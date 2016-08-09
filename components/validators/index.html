@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+      <html>
+        <head>
+          <meta charset="utf-8">
+          <meta http-equiv="X-UA-Compatible" content="IE=edge">
+          <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+          <title data-react-helmet="true">Availity reactstrap Validation - Validators</title>
+          <meta data-react-helmet="true" name="description" content="Availity reactstrap Validation - easy to use form validation for reactstrap"/><meta data-react-helmet="true" property="og:type" content="article"/>
+          <link rel=icon href=/assets/favicon.ico>
+          <link rel="stylesheet" href="/assets/style.css"/>
+          <link rel="stylesheet" href="/assets/docs.css"/>
+        </head>
+        <body>
+          <div id="app"><div class="wrapper" data-reactroot="" data-reactid="1" data-react-checksum="563487372"><!-- react-empty: 2 --><nav role="navigation" class="header navbar navbar-light bg-faded" data-reactid="3"><div class="container-fluid" data-reactid="4"><a class="navbar-brand" href="/" data-reactid="5">Availity reactstrap Validation</a><ul class="nav navbar-nav pull-xs-right nav" data-reactid="6"><li class="nav-item" data-reactid="7"><a class="nav-link nav-link active" href="/components/" data-reactid="8">Components</a></li><li class="nav-item" data-reactid="9"><a href="https://github.com/availity" class="nav-link" data-reactid="10">Github</a></li></ul></div></nav><div class="content container-fluid" data-reactid="11"><div class="row" data-reactid="12"><div class="col-xs-12 col-md-3 push-md-9" data-reactid="13"><div class="docs-sidebar m-b-3" data-reactid="14"><h5 data-reactid="15">Components</h5><ul class="nav" data-reactid="16"><li class="nav-item" data-reactid="17"><a class="nav-link" href="/components/avform/" data-reactid="18">AvForm</a></li><li class="nav-item" data-reactid="19"><a class="nav-link active" href="/components/validators/" data-reactid="20">Validators</a></li></ul></div></div><div class="col-xs-12 col-md-9 pull-md-3" data-reactid="21"><div data-reactid="22"><!-- react-empty: 23 --><h3 data-reactid="24">Validations</h3><hr data-reactid="25"/><h4 data-reactid="26">Date</h4><div class="docs-example" data-reactid="27"><form novalidate="" action="#" method="get" class="av-valid" data-reactid="28"><div class="form-group" data-reactid="29"><label for="date" class="" data-reactid="30">Date</label><input type="date" id="date" name="date" value="" class="av-untouched av-pristine av-valid form-control" data-reactid="31"/></div><div class="form-group" data-reactid="32"><label for="dateProp" class="" data-reactid="33">Date (validate prop)</label><input type="text" id="dateProp" name="dateProp" title="Use MM/DD/YYYY" value="" class="av-untouched av-pristine av-valid form-control" data-reactid="34"/></div><button class="btn btn-primary" data-reactid="35">Submit</button></form></div><pre data-reactid="36"><code class="language-jsx" data-reactid="37">import React from &#x27;react&#x27;;
+import { AvForm, AvField } from &#x27;availity-reactstrap-validation&#x27;;
+import { Button } from &#x27;reactstrap&#x27;;
+
+export default class Example extends React.Component {
+  render() {
+    return (
+      &lt;AvForm&gt;
+        &lt;AvField name=&quot;date&quot; label=&quot;Date&quot; type=&quot;date&quot; /&gt;
+        &lt;AvField name=&quot;dateProp&quot; label=&quot;Date (validate prop)&quot; type=&quot;text&quot; validate={{date: {format: &#x27;MM/DD/YYYY&#x27;}}} title=&quot;Use MM/DD/YYYY&quot; /&gt;
+        &lt;Button color=&quot;primary&quot;&gt;Submit&lt;/Button&gt;
+      &lt;/AvForm&gt;
+    );
+  }
+}
+</code></pre><h4 data-reactid="38">DateRange</h4><div class="docs-example" data-reactid="39"><form novalidate="" action="#" method="get" class="av-valid" data-reactid="40"><div class="form-group" data-reactid="41"><label for="dateRange" class="" data-reactid="42">Date (with relative dates)</label><input type="date" id="dateRange" name="dateRange" value="" class="av-untouched av-pristine av-valid form-control" data-reactid="43"/></div><div class="form-group" data-reactid="44"><label for="dateRangeProp" class="" data-reactid="45">Date (with absolute dates)</label><input type="text" id="dateRangeProp" name="dateRangeProp" title="Use MM/DD/YYYY" value="" class="av-untouched av-pristine av-valid form-control" data-reactid="46"/></div><button class="btn btn-primary" data-reactid="47">Submit</button></form></div><pre data-reactid="48"><code class="language-jsx" data-reactid="49">import React from &#x27;react&#x27;;
+import { AvForm, AvField } from &#x27;availity-reactstrap-validation&#x27;;
+import { Button } from &#x27;reactstrap&#x27;;
+
+export default class Example extends React.Component {
+  render() {
+    return (
+      &lt;AvForm&gt;
+        &lt;AvField name=&quot;dateRange&quot; label=&quot;Date (with relative dates)&quot; type=&quot;date&quot; validate={{dateRange: {start: {value: -5, units: &#x27;years&#x27;,} ,end: {value: 5, units: &#x27;years&#x27;,}}}} /&gt;
+        &lt;AvField name=&quot;dateRangeProp&quot; label=&quot;Date (with absolute dates)&quot; type=&quot;text&quot; validate={{dateRange: {format: &#x27;MM/DD/YYYY&#x27;, start: {value: &#x27;01/01/2010&#x27;}, end: {value: &#x27;12/31/2020&#x27;}}}} title=&quot;Use MM/DD/YYYY&quot; /&gt;
+        &lt;Button color=&quot;primary&quot;&gt;Submit&lt;/Button&gt;
+      &lt;/AvForm&gt;
+    );
+  }
+}
+</code></pre><h4 data-reactid="50">DateTime</h4><div class="docs-example" data-reactid="51"><form novalidate="" action="#" method="get" class="av-valid" data-reactid="52"><div class="form-group" data-reactid="53"><label for="datetime" class="" data-reactid="54">DateTime</label><input type="datetime" id="datetime" name="datetime" value="" class="av-untouched av-pristine av-valid form-control" data-reactid="55"/></div><div class="form-group" data-reactid="56"><label for="datetimeProp" class="" data-reactid="57">DateTime (validate prop)</label><input type="text" id="datetimeProp" name="datetimeProp" value="" class="av-untouched av-pristine av-valid form-control" data-reactid="58"/></div><button class="btn btn-primary" data-reactid="59">Submit</button></form></div><pre data-reactid="60"><code class="language-jsx" data-reactid="61">import React from &#x27;react&#x27;;
+import { AvForm, AvField } from &#x27;availity-reactstrap-validation&#x27;;
+import { Button } from &#x27;reactstrap&#x27;;
+
+export default class Example extends React.Component {
+  render() {
+    return (
+      &lt;AvForm&gt;
+        &lt;AvField name=&quot;datetime&quot; label=&quot;DateTime&quot; type=&quot;datetime&quot; /&gt;
+        &lt;AvField name=&quot;datetimeProp&quot; label=&quot;DateTime (validate prop)&quot; type=&quot;text&quot; validate={{datetime: true}} /&gt;
+        &lt;Button color=&quot;primary&quot;&gt;Submit&lt;/Button&gt;
+      &lt;/AvForm&gt;
+    );
+  }
+}
+</code></pre><h4 data-reactid="62">Email</h4><div class="docs-example" data-reactid="63"><form novalidate="" action="#" method="get" class="av-valid" data-reactid="64"><div class="form-group" data-reactid="65"><label for="email" class="" data-reactid="66">Email</label><input type="email" id="email" name="email" value="" class="av-untouched av-pristine av-valid form-control" data-reactid="67"/></div><div class="form-group" data-reactid="68"><label for="emailProp" class="" data-reactid="69">Email (validate prop)</label><input type="text" id="emailProp" name="emailProp" value="" class="av-untouched av-pristine av-valid form-control" data-reactid="70"/></div><button class="btn btn-primary" data-reactid="71">Submit</button></form></div><pre data-reactid="72"><code class="language-jsx" data-reactid="73">import React from &#x27;react&#x27;;
+import { AvForm, AvField } from &#x27;availity-reactstrap-validation&#x27;;
+import { Button } from &#x27;reactstrap&#x27;;
+
+export default class Example extends React.Component {
+  render() {
+    return (
+      &lt;AvForm&gt;
+        &lt;AvField name=&quot;email&quot; label=&quot;Email&quot; type=&quot;email&quot; /&gt;
+        &lt;AvField name=&quot;emailProp&quot; label=&quot;Email (validate prop)&quot; type=&quot;text&quot; validate={{email: true}} /&gt;
+        &lt;Button color=&quot;primary&quot;&gt;Submit&lt;/Button&gt;
+      &lt;/AvForm&gt;
+    );
+  }
+}
+</code></pre><h4 data-reactid="74">Match</h4><div class="docs-example" data-reactid="75"><form novalidate="" action="#" method="get" class="av-valid" data-reactid="76"><div class="form-group" data-reactid="77"><label for="originalEmail" class="" data-reactid="78">Email</label><input type="email" id="originalEmail" name="originalEmail" value="" class="av-untouched av-pristine av-valid form-control" data-reactid="79"/></div><div class="form-group" data-reactid="80"><label for="confirmationEmail" class="" data-reactid="81">Email</label><input type="email" id="confirmationEmail" name="confirmationEmail" value="" class="av-untouched av-pristine av-valid form-control" data-reactid="82"/></div><button class="btn btn-primary" data-reactid="83">Submit</button></form></div><pre data-reactid="84"><code class="language-jsx" data-reactid="85">import React from &#x27;react&#x27;;
+import { AvForm, AvField } from &#x27;availity-reactstrap-validation&#x27;;
+import { Button } from &#x27;reactstrap&#x27;;
+
+export default class Example extends React.Component {
+  render() {
+    return (
+      &lt;AvForm&gt;
+        &lt;AvField name=&quot;originalEmail&quot; label=&quot;Email&quot; type=&quot;email&quot; /&gt;
+        &lt;AvField name=&quot;confirmationEmail&quot; label=&quot;Email&quot; type=&quot;email&quot; validate={{match:{value:&#x27;originalEmail&#x27;}}} /&gt;
+        &lt;Button color=&quot;primary&quot;&gt;Submit&lt;/Button&gt;
+      &lt;/AvForm&gt;
+    );
+  }
+}
+</code></pre><h4 data-reactid="86">Max</h4><div class="docs-example" data-reactid="87"><form novalidate="" action="#" method="get" class="av-valid" data-reactid="88"><div class="form-group" data-reactid="89"><label for="maxPropString" class="" data-reactid="90">Max</label><input type="number" max="10" id="maxPropString" name="maxPropString" value="" class="av-untouched av-pristine av-valid form-control" data-reactid="91"/></div><div class="form-group" data-reactid="92"><label for="maxPropNumber" class="" data-reactid="93">Max (w/ prop as a number)</label><input type="number" max="10" id="maxPropNumber" name="maxPropNumber" value="" class="av-untouched av-pristine av-valid form-control" data-reactid="94"/></div><div class="form-group" data-reactid="95"><label for="maxPropNumberProp" class="" data-reactid="96">Max (validate prop)</label><input type="text" max="10" id="maxPropNumberProp" name="maxPropNumberProp" value="" class="av-untouched av-pristine av-valid form-control" data-reactid="97"/></div><button class="btn btn-primary" data-reactid="98">Submit</button></form></div><pre data-reactid="99"><code class="language-jsx" data-reactid="100">import React from &#x27;react&#x27;;
+import { AvForm, AvField } from &#x27;availity-reactstrap-validation&#x27;;
+import { Button } from &#x27;reactstrap&#x27;;
+
+export default class Example extends React.Component {
+  render() {
+    return (
+      &lt;AvForm&gt;
+        &lt;AvField name=&quot;maxPropString&quot; label=&quot;Max&quot; type=&quot;number&quot; max=&quot;10&quot; /&gt;
+        &lt;AvField name=&quot;maxPropNumber&quot; label=&quot;Max (w/ prop as a number)&quot; type=&quot;number&quot; max={10} /&gt;
+        &lt;AvField name=&quot;maxPropNumberProp&quot; label=&quot;Max (validate prop)&quot; type=&quot;text&quot; validate={{max: {value: 10}}} /&gt;
+        &lt;Button color=&quot;primary&quot;&gt;Submit&lt;/Button&gt;
+      &lt;/AvForm&gt;
+    );
+  }
+}
+</code></pre><h4 data-reactid="101">MaxLength</h4><div class="docs-example" data-reactid="102"><form novalidate="" action="#" method="get" class="av-valid" data-reactid="103"><div class="form-group" data-reactid="104"><label for="maxLengthPropString" class="" data-reactid="105">Max Length</label><input type="text" id="maxLengthPropString" name="maxLengthPropString" maxlength="10" value="" class="av-untouched av-pristine av-valid form-control" data-reactid="106"/></div><div class="form-group" data-reactid="107"><label for="maxLengthPropNumber" class="" data-reactid="108">Max Length (w/ prop as a number)</label><input type="text" id="maxLengthPropNumber" name="maxLengthPropNumber" maxlength="10" value="" class="av-untouched av-pristine av-valid form-control" data-reactid="109"/></div><div class="form-group" data-reactid="110"><label for="maxLengthPropNumberProp" class="" data-reactid="111">Max Length (validate prop)</label><input type="text" id="maxLengthPropNumberProp" name="maxLengthPropNumberProp" value="" maxlength="10" class="av-untouched av-pristine av-valid form-control" data-reactid="112"/></div><button class="btn btn-primary" data-reactid="113">Submit</button></form></div><pre data-reactid="114"><code class="language-jsx" data-reactid="115">import React from &#x27;react&#x27;;
+import { AvForm, AvField } from &#x27;availity-reactstrap-validation&#x27;;
+import { Button } from &#x27;reactstrap&#x27;;
+
+export default class Example extends React.Component {
+  render() {
+    return (
+      &lt;AvForm&gt;
+        &lt;AvField name=&quot;maxLengthPropString&quot; label=&quot;Max Length&quot; type=&quot;text&quot; maxLength=&quot;10&quot; /&gt;
+        &lt;AvField name=&quot;maxLengthPropNumber&quot; label=&quot;Max Length (w/ prop as a number)&quot; type=&quot;text&quot; maxLength={10} /&gt;
+        &lt;AvField name=&quot;maxLengthPropNumberProp&quot; label=&quot;Max Length (validate prop)&quot; type=&quot;text&quot; validate={{maxLength: {value: 10}}} /&gt;
+        &lt;Button color=&quot;primary&quot;&gt;Submit&lt;/Button&gt;
+      &lt;/AvForm&gt;
+    );
+  }
+}
+</code></pre><h4 data-reactid="116">Min</h4><div class="docs-example" data-reactid="117"><form novalidate="" action="#" method="get" class="av-valid" data-reactid="118"><div class="form-group" data-reactid="119"><label for="minPropString" class="" data-reactid="120">Min</label><input type="number" min="10" id="minPropString" name="minPropString" value="" class="av-untouched av-pristine av-valid form-control" data-reactid="121"/></div><div class="form-group" data-reactid="122"><label for="minPropNumber" class="" data-reactid="123">Min (w/ prop as a number)</label><input type="number" min="10" id="minPropNumber" name="minPropNumber" value="" class="av-untouched av-pristine av-valid form-control" data-reactid="124"/></div><div class="form-group" data-reactid="125"><label for="minPropNumberProp" class="" data-reactid="126">Min (validate prop)</label><input type="text" min="10" id="minPropNumberProp" name="minPropNumberProp" value="" class="av-untouched av-pristine av-valid form-control" data-reactid="127"/></div><button class="btn btn-primary" data-reactid="128">Submit</button></form></div><pre data-reactid="129"><code class="language-jsx" data-reactid="130">import React from &#x27;react&#x27;;
+import { AvForm, AvField } from &#x27;availity-reactstrap-validation&#x27;;
+import { Button } from &#x27;reactstrap&#x27;;
+
+export default class Example extends React.Component {
+  render() {
+    return (
+      &lt;AvForm&gt;
+        &lt;AvField name=&quot;minPropString&quot; label=&quot;Min&quot; type=&quot;number&quot; min=&quot;10&quot; /&gt;
+        &lt;AvField name=&quot;minPropNumber&quot; label=&quot;Min (w/ prop as a number)&quot; type=&quot;number&quot; min={10} /&gt;
+        &lt;AvField name=&quot;minPropNumberProp&quot; label=&quot;Min (validate prop)&quot; type=&quot;text&quot; validate={{min: {value: 10}}} /&gt;
+        &lt;Button color=&quot;primary&quot;&gt;Submit&lt;/Button&gt;
+      &lt;/AvForm&gt;
+    );
+  }
+}
+</code></pre><h4 data-reactid="131">MinLength</h4><div class="docs-example" data-reactid="132"><form novalidate="" action="#" method="get" class="av-valid" data-reactid="133"><div class="form-group" data-reactid="134"><label for="minLengthPropString" class="" data-reactid="135">Min Length</label><input type="text" id="minLengthPropString" name="minLengthPropString" minlength="10" value="" class="av-untouched av-pristine av-valid form-control" data-reactid="136"/></div><div class="form-group" data-reactid="137"><label for="minLengthPropNumber" class="" data-reactid="138">Min Length (w/ prop as a number)</label><input type="text" id="minLengthPropNumber" name="minLengthPropNumber" minlength="10" value="" class="av-untouched av-pristine av-valid form-control" data-reactid="139"/></div><div class="form-group" data-reactid="140"><label for="minLengthPropNumberProp" class="" data-reactid="141">Min Length (validate prop)</label><input type="text" id="minLengthPropNumberProp" name="minLengthPropNumberProp" value="" minlength="10" class="av-untouched av-pristine av-valid form-control" data-reactid="142"/></div><button class="btn btn-primary" data-reactid="143">Submit</button></form></div><pre data-reactid="144"><code class="language-jsx" data-reactid="145">import React from &#x27;react&#x27;;
+import { AvForm, AvField } from &#x27;availity-reactstrap-validation&#x27;;
+import { Button } from &#x27;reactstrap&#x27;;
+
+export default class Example extends React.Component {
+  render() {
+    return (
+      &lt;AvForm&gt;
+        &lt;AvField name=&quot;minLengthPropString&quot; label=&quot;Min Length&quot; type=&quot;text&quot; minLength=&quot;10&quot; /&gt;
+        &lt;AvField name=&quot;minLengthPropNumber&quot; label=&quot;Min Length (w/ prop as a number)&quot; type=&quot;text&quot; minLength={10} /&gt;
+        &lt;AvField name=&quot;minLengthPropNumberProp&quot; label=&quot;Min Length (validate prop)&quot; type=&quot;text&quot; validate={{minLength: {value: 10}}} /&gt;
+        &lt;Button color=&quot;primary&quot;&gt;Submit&lt;/Button&gt;
+      &lt;/AvForm&gt;
+    );
+  }
+}
+</code></pre><h4 data-reactid="146">Npi</h4><div class="docs-example" data-reactid="147"><form novalidate="" action="#" method="get" class="av-valid" data-reactid="148"><div class="form-group" data-reactid="149"><label for="npi" class="" data-reactid="150">NPI</label><input type="text" id="npi" name="npi" value="" class="av-untouched av-pristine av-valid form-control" data-reactid="151"/></div><button class="btn btn-primary" data-reactid="152">Submit</button></form></div><pre data-reactid="153"><code class="language-jsx" data-reactid="154">import React from &#x27;react&#x27;;
+import { AvForm, AvField } from &#x27;availity-reactstrap-validation&#x27;;
+import { Button } from &#x27;reactstrap&#x27;;
+
+export default class Example extends React.Component {
+  render() {
+    return (
+      &lt;AvForm&gt;
+        &lt;AvField name=&quot;npi&quot; label=&quot;NPI&quot; type=&quot;text&quot; validate={{npi: true}} /&gt;
+        &lt;Button color=&quot;primary&quot;&gt;Submit&lt;/Button&gt;
+      &lt;/AvForm&gt;
+    );
+  }
+}
+</code></pre><h4 data-reactid="155">Number</h4><div class="docs-example" data-reactid="156"><form novalidate="" action="#" method="get" class="av-valid" data-reactid="157"><div class="form-group" data-reactid="158"><label for="number" class="" data-reactid="159">Number</label><input type="number" id="number" name="number" value="" class="av-untouched av-pristine av-valid form-control" data-reactid="160"/></div><div class="form-group" data-reactid="161"><label for="numberProp" class="" data-reactid="162">Number (validate prop)</label><input type="text" id="numberProp" name="numberProp" value="" class="av-untouched av-pristine av-valid form-control" data-reactid="163"/></div><button class="btn btn-primary" data-reactid="164">Submit</button></form></div><pre data-reactid="165"><code class="language-jsx" data-reactid="166">import React from &#x27;react&#x27;;
+import { AvForm, AvField } from &#x27;availity-reactstrap-validation&#x27;;
+import { Button } from &#x27;reactstrap&#x27;;
+
+export default class Example extends React.Component {
+  render() {
+    return (
+      &lt;AvForm&gt;
+        &lt;AvField name=&quot;number&quot; label=&quot;Number&quot; type=&quot;number&quot; /&gt;
+        &lt;AvField name=&quot;numberProp&quot; label=&quot;Number (validate prop)&quot; type=&quot;text&quot; validate={{number: true}} /&gt;
+        &lt;Button color=&quot;primary&quot;&gt;Submit&lt;/Button&gt;
+      &lt;/AvForm&gt;
+    );
+  }
+}
+</code></pre><h4 data-reactid="167">Pattern</h4><div class="docs-example" data-reactid="168"><form novalidate="" action="#" method="get" class="av-valid" data-reactid="169"><div class="form-group" data-reactid="170"><label for="pattern" class="" data-reactid="171">Pattern</label><input type="text" id="pattern" name="pattern" pattern="^[A-Z]*$" placeholder="^[A-Z]*$" title="Only Uppercase letters are allowed for this example" value="" class="av-untouched av-pristine av-valid form-control" data-reactid="172"/></div><div class="form-group" data-reactid="173"><label for="patternPropRegex" class="" data-reactid="174">Pattern (validate prop with regex)</label><input type="text" id="patternPropRegex" name="patternPropRegex" placeholder="^[A-Z]*$" title="Only Uppercase letters are allowed for this example" value="" pattern="/^[A-Z]*$/" class="av-untouched av-pristine av-valid form-control" data-reactid="175"/></div><div class="form-group" data-reactid="176"><label for="patternPropString" class="" data-reactid="177">Pattern (validate prop with string)</label><input type="text" id="patternPropString" name="patternPropString" placeholder="^[A-Z]*$" title="Only Uppercase letters are allowed for this example" value="" pattern="^[A-Z]*$" class="av-untouched av-pristine av-valid form-control" data-reactid="178"/></div><button class="btn btn-primary" data-reactid="179">Submit</button></form></div><pre data-reactid="180"><code class="language-jsx" data-reactid="181">import React from &#x27;react&#x27;;
+import { AvForm, AvField } from &#x27;availity-reactstrap-validation&#x27;;
+import { Button } from &#x27;reactstrap&#x27;;
+
+export default class Example extends React.Component {
+  render() {
+    return (
+      &lt;AvForm&gt;
+        &lt;AvField name=&quot;pattern&quot; label=&quot;Pattern&quot; type=&quot;text&quot; pattern=&quot;^[A-Z]*$&quot; placeholder=&quot;^[A-Z]*$&quot; title=&quot;Only Uppercase letters are allowed for this example&quot; /&gt;
+        &lt;AvField name=&quot;patternPropRegex&quot; label=&quot;Pattern (validate prop with regex)&quot; type=&quot;text&quot; validate={{pattern: {value: /^[A-Z]*$/}}} placeholder=&quot;^[A-Z]*$&quot; title=&quot;Only Uppercase letters are allowed for this example&quot; /&gt;
+        &lt;AvField name=&quot;patternPropString&quot; label=&quot;Pattern (validate prop with string)&quot; type=&quot;text&quot; validate={{pattern: {value: &#x27;^[A-Z]*$&#x27;}}} placeholder=&quot;^[A-Z]*$&quot; title=&quot;Only Uppercase letters are allowed for this example&quot; /&gt;
+        &lt;Button color=&quot;primary&quot;&gt;Submit&lt;/Button&gt;
+      &lt;/AvForm&gt;
+    );
+  }
+}
+</code></pre><h4 data-reactid="182">Phone</h4><p data-reactid="183">Note: Validates against NANP</p><div class="docs-example" data-reactid="184"><form novalidate="" action="#" method="get" class="av-valid" data-reactid="185"><div class="form-group" data-reactid="186"><label for="telephone" class="" data-reactid="187">Phone</label><input type="tel" id="telephone" name="telephone" value="" class="av-untouched av-pristine av-valid form-control" data-reactid="188"/></div><div class="form-group" data-reactid="189"><label for="telephoneProp" class="" data-reactid="190">Phone (validate prop)</label><input type="text" id="telephoneProp" name="telephoneProp" value="" class="av-untouched av-pristine av-valid form-control" data-reactid="191"/></div><button class="btn btn-primary" data-reactid="192">Submit</button></form></div><pre data-reactid="193"><code class="language-jsx" data-reactid="194">import React from &#x27;react&#x27;;
+import { AvForm, AvField } from &#x27;availity-reactstrap-validation&#x27;;
+import { Button } from &#x27;reactstrap&#x27;;
+
+export default class Example extends React.Component {
+  render() {
+    return (
+      &lt;AvForm&gt;
+        &lt;AvField name=&quot;telephone&quot; label=&quot;Phone&quot; type=&quot;tel&quot; /&gt;
+        &lt;AvField name=&quot;telephoneProp&quot; label=&quot;Phone (validate prop)&quot; type=&quot;text&quot; validate={{tel: true}} /&gt;
+        &lt;Button color=&quot;primary&quot;&gt;Submit&lt;/Button&gt;
+      &lt;/AvForm&gt;
+    );
+  }
+}
+</code></pre><h4 data-reactid="195">Required</h4><div class="docs-example" data-reactid="196"><form novalidate="" action="#" method="get" class="av-valid" data-reactid="197"><div class="form-group" data-reactid="198"><label for="required" class="" data-reactid="199">Required</label><input type="text" id="required" name="required" required="" value="" class="av-untouched av-pristine av-invalid form-control" data-reactid="200"/></div><div class="form-group" data-reactid="201"><label for="requiredProp" class="" data-reactid="202">Required (validate prop)</label><input type="text" id="requiredProp" name="requiredProp" value="" required="" class="av-untouched av-pristine av-invalid form-control" data-reactid="203"/></div><button class="btn btn-primary" data-reactid="204">Submit</button></form></div><pre data-reactid="205"><code class="language-jsx" data-reactid="206">import React from &#x27;react&#x27;;
+import { AvForm, AvField } from &#x27;availity-reactstrap-validation&#x27;;
+import { Button } from &#x27;reactstrap&#x27;;
+
+export default class Example extends React.Component {
+  render() {
+    return (
+      &lt;AvForm&gt;
+        &lt;AvField name=&quot;required&quot; label=&quot;Required&quot; type=&quot;text&quot; required /&gt;
+        &lt;AvField name=&quot;requiredProp&quot; label=&quot;Required (validate prop)&quot; type=&quot;text&quot; validate={{required: true}} /&gt;
+        &lt;Button color=&quot;primary&quot;&gt;Submit&lt;/Button&gt;
+      &lt;/AvForm&gt;
+    );
+  }
+}
+</code></pre><h4 data-reactid="207">Step</h4><p data-reactid="208">Note: Only works only with input type of numbers</p><div class="docs-example" data-reactid="209"><form novalidate="" action="#" method="get" class="av-valid" data-reactid="210"><div class="form-group" data-reactid="211"><label for="step5" class="" data-reactid="212">Step</label><input type="number" step="5" id="step5" name="step5" value="" class="av-untouched av-pristine av-valid form-control" data-reactid="213"/></div><div class="form-group" data-reactid="214"><label for="step5Prop" class="" data-reactid="215">Step (validate prop)</label><input type="number" step="5" id="step5Prop" name="step5Prop" value="" class="av-untouched av-pristine av-valid form-control" data-reactid="216"/></div><button class="btn btn-primary" data-reactid="217">Submit</button></form></div><pre data-reactid="218"><code class="language-jsx" data-reactid="219">import React from &#x27;react&#x27;;
+import { AvForm, AvField } from &#x27;availity-reactstrap-validation&#x27;;
+import { Button } from &#x27;reactstrap&#x27;;
+
+export default class Example extends React.Component {
+  render() {
+    return (
+      &lt;AvForm&gt;
+        &lt;AvField name=&quot;step5&quot; label=&quot;Step&quot; type=&quot;number&quot; step=&quot;5&quot; /&gt;
+        &lt;AvField name=&quot;step5Prop&quot; label=&quot;Step (validate prop)&quot; type=&quot;number&quot; validate={{step: {value: 5}}} /&gt;
+        &lt;Button color=&quot;primary&quot;&gt;Submit&lt;/Button&gt;
+      &lt;/AvForm&gt;
+    );
+  }
+}
+</code></pre></div></div></div></div><div class="footer" data-reactid="220"><div class="container-fluid" data-reactid="221"><div class="row" data-reactid="222"><div class="text-xs-center col-xs-12" data-reactid="223"><p class="social" data-reactid="224"><!-- react-text: 225 -->© 2016 Availity<!-- /react-text --><!-- react-text: 226 --> <!-- /react-text --><iframe src="https://ghbtns.com/github-btn.html?user=availity&amp;repo=availity-reactstrap-validation&amp;type=star&amp;count=true" frameborder="0" scrolling="0" width="100" height="20px" data-reactid="227"></iframe><iframe src="https://ghbtns.com/github-btn.html?user=availity&amp;repo=availity-reactstrap-validation&amp;type=fork&amp;count=true" frameborder="0" scrolling="0" width="100" height="20px" data-reactid="228"></iframe></p></div></div></div></div></div></div>
+          <script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+            ga('create', 'UA-40000603-2', 'auto');
+          </script>
+          <script src="/assets/prism.js" data-manual></script>
+          <script src="/bundle.js"></script>
+        </body>
+      </html>
