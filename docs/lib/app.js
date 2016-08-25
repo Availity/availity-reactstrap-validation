@@ -10,10 +10,6 @@ import Helmet from 'react-helmet';
 // Client render (optional):
 if (typeof document !== 'undefined') {
   const outlet = document.getElementById('app');
-  browserHistory.listen(function (location) {
-    window.ga('set', 'page', location.pathname);
-    window.ga('send', 'pageview');
-  });
   ReactDOM.render(<Router onUpdate={() => window.scrollTo(0, 0)} history={browserHistory} routes={routes} />, outlet)
 }
 
@@ -24,13 +20,15 @@ export default (locals, callback) => {
 
   match({ routes, location }, (error, redirectLocation, renderProps) => {
     var url;
+    const relative = location.pathname.split('/').filter(url => url).map(url => '../').join('');
+    console.log(location.pathname, relative);
     if (redirectLocation && redirectLocation.pathname) {
       url = redirectLocation.pathname;
       callback(null, `<!DOCTYPE html>
       <html>
-      <head><link rel="canonical" href="${url}"/>
+      <head><link rel="canonical" href="${relative}${url}"/>
       <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-      <meta http-equiv="refresh" content="0;url=${url}" />
+      <meta http-equiv="refresh" content="0;url=${relative}${url}" />
       </head>
       </html>`);
     }
@@ -44,21 +42,14 @@ export default (locals, callback) => {
           <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
           ${head.title.toString()}
           ${head.meta.toString()}
-          <link rel=icon href=/assets/favicon.ico>
-          <link rel="stylesheet" href="/assets/style.css"/>
-          <link rel="stylesheet" href="/assets/docs.css"/>
+          <link rel=icon href="${relative}/assets/favicon.ico">
+          <link rel="stylesheet" href="${relative}assets/style.css"/>
+          <link rel="stylesheet" href="${relative}assets/docs.css"/>
         </head>
         <body>
           <div id="app">${body}</div>
-          <script>
-            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-            })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-            ga('create', 'UA-40000603-2', 'auto');
-          </script>
-          <script src="/assets/prism.js" data-manual></script>
-          <script src="/bundle.js"></script>
+          <script src="${relative}assets/prism.js" data-manual></script>
+          <script src="${relative}bundle.js"></script>
         </body>
       </html>`;
     callback(null, markup);
