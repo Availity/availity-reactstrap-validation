@@ -13,16 +13,4 @@ export const inputTypeOverride = (key, value) => {
   inputType[key] = value;
 };
 
-/* istanbul ignore next  */
-if(typeof document !== 'undefined' && typeof document.createElement === 'function') {
-  const tester = document.createElement('input');
 
-  for (var i in inputType) {
-    tester.type = i;
-    tester.value = ':(';
-
-    if (tester.type === i && tester.value === '') {
-      inputType[i] = true;
-    }
-  }
-}

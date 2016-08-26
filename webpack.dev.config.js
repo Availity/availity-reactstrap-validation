@@ -33,6 +33,7 @@ var config = [{
   },
   output: {
     filename: 'bundle.js',
+    publicPath: '/availity-reactstrap-validation/',
     path: './build',
     libraryTarget: 'umd'
   },

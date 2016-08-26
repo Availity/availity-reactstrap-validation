@@ -14,14 +14,14 @@ export default () => {
           <Row>
             <Col>
               <p className="lead">
-                <img src="/assets/logo.png" alt="" width="150px" />
+                <img src="assets/logo.png" alt="" width="150px" />
               </p>
               <h1 className="jumbotron-heading display-4">Availity reactstrap Validation</h1>
               <p className="lead">
                 Easy to use form validation for <a href="https://github.com/reactstrap/reactstrap">reactstrap</a>
               </p>
               <p>
-                {/*<Button outline color="danger" href="https://github.com/availity/availity-reactstrap-validation">View on Github</Button>*/}
+                <Button outline color="danger" href="https://github.com/availity/availity-reactstrap-validation">View on Github</Button>
                 <Button color="danger" tag={Link} to="/components/">View Components</Button>
               </p>
             </Col>
@@ -31,13 +31,13 @@ export default () => {
       <Container fluid>
         <Row>
           <Col sm={{ size: 8, offset: 2 }}>
-            {/*<h2>Installation</h2>
+            <h2>Installation</h2>
             <hr/>
             <h3>NPM</h3>
             <p>Install reactstrap and peer dependencies via NPM</p>
             <pre>
-              <PrismCode className="language-bash">npm install --save reactstrap react-addons-transition-group react react-dom</PrismCode>
-            </pre>*/}
+              <PrismCode className="language-bash">npm install --save availity-reactstrap-validation react react-dom</PrismCode>
+            </pre>
             <p>ES6 - import the components you need</p>
             <div className="docs-example">
               <Example/>
