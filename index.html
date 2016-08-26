@@ -11,7 +11,7 @@
           <link rel="stylesheet" href="/availity-reactstrap-validation/assets/docs.css"/>
         </head>
         <body>
-          <div id="app"><div class="wrapper" data-reactroot="" data-reactid="1" data-react-checksum="-2085355021"><!-- react-empty: 2 --><nav role="navigation" class="header navbar navbar-light bg-faded" data-reactid="3"><div class="container-fluid" data-reactid="4"><a class="navbar-brand" href="/availity-reactstrap-validation/" data-reactid="5">Availity reactstrap Validation</a><ul class="nav navbar-nav pull-xs-right nav" data-reactid="6"><li class="nav-item" data-reactid="7"><a class="nav-link nav-link" href="/availity-reactstrap-validation/components/" data-reactid="8">Components</a></li><li class="nav-item" data-reactid="9"><a href="https://github.com/availity" class="nav-link" data-reactid="10">Github</a></li></ul></div></nav><div data-reactid="11"><section class="jumbotron text-xs-center m-b-3" data-reactid="12"><div class="container-fluid" data-reactid="13"><div class="row" data-reactid="14"><div class="col-xs-12" data-reactid="15"><p class="lead" data-reactid="16"><img src="assets/logo.png" alt="" width="150px" data-reactid="17"/></p><h1 class="jumbotron-heading display-4" data-reactid="18">Availity reactstrap Validation</h1><p class="lead" data-reactid="19"><!-- react-text: 20 -->Easy to use form validation for <!-- /react-text --><a href="https://github.com/reactstrap/reactstrap" data-reactid="21">reactstrap</a></p><p data-reactid="22"><a href="https://github.com/availity/availity-reactstrap-validation" class="btn btn-outline-danger" data-reactid="23">View on Github</a><a class="btn btn-danger" href="/availity-reactstrap-validation/components/" data-reactid="24">View Components</a></p></div></div></div></section><div class="container-fluid" data-reactid="25"><div class="row" data-reactid="26"><div class="col-xs-12 col-sm-8 offset-sm-2" data-reactid="27"><h2 data-reactid="28">Installation</h2><hr data-reactid="29"/><h3 data-reactid="30">NPM</h3><p data-reactid="31">Install reactstrap and peer dependencies via NPM</p><pre data-reactid="32"><code class="language-bash" data-reactid="33">npm install --save availity-reactstrap-validation react react-dom</code></pre><p data-reactid="34">ES6 - import the components you need</p><div class="docs-example" data-reactid="35"><div data-reactid="36"><form novalidate="" action="#" method="get" class="av-valid" data-reactid="37"><div class="form-group" data-reactid="38"><label for="email" class="" data-reactid="39">Email Address</label><input type="email" id="email" name="email" required="" value="" class="av-untouched av-pristine av-invalid form-control" data-reactid="40"/></div><button class="btn btn-primary" data-reactid="41">Submit</button></form><!-- react-empty: 42 --></div></div><pre data-reactid="43"><code class="language-jsx" data-reactid="44">import React from &#x27;react&#x27;;
+          <div id="app"><div class="wrapper" data-reactroot="" data-reactid="1" data-react-checksum="1313932235"><!-- react-empty: 2 --><nav role="navigation" class="header navbar navbar-light bg-faded" data-reactid="3"><div class="container-fluid" data-reactid="4"><a class="navbar-brand" href="/availity-reactstrap-validation/" data-reactid="5">Availity reactstrap Validation</a><ul class="nav navbar-nav pull-xs-right nav" data-reactid="6"><li class="nav-item" data-reactid="7"><a class="nav-link nav-link" href="/availity-reactstrap-validation/components/" data-reactid="8">Components</a></li><li class="nav-item" data-reactid="9"><a href="https://github.com/availity" class="nav-link" data-reactid="10">Github</a></li></ul></div></nav><div data-reactid="11"><section class="jumbotron text-xs-center m-b-3" data-reactid="12"><div class="container-fluid" data-reactid="13"><div class="row" data-reactid="14"><div class="col-xs-12" data-reactid="15"><p class="lead" data-reactid="16"><img src="assets/logo.png" alt="" width="150px" data-reactid="17"/></p><h1 class="jumbotron-heading display-4" data-reactid="18">Availity reactstrap Validation</h1><p class="lead" data-reactid="19"><!-- react-text: 20 -->Easy to use form validation for <!-- /react-text --><a href="https://github.com/reactstrap/reactstrap" data-reactid="21">reactstrap</a></p><p data-reactid="22"><a href="https://github.com/availity/availity-reactstrap-validation" class="btn btn-outline-danger" data-reactid="23">View on Github</a><a class="btn btn-danger" href="/availity-reactstrap-validation/components/" data-reactid="24">View Components</a></p></div></div></div></section><div class="container-fluid" data-reactid="25"><div class="row" data-reactid="26"><div class="col-xs-12 col-sm-8 offset-sm-2" data-reactid="27"><h2 data-reactid="28">Installation</h2><hr data-reactid="29"/><h3 data-reactid="30">NPM</h3><p data-reactid="31">Install reactstrap and peer dependencies via NPM</p><pre data-reactid="32"><code class="language-bash" data-reactid="33">npm install --save availity-reactstrap-validation react react-dom</code></pre><p data-reactid="34">ES6 - import the components you need</p><div class="docs-example" data-reactid="35"><div data-reactid="36"><form novalidate="" action="#" method="get" class="av-valid" data-reactid="37"><div class="form-group" data-reactid="38"><label for="email" class="" data-reactid="39">Email Address</label><input type="email" id="email" name="email" required="" value="" class="av-untouched av-pristine av-invalid form-control" data-reactid="40"/></div><button class="btn btn-primary" data-reactid="41">Submit</button></form><!-- react-empty: 42 --></div></div><pre data-reactid="43"><code class="language-jsx" data-reactid="44">import React from &#x27;react&#x27;;
 import { AvForm, AvField } from &#x27;availity-reactstrap-validation&#x27;;
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from &#x27;reactstrap&#x27;;
 
@@ -20,7 +20,7 @@ export default class Example extends React.Component {
     const modalError = this.state.error ? &#x27;not&#x27; : &#x27;&#x27;; // This is just for the modal
     return (
       &lt;div&gt;
-        &lt;AvForm onValidSubmit={this.handleValidSubmit} onInvalidSubmit={this.handleInalidSubmit}&gt;
+        &lt;AvForm onValidSubmit={this.handleValidSubmit} onInvalidSubmit={this.handleInvalidSubmit}&gt;
           &lt;AvField name=&quot;email&quot; label=&quot;Email Address&quot; type=&quot;email&quot; required /&gt;
           &lt;Button color=&quot;primary&quot;&gt;Submit&lt;/Button&gt;
         &lt;/AvForm&gt;
@@ -43,7 +43,7 @@ export default class Example extends React.Component {
     super(props);
 
     this.handleValidSubmit = this.handleValidSubmit.bind(this);
-    this.handleInalidSubmit = this.handleInalidSubmit.bind(this);
+    this.handleInvalidSubmit = this.handleInvalidSubmit.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.state = {email: false};
   }
@@ -52,7 +52,7 @@ export default class Example extends React.Component {
     this.setState({email: values.email});
   }
 
-  handleInalidSubmit(event, errors, values) {
+  handleInvalidSubmit(event, errors, values) {
     this.setState({email: values.email, error: true});
   }
 
