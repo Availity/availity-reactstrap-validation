@@ -7,7 +7,7 @@ export default class Example extends React.Component {
     const modalError = this.state.error ? 'not' : ''; // This is just for the modal
     return (
       <div>
-        <AvForm onValidSubmit={this.handleValidSubmit} onInvalidSubmit={this.handleInalidSubmit}>
+        <AvForm onValidSubmit={this.handleValidSubmit} onInvalidSubmit={this.handleInvalidSubmit}>
           <AvField name="email" label="Email Address" type="email" required />
           <Button color="primary">Submit</Button>
         </AvForm>
@@ -30,7 +30,7 @@ export default class Example extends React.Component {
     super(props);
 
     this.handleValidSubmit = this.handleValidSubmit.bind(this);
-    this.handleInalidSubmit = this.handleInalidSubmit.bind(this);
+    this.handleInvalidSubmit = this.handleInvalidSubmit.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.state = {email: false};
   }
@@ -39,7 +39,7 @@ export default class Example extends React.Component {
     this.setState({email: values.email});
   }
 
-  handleInalidSubmit(event, errors, values) {
+  handleInvalidSubmit(event, errors, values) {
     this.setState({email: values.email, error: true});
   }
 
