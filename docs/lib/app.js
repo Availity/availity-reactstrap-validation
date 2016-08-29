@@ -8,17 +8,16 @@ import { Router, RouterContext, match, useRouterHistory, createMemoryHistory } f
 import routes from './routes';
 import Helmet from 'react-helmet';
 
-const basename = '/availity-reactstrap-validation';
-
 // Client render (optional):
 if (typeof document !== 'undefined') {
-  const history = useRouterHistory(createHistory)({ basename });
+  const history = useRouterHistory(createHistory)({ basename: window.basename });
   const outlet = document.getElementById('app');
   ReactDOM.render(<Router onUpdate={() => window.scrollTo(0, 0)} history={history} routes={routes} />, outlet)
 }
 
 // Exported static site renderer:
 export default (locals, callback) => {
+  const basename = locals.basename.substr(0, locals.basename.length - 1);
   match({ routes, location: locals.path, basename }, (error, redirectLocation, renderProps) => {
     var url;
 
@@ -49,6 +48,7 @@ export default (locals, callback) => {
         <body>
           <div id="app">${body}</div>
           <script src="${basename}/assets/prism.js" data-manual></script>
+          <script>window.basename = '${basename}';</script>
           <script src="${basename}/bundle.js"></script>
         </body>
       </html>`;

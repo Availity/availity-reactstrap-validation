@@ -17,6 +17,8 @@ var paths = [
   '/404.html'
 ];
 
+var basepath = env === 'production' ? '/availity-reactstrap-validation/' : '/';
+
 var config = [{
   devtool: 'source-map',
   devServer: {
@@ -33,7 +35,7 @@ var config = [{
   },
   output: {
     filename: 'bundle.js',
-    publicPath: '/availity-reactstrap-validation/',
+    publicPath: basepath,
     path: './build',
     libraryTarget: 'umd'
   },
@@ -45,7 +47,7 @@ var config = [{
     }),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurenceOrderPlugin(),
-    new StaticSiteGeneratorPlugin('main', paths, {}),
+    new StaticSiteGeneratorPlugin('main', paths, {basename: basepath}),
     new webpack.NoErrorsPlugin(),
     new ExtractTextPlugin("/assets/style.css")
   ],
