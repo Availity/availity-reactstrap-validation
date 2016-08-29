@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/Availity/availity-reactstrap-validation.svg?branch=master)](https://travis-ci.org/Availity/availity-reactstrap-validation) [![Coverage Status](https://coveralls.io/repos/github/Availity/availity-reactstrap-validation/badge.svg?branch=master)](https://coveralls.io/github/Availity/availity-reactstrap-validation?branch=master)
+
 # availity-reactstrap-validation
 
 Easy to use React validation components compatible for reactstrap.
