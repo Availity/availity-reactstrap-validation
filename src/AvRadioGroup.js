@@ -31,6 +31,8 @@ export default class AvRadioGroup extends InputContainer {
       selection: '',
     };
 
+    this.selection = '';
+
     this.validations = props.validate;
   }
 
@@ -53,7 +55,7 @@ export default class AvRadioGroup extends InputContainer {
   }
 
   getValue () {
-    return this.state.selection;
+    return this.selection;
   }
 
   componentWillUnmount () {
@@ -81,6 +83,7 @@ export default class AvRadioGroup extends InputContainer {
 
     const updateGroup = (value) => {
       this.setState({selection: value});
+      this.selection = value;
       this.validate();
     }
 

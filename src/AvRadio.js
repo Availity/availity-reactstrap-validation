@@ -22,24 +22,37 @@ export default class AvRadio extends AvInput {
 
   onChangeHandler () {
     this.context.Group.update(this.props.value);
+    if(this.props.onChange) {
+      this.props.onChange();
+    }
   }
 
   render () {
-    const {errorMessage, validate, validationEvent, state, className, tag: Tag, ...attributes} = this.props;
+    const {
+      errorMessage, 
+      validate, 
+      validationEvent, 
+      state, 
+      className, 
+      check,
+      inline,
+      tag: Tag, 
+      ...attributes} = this.props;
 
     const classes = classNames(
       className,
       this.context.FormCtrl.isTouched[this.props.name] ? 'av-touched' : 'av-untouched',
       this.context.FormCtrl.isDirty[this.props.name] ? 'av-dirty' : 'av-pristine',
-      this.context.FormCtrl.isBad[this.props.name] ? 'av-bad-input' : null,
       this.context.FormCtrl.hasError[this.props.name] ? 'av-invalid' : 'av-valid'
     );
 
-    const isDisabled = attributes.disabled === true;
+    const labelClasses = classNames(
+      `form-check-${inline ? 'inline' : 'label'}` : false,
+    );
 
     return (
-      <FormGroup check disabled={isDisabled}>
-        <Label check>
+      <FormGroup check {...attributes}>
+        <Label className={labelClasses}>
           <Input
             name={this.context.Group.name}
             type='radio'
