@@ -98,12 +98,11 @@ export default class AvRadioGroup extends InputContainer {
   }
 
   renderErrorMessage (validation) {
-    let errorMessage = '';
     if (validation.errorMessage !== false) {
-      errorMessage = (<AvFeedback>{validation.errorMessage}</AvFeedback>);
+      return (<AvFeedback>{validation.errorMessage}</AvFeedback>);
     }
 
-    return errorMessage;
+    return null;
   }
 
   render () {

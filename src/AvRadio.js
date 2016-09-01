@@ -33,9 +33,7 @@ export default class AvRadio extends AvInput {
       validate, 
       validationEvent, 
       state, 
-      className, 
-      check,
-      inline,
+      className,
       tag: Tag, 
       ...attributes} = this.props;
 
@@ -47,7 +45,7 @@ export default class AvRadio extends AvInput {
     );
 
     const labelClasses = classNames(
-      `form-check-${inline ? 'inline' : 'label'}` : false,
+      `form-check-${attributes.inline ? 'inline' : 'label'}` : false,
     );
 
     return (
