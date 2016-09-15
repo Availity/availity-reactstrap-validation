@@ -1,3 +1,4 @@
+import 'babel-polyfill';
 import AvFeedback from './AvFeedback';
 import AvField from './AvField';
 import AvForm from './AvForm';

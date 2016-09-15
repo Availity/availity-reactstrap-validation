@@ -284,7 +284,7 @@ export default class AvForm extends InputContainer {
     this.setState({badInputs});
   }
 
-  validateOne (inputName, context) {
+  async validateOne (inputName, context) {
     const input = this._inputs[inputName];
 
     if (Array.isArray(input)) {
@@ -298,9 +298,9 @@ export default class AvForm extends InputContainer {
     let error;
 
     if (typeof validate === 'function') {
-      result = validate(value, context, input);
+      result = await validate(value, context, input);
     } else if (typeof validate === 'object') {
-      result = this._validators[inputName](value, context);
+      result = await this._validators[inputName](value, context);
     } else {
       result = true;
     }
@@ -318,16 +318,19 @@ export default class AvForm extends InputContainer {
     return isValid;
   }
 
-  validateAll (context) {
+  async validateAll (context) {
     const errors = [];
     let isValid = true;
 
-    Object.keys(this._inputs).forEach(inputName => {
-      if (!this.validateOne(inputName, context)) {
-        isValid = false;
-        errors.push(inputName);
+    for(const inputName in this._inputs) {
+      if (this._inputs.hasOwnProperty(inputName)) {
+        const valid = await this.validateOne(inputName, context);
+        if (!valid) {
+          isValid = false;
+          errors.push(inputName);
+        }
       }
-    });
+    }
 
     if (this.props.validate) {
       let formLevelValidation = this.props.validate;
@@ -348,32 +351,45 @@ export default class AvForm extends InputContainer {
   }
 
   compileValidationRules (input, ruleProp) {
-    return (val, context) => {
+    return async (val, context) => {
       if (this.isBad(input.props.name)) {
         return false;
       }
 
       let result = true;
-      let ruleResult;
-      Object.keys(ruleProp).some(rule => {
-        if (typeof ruleProp[rule] === 'function') {
-          ruleResult = ruleProp[rule](val, context, input);
-        } else {
-          if (typeof AvValidator[rule] !== 'function') {
-            throw new Error(`Invalid input validation rule: "${rule}"`);
+
+      for(const rule in ruleProp) {
+        if (ruleProp.hasOwnProperty(rule)) {
+          let ruleResult;
+
+          if (typeof ruleProp[rule] === 'function') {
+            ruleResult = await ruleProp[rule](val, context, input);
+          } else {
+            if (typeof AvValidator[rule] !== 'function') {
+              throw new Error(`Invalid input validation rule: "${rule}"`);
+            }
+            ruleResult = await AvValidator[rule](val, context, ruleProp[rule], input);
+
+            if (ruleResult && typeof ruleResult.then === 'function') {
+              ruleResult.then(callback);
+            } else if (ruleResult !== undefined) {
+              callback(ruleResult);
+            } else {
+              //they are using the callback
+            }
           }
 
-          ruleResult = AvValidator[rule](val, context, ruleProp[rule], input);
-        }
+          if (result === true && rulePromise !== true) {
+            result = isString(rulePromise) && ruleResult ||
+              getInputErrorMessage(input, rule) ||
+              getInputErrorMessage(this, rule) || false;
+          }
 
-        if (result === true && ruleResult !== true) {
-          result = isString(ruleResult) && ruleResult ||
-            getInputErrorMessage(input, rule) ||
-            getInputErrorMessage(this, rule) || false;
+          if (result !== true) {
+            break;
+          }
         }
-
-        return result !== true;
-      });
+      }
 
       return result;
     };
@@ -393,14 +409,14 @@ export default class AvForm extends InputContainer {
     return input.getValue();
   }
 
-  handleSubmit (e) {
+  async handleSubmit (e) {
     if (e && typeof e.preventDefault === 'function') {
       e.preventDefault();
     }
 
     const values = this.getValues();
 
-    const {isValid, errors} = this.validateAll(values);
+    const {isValid, errors} = await this.validateAll(values);
 
     this.setTouched(Object.keys(this._inputs));
 
