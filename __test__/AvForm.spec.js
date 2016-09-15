@@ -1089,7 +1089,7 @@ describe('AvForm', function () {
           sinon.stub(this.instance, 'isBad').returns(true);
           const input = {props: {name: 'myInput'}};
           const spy = sinon.spy();
-          const rules = {myFn: spy};
+          const rules = {myFn: (...args) => spy(...args) || true};
           const fn = this.instance.compileValidationRules(input, rules);
 
           return expect(fn()).to.eventually.be.false.then(() => {
@@ -1097,17 +1097,136 @@ describe('AvForm', function () {
           });
         });
 
+        it('should be able to handle a returned promise', () => {
+          let resolve;
+          const input = {props: {name: 'myInput'}};
+          const rules = {myFn: () => {
+            return new Promise(r => {
+              resolve = r;
+            });
+          }};
+          const fn = this.instance.compileValidationRules(input, rules);
+          const result = fn();
+          expect(result).to.not.be.fulfilled;
+          resolve(true);
+          return expect(result).to.be.fulfilled.and.eventually.be.true;
+        });
+
+        describe('returned promised', () => {
+          it('should be able to return true to invalid valid', () => {
+            let resolve;
+            const input = {props: {name: 'myInput'}};
+            const rules = {myFn: () => {
+              return new Promise(r => {
+                resolve = r;
+              });
+            }};
+            const fn = this.instance.compileValidationRules(input, rules);
+            const result = fn();
+            expect(result).to.not.be.fulfilled;
+            resolve(true);
+            return expect(result).to.be.fulfilled.and.eventually.be.true;
+          });
+
+          it('should be able to return false to indicate invalud', () => {
+            let resolve;
+            const input = {props: {name: 'myInput'}};
+            const rules = {myFn: () => {
+              return new Promise(r => {
+                resolve = r;
+              });
+            }};
+            const fn = this.instance.compileValidationRules(input, rules);
+            const result = fn();
+            expect(result).to.not.be.fulfilled;
+            resolve(false);
+            return expect(result).to.be.fulfilled.and.eventually.be.false;
+          });
+
+          it('should be able to return a string error message', () => {
+            let resolve;
+            const input = {props: {name: 'myInput'}};
+            const rules = {myFn: () => {
+              return new Promise(r => {
+                resolve = r;
+              });
+            }};
+            const errorMessage = 'my error message';
+            const fn = this.instance.compileValidationRules(input, rules);
+            const result = fn();
+            expect(result).to.not.be.fulfilled;
+            resolve(errorMessage);
+            return expect(result).to.be.fulfilled.and.eventually.be.equal(errorMessage);
+          });
+        });
+
+
+        it('should be able to use a callback', () => {
+          let callback;
+          const input = {props: {name: 'myInput'}};
+          const rules = {myFn: (value, ctx, input, cb) => {
+            callback = cb;
+          }};
+          const fn = this.instance.compileValidationRules(input, rules);
+          const result = fn();
+          expect(result).to.not.be.fulfilled;
+          callback(true);
+          return expect(result).to.be.fulfilled.and.eventually.be.true;
+        });
+
+        describe('using the callback', () => {
+          it('should be able to return true to invalid valid', () => {
+            let callback;
+            const input = {props: {name: 'myInput'}};
+            const rules = {myFn: (value, ctx, input, cb) => {
+              callback = cb;
+            }};
+            const fn = this.instance.compileValidationRules(input, rules);
+            const result = fn();
+            expect(result).to.not.be.fulfilled;
+            callback(true);
+            return expect(result).to.be.fulfilled.and.eventually.be.true;
+          });
+
+          it('should be able to return false to indicate invalud', () => {
+            let callback;
+            const input = {props: {name: 'myInput'}};
+            const rules = {myFn: (value, ctx, input, cb) => {
+              callback = cb;
+            }};
+            const fn = this.instance.compileValidationRules(input, rules);
+            const result = fn();
+            expect(result).to.not.be.fulfilled;
+            callback(false);
+            return expect(result).to.be.fulfilled.and.eventually.be.false;
+          });
+
+          it('should be able to return a string error message', () => {
+            let callback;
+            const input = {props: {name: 'myInput'}};
+            const rules = {myFn: (value, ctx, input, cb) => {
+              callback = cb;
+            }};
+            const errorMessage = 'my error message';
+            const fn = this.instance.compileValidationRules(input, rules);
+            const result = fn();
+            expect(result).to.not.be.fulfilled;
+            callback(errorMessage);
+            return expect(result).to.be.fulfilled.and.eventually.be.equal(errorMessage);
+          });
+        });
+
         describe('when validate prop object has a function', ()=> {
           it('should call the validation function', () => {
             const input = {props: {name: 'myInput'}};
             const spy = sinon.spy();
-            const rules = {myFn: spy};
+            const rules = {myFn: (...args) => spy(...args) || true};
             const fn = this.instance.compileValidationRules(input, rules);
             const value = 'myvalue';
             const context = {};
-            fn(value, context);
-
-            expect(spy).to.have.been.calledWith(value, context, input);
+            return fn(value, context).then(() => {
+              expect(spy).to.have.been.calledWith(value, context, input);
+            });
           });
 
           it('should return false when the function returns false and no message is not supplied', () => {
@@ -1292,7 +1411,7 @@ describe('AvForm', function () {
 
           it('should return false is any of the validations fail', () => {
             const input = {props: {name: 'myInput'}};
-            const rules = {myFn: () => true, max: {value:12}, min: {value: 6}};
+            const rules = {myFn: () => false, max: {value:12}, min: {value: 6}};
             const fn = this.instance.compileValidationRules(input, rules);
             const value = 'myvalue';
             const context = {};

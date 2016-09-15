@@ -323,6 +323,7 @@ export default class AvForm extends InputContainer {
     let isValid = true;
 
     for(const inputName in this._inputs) {
+      /* istanbul ignore else  */
       if (this._inputs.hasOwnProperty(inputName)) {
         const valid = await this.validateOne(inputName, context);
         if (!valid) {
@@ -357,39 +358,50 @@ export default class AvForm extends InputContainer {
       }
 
       let result = true;
+      const validations = [];
 
       for(const rule in ruleProp) {
+        /* istanbul ignore else  */
         if (ruleProp.hasOwnProperty(rule)) {
           let ruleResult;
 
-          if (typeof ruleProp[rule] === 'function') {
-            ruleResult = await ruleProp[rule](val, context, input);
-          } else {
-            if (typeof AvValidator[rule] !== 'function') {
-              throw new Error(`Invalid input validation rule: "${rule}"`);
-            }
-            ruleResult = await AvValidator[rule](val, context, ruleProp[rule], input);
+          const promise = new Promise((resolve, reject) => {
+            const callback = value => resolve({value, rule});
 
-            if (ruleResult && typeof ruleResult.then === 'function') {
+            if (typeof ruleProp[rule] === 'function') {
+              ruleResult = ruleProp[rule](val, context, input, callback);
+            } else {
+              if (typeof AvValidator[rule] !== 'function') {
+                return reject(new Error(`Invalid input validation rule: "${rule}"`));
+              }
+
+              ruleResult = AvValidator[rule](val, context, ruleProp[rule], input, callback);
+            }
+
+            if (ruleResult && typeof ruleResult.then === 'function'){
               ruleResult.then(callback);
-            } else if (ruleResult !== undefined) {
+            }else if (ruleResult !== undefined) {
               callback(ruleResult);
             } else {
               //they are using the callback
             }
-          }
+          });
 
-          if (result === true && rulePromise !== true) {
-            result = isString(rulePromise) && ruleResult ||
-              getInputErrorMessage(input, rule) ||
-              getInputErrorMessage(this, rule) || false;
-          }
-
-          if (result !== true) {
-            break;
-          }
+          validations.push(promise);
         }
       }
+
+      await Promise.all(validations)
+        .then(results => {
+          results.every(ruleResult => {
+            if (result === true && ruleResult.value !== true) {
+              result = isString(ruleResult.value) && ruleResult.value ||
+                getInputErrorMessage(input, ruleResult.rule) ||
+                getInputErrorMessage(this, ruleResult.rule) || false;
+            }
+            return ruleResult === true;
+          });
+        });
 
       return result;
     };

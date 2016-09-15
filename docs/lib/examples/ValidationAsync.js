@@ -12,10 +12,18 @@ export default class Example extends React.Component {
     }
   }
 
-  validate = (value) => {
+  // debounce to not pound the 'server'
+  validate = _debounce((value, ctx, input, cb) => {
 
-      this.timeout = setTimeout(() => {}, 250);
-  };
+    // cancel pending 'network call'
+    clearTimeout(this.timeout);
+
+    // simulate network call
+    this.timeout = setTimeout(() => {
+      cb(value === 'valid' || value === '');
+    }, 500);
+
+  }, 300);
 
   render() {
     return (
