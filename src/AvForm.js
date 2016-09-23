@@ -399,7 +399,7 @@ export default class AvForm extends InputContainer {
                 getInputErrorMessage(input, ruleResult.rule) ||
                 getInputErrorMessage(this, ruleResult.rule) || false;
             }
-            return ruleResult === true;
+            return result === true;
           });
         });
 
