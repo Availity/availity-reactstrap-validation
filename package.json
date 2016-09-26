@@ -1,6 +1,6 @@
 {
   "name": "availity-reactstrap-validation",
-  "version": "1.0.3",
+  "version": "1.1.1",
   "author": "Evan Sharp <evan.sharp@availity.com>",
   "description": "Form validation helpers for reactstrap",
   "main": "lib/index.js",
@@ -41,6 +41,7 @@
     "component",
     "components",
     "react-component",
+    "availity",
     "ui"
   ],
   "contributors": [
@@ -81,6 +82,7 @@
     "babel-register": "^6.11.6",
     "bootstrap": "^4.0.0-alpha.3",
     "chai": "^3.5.0",
+    "chai-as-promised": "^5.3.0",
     "chai-enzyme": "^0.5.0",
     "cheerio": "^0.20.0",
     "clean-webpack-plugin": "^0.1.8",
@@ -100,6 +102,7 @@
     "jasmine-core": "^2.4.1",
     "jsdom": "^9.4.2",
     "json-loader": "^0.5.4",
+    "lodash.debounce": "^4.0.8",
     "mocha": "^3.0.2",
     "mocha-webpack": "^0.6.0",
     "nyc": "^8.1.0",

@@ -104,7 +104,9 @@ export default class AvBaseInput extends Component {
   }
 
   onKeyUpHandler(event) {
-    if (event && event.target && event.target.validity && event.target.validity.badInput !== this.context.FormCtrl.isBad[this.props.name]) {
+    if (event && event.target && event.target.validity &&
+      event.target.validity.badInput !== this.context.FormCtrl.isBad[this.props.name] &&
+      (event.target.validity.badInput !== false || this.context.FormCtrl.isBad[this.props.name] !== undefined)) {
       this.context.FormCtrl.setBad(this.props.name, event.target.validity.badInput);
       this.validate();
     }

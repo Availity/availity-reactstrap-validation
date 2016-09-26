@@ -230,8 +230,9 @@ describe('AvForm', function () {
       const spy = sinon.spy(wrapper.instance(), 'setTouched');
       const instance = wrapper.instance();
       instance._inputs.input = {getValue: () => 'value'};
-      wrapper.simulate('submit');
-      expect(spy).to.have.been.calledWithMatch(Object.keys(instance._inputs));
+      return instance.handleSubmit().then(() => {
+        expect(spy).to.have.been.calledWithMatch(Object.keys(instance._inputs));
+      });
     });
 
     it('should call the onSubmit callback from props with the event, errors, and values', () => {
@@ -242,9 +243,10 @@ describe('AvForm', function () {
       instance._inputs.input = {getValue: () => 'value'};
       instance._inputs.invalidInput = {getValue: () => ''};
       const errors = ['invalidInput'];
-      instance.validateAll = sinon.stub().returns({isValid: false, errors})
-      wrapper.simulate('submit', event);
-      expect(spy).to.have.been.calledWithMatch(event, errors, {input: 'value', invalidInput: ''});
+      instance.validateAll = sinon.stub().returns({isValid: false, errors});
+      return instance.handleSubmit(event).then(() => {
+        expect(spy).to.have.been.calledWithMatch(event, errors, {input: 'value', invalidInput: ''});
+      });
     });
 
     it('should call the onValidSubmit callback from props with the event and values when form is valid', () => {
@@ -254,10 +256,11 @@ describe('AvForm', function () {
       const instance = wrapper.instance();
       const event = {type: 'submit'};
       instance._inputs.input = {getValue: () => 'value'};
-      wrapper.simulate('submit', event);
 
-      expect(spy).to.have.been.calledWithMatch(event, {input: 'value'});
-      expect(invalidSpy).to.not.have.been.called;
+      return instance.handleSubmit(event).then(() => {
+        expect(spy).to.have.been.calledWithMatch(event, { input: 'value' });
+        expect(invalidSpy).to.not.have.been.called;
+      });
     });
 
     it('should call the onInvalidSubmit callback from props with the event, errors, and values when the form is invalid', () => {
@@ -270,17 +273,21 @@ describe('AvForm', function () {
       instance._inputs.invalidInput = {getValue: () => ''};
       const errors = ['invalidInput'];
       instance.validateAll = sinon.stub().returns({isValid: false, errors})
-      wrapper.simulate('submit', event);
 
-      expect(spy).to.not.have.been.called;
-      expect(invalidSpy).to.have.been.calledWithMatch(event, errors, {input: 'value', invalidInput: ''});
+      return instance.handleSubmit(event).then(() => {
+        expect(spy).to.not.have.been.called;
+        expect(invalidSpy).to.have.been.calledWithMatch(event, errors, { input: 'value', invalidInput: '' });
+      });
     });
 
     it('should set the state to be submitted', () => {
       const wrapper = shallow(<AvForm />);
+      const instance = wrapper.instance();
       expect(wrapper.state('submitted')).to.be.false;
-      wrapper.simulate('submit');
-      expect(wrapper.state('submitted')).to.be.true;
+
+      return instance.handleSubmit().then(() => {
+        expect(wrapper.state('submitted')).to.be.true;
+      });
     });
   });
 
@@ -852,13 +859,13 @@ describe('AvForm', function () {
       it('should return a boolean', () => {
         const inputName = 'myInput';
         this.instance._inputs = {[inputName]: {}};
-        expect(this.instance.validateOne(inputName, {})).to.be.a('boolean');
+        expect(this.instance.validateOne(inputName, {})).to.eventually.be.a('boolean');
       });
 
       it('should throw if more than one input has the same name', () => {
         const inputName = 'myInput';
         this.instance._inputs = {[inputName]: []};
-        expect(this.instance.validateOne.bind(this.instance, inputName, {})).to.throw();
+        expect(this.instance.validateOne(inputName, {})).to.be.rejected;
       });
 
       describe('when validate is a function', () => {
@@ -880,9 +887,10 @@ describe('AvForm', function () {
           const context = {[inputName]: inputValue};
           const spy = sinon.stub(this.instance, 'setError');
           this.instance._inputs = {[inputName]: input};
-          const result = this.instance.validateOne(inputName, context);
-          expect(spy).to.have.been.calledWith(inputName, true, undefined);
-          expect(result).to.be.false;
+          return this.instance.validateOne(inputName, context).then(result => {
+            expect(spy).to.have.been.calledWith(inputName, true, undefined);
+            expect(result).to.be.false;
+          });
         });
 
         it('should set error when the function returns a string', () => {
@@ -893,9 +901,10 @@ describe('AvForm', function () {
           const context = {[inputName]: inputValue};
           const spy = sinon.stub(this.instance, 'setError');
           this.instance._inputs = {[inputName]: input};
-          const result = this.instance.validateOne(inputName, context);
-          expect(spy).to.have.been.calledWith(inputName, true, errorMessage);
-          expect(result).to.be.false;
+          return this.instance.validateOne(inputName, context).then(result => {
+            expect(spy).to.have.been.calledWith(inputName, true, errorMessage);
+            expect(result).to.be.false;
+          });
         });
 
         it('should remove error when the function returns true', () => {
@@ -905,9 +914,10 @@ describe('AvForm', function () {
           const context = {[inputName]: inputValue};
           const spy = sinon.stub(this.instance, 'setError');
           this.instance._inputs = {[inputName]: input};
-          const result = this.instance.validateOne(inputName, context);
-          expect(spy).to.have.been.calledWith(inputName, false, undefined);
-          expect(result).to.be.true;
+          return this.instance.validateOne(inputName, context).then(result => {
+            expect(spy).to.have.been.calledWith(inputName, false, undefined);
+            expect(result).to.be.true;
+          });
         });
       });
 
@@ -919,8 +929,9 @@ describe('AvForm', function () {
           const inputValue = 'some value';
           const context = {[inputName]: inputValue};
           this.instance._inputs = {[inputName]: input};
-          this.instance.validateOne(inputName, context);
-          expect(validatorsSpy).to.have.been.calledWith(inputValue, context);
+          return this.instance.validateOne(inputName, context).then(() => {
+            expect(validatorsSpy).to.have.been.calledWith(inputValue, context);
+          });
         });
 
         it('should set error when the validators returns false', () => {
@@ -931,9 +942,10 @@ describe('AvForm', function () {
           const context = {[inputName]: inputValue};
           const spy = sinon.stub(this.instance, 'setError');
           this.instance._inputs = {[inputName]: input};
-          const result = this.instance.validateOne(inputName, context);
-          expect(spy).to.have.been.calledWith(inputName, true, undefined);
-          expect(result).to.be.false;
+          return this.instance.validateOne(inputName, context).then(result => {
+            expect(spy).to.have.been.calledWith(inputName, true, undefined);
+            expect(result).to.be.false;
+          });
         });
 
         it('should set error when the validators returns a string', () => {
@@ -945,9 +957,10 @@ describe('AvForm', function () {
           const context = {[inputName]: inputValue};
           const spy = sinon.stub(this.instance, 'setError');
           this.instance._inputs = {[inputName]: input};
-          const result = this.instance.validateOne(inputName, context);
-          expect(spy).to.have.been.calledWith(inputName, true, errorMessage);
-          expect(result).to.be.false;
+          return this.instance.validateOne(inputName, context).then(result => {
+            expect(spy).to.have.been.calledWith(inputName, true, errorMessage);
+            expect(result).to.be.false;
+          });
         });
 
         it('should remove error when the validators returns true', () => {
@@ -958,9 +971,10 @@ describe('AvForm', function () {
           const context = {[inputName]: inputValue};
           const spy = sinon.stub(this.instance, 'setError');
           this.instance._inputs = {[inputName]: input};
-          const result = this.instance.validateOne(inputName, context);
-          expect(spy).to.have.been.calledWith(inputName, false, undefined);
-          expect(result).to.be.true;
+          return this.instance.validateOne(inputName, context).then(result => {
+            expect(spy).to.have.been.calledWith(inputName, false, undefined);
+            expect(result).to.be.true;
+          });
         });
       });
 
@@ -971,34 +985,33 @@ describe('AvForm', function () {
           const inputValue = 'some value';
           const context = {[inputName]: inputValue};
           this.instance._inputs = {[inputName]: input};
-          const result = this.instance.validateOne(inputName, context);
-          expect(result).to.be.true;
+          return expect(this.instance.validateOne(inputName, context)).to.eventually.be.true;
         });
       });
     });
 
     describe('validate all', () => {
       it('should return an object', () => {
-        expect(this.instance.validateAll({})).to.be.an('object');
+        return expect(this.instance.validateAll({})).to.eventually.be.an('object');
       });
 
       it('should validate each registered input', () => {
         this.instance._inputs = {input1: {}, input2: {}, input3: {}};
         const context = {input1: 'input1value', input2: 'input2value', input3: 'input3value'};
         const spy = sinon.stub(this.instance, 'validateOne');
-        this.instance.validateAll(context);
-        expect(spy).to.have.been.calledThrice;
-        expect(spy.firstCall).to.have.been.calledWith('input1', context);
-        expect(spy.secondCall).to.have.been.calledWith('input2', context);
-        expect(spy.thirdCall).to.have.been.calledWith('input3', context);
+        return this.instance.validateAll(context).then(() => {
+          expect(spy).to.have.been.calledThrice;
+          expect(spy.firstCall).to.have.been.calledWith('input1', context);
+          expect(spy.secondCall).to.have.been.calledWith('input2', context);
+          expect(spy.thirdCall).to.have.been.calledWith('input3', context);
+        });
       });
 
       it('should indicate when a input has an error', () => {
         this.instance._inputs = {input1: {}, input2: {}, input3: {}};
         const context = {input1: 'input1value', input2: 'input2value', input3: 'input3value'};
          sinon.stub(this.instance, 'validateOne').returns(false);
-        const result = this.instance.validateAll(context);
-        expect(result.isValid).to.be.false;
+        return expect(this.instance.validateAll(context)).to.eventually.have.property('isValid', false);
       });
 
       it('should indicate which inputs have an error when a input has an error', () => {
@@ -1007,9 +1020,10 @@ describe('AvForm', function () {
         const stub = sinon.stub(this.instance, 'validateOne');
         stub.withArgs('input2', context).returns(false);
         stub.returns(true);
-        const result = this.instance.validateAll(context);
-        expect(result.errors).to.contain('input2');
-        expect(result.errors).to.not.contain.any('input1', 'input3');
+        return this.instance.validateAll(context).then(result => {
+          expect(result.errors).to.contain('input2');
+          expect(result.errors).to.not.contain.any('input1', 'input3');
+        });
       });
 
       describe('form level validation', () => {
@@ -1038,8 +1052,7 @@ describe('AvForm', function () {
           const spy2 = sinon.stub().returns(false);
           this.wrapper.setProps({validate: [spy1, spy2]});
           const context = {};
-          const result = this.instance.validateAll(context);
-          expect(result).to.deep.equal({isValid: false, errors:['*']});
+          return expect(this.instance.validateAll(context)).to.eventually.deep.equal({isValid: false, errors:['*']});
         });
 
         it('should not indicate a form level validation error when form is valid',() => {
@@ -1047,8 +1060,7 @@ describe('AvForm', function () {
           const spy2 = sinon.stub().returns(true);
           this.wrapper.setProps({validate: [spy1, spy2]});
           const context = {};
-          const result = this.instance.validateAll(context);
-          expect(result).to.deep.equal({isValid: true, errors:[]});
+          return expect(this.instance.validateAll(context)).to.eventually.deep.equal({isValid: true, errors:[]});
         });
       });
     });
@@ -1063,41 +1075,158 @@ describe('AvForm', function () {
           const input = {props: {name: 'myInput'}};
           const rules = {myRuleDoesNotExist: true};
           const fn = this.instance.compileValidationRules(input, rules);
-          expect(fn.bind(this.instance)).to.throw('Invalid input validation rule: "myRuleDoesNotExist"');
+          return expect(fn()).to.eventually.rejectedWith('Invalid input validation rule: "myRuleDoesNotExist"');
         });
 
         it('should return false if the input is bad', () => {
           sinon.stub(this.instance, 'isBad').returns(true);
           const input = {props: {name: 'myInput'}};
           const fn = this.instance.compileValidationRules(input, {});
-          expect(fn()).to.be.false;
+          return expect(fn()).to.eventually.be.false;
         });
 
         it('should not perform validations if the input is bad', () => {
           sinon.stub(this.instance, 'isBad').returns(true);
           const input = {props: {name: 'myInput'}};
           const spy = sinon.spy();
-          const rules = {myFn: spy};
+          const rules = {myFn: (...args) => spy(...args) || true};
           const fn = this.instance.compileValidationRules(input, rules);
-          const value = 'myvalue';
-          const context = {};
-          const result = fn(value, context);
 
-          expect(fn()).to.be.false;
-          expect(spy).to.not.have.been.called;
+          return expect(fn()).to.eventually.be.false.then(() => {
+            expect(spy).to.not.have.been.called;
+          });
+        });
+
+        it('should be able to handle a returned promise', () => {
+          let resolve;
+          const input = {props: {name: 'myInput'}};
+          const rules = {myFn: () => {
+            return new Promise(r => {
+              resolve = r;
+            });
+          }};
+          const fn = this.instance.compileValidationRules(input, rules);
+          const result = fn();
+          expect(result).to.not.be.fulfilled;
+          resolve(true);
+          return expect(result).to.be.fulfilled.and.eventually.be.true;
+        });
+
+        describe('returned promised', () => {
+          it('should be able to return true to invalid valid', () => {
+            let resolve;
+            const input = {props: {name: 'myInput'}};
+            const rules = {myFn: () => {
+              return new Promise(r => {
+                resolve = r;
+              });
+            }};
+            const fn = this.instance.compileValidationRules(input, rules);
+            const result = fn();
+            expect(result).to.not.be.fulfilled;
+            resolve(true);
+            return expect(result).to.be.fulfilled.and.eventually.be.true;
+          });
+
+          it('should be able to return false to indicate invalud', () => {
+            let resolve;
+            const input = {props: {name: 'myInput'}};
+            const rules = {myFn: () => {
+              return new Promise(r => {
+                resolve = r;
+              });
+            }};
+            const fn = this.instance.compileValidationRules(input, rules);
+            const result = fn();
+            expect(result).to.not.be.fulfilled;
+            resolve(false);
+            return expect(result).to.be.fulfilled.and.eventually.be.false;
+          });
+
+          it('should be able to return a string error message', () => {
+            let resolve;
+            const input = {props: {name: 'myInput'}};
+            const rules = {myFn: () => {
+              return new Promise(r => {
+                resolve = r;
+              });
+            }};
+            const errorMessage = 'my error message';
+            const fn = this.instance.compileValidationRules(input, rules);
+            const result = fn();
+            expect(result).to.not.be.fulfilled;
+            resolve(errorMessage);
+            return expect(result).to.be.fulfilled.and.eventually.be.equal(errorMessage);
+          });
+        });
+
+
+        it('should be able to use a callback', () => {
+          let callback;
+          const input = {props: {name: 'myInput'}};
+          const rules = {myFn: (value, ctx, input, cb) => {
+            callback = cb;
+          }};
+          const fn = this.instance.compileValidationRules(input, rules);
+          const result = fn();
+          expect(result).to.not.be.fulfilled;
+          callback(true);
+          return expect(result).to.be.fulfilled.and.eventually.be.true;
+        });
+
+        describe('using the callback', () => {
+          it('should be able to return true to invalid valid', () => {
+            let callback;
+            const input = {props: {name: 'myInput'}};
+            const rules = {myFn: (value, ctx, input, cb) => {
+              callback = cb;
+            }};
+            const fn = this.instance.compileValidationRules(input, rules);
+            const result = fn();
+            expect(result).to.not.be.fulfilled;
+            callback(true);
+            return expect(result).to.be.fulfilled.and.eventually.be.true;
+          });
+
+          it('should be able to return false to indicate invalud', () => {
+            let callback;
+            const input = {props: {name: 'myInput'}};
+            const rules = {myFn: (value, ctx, input, cb) => {
+              callback = cb;
+            }};
+            const fn = this.instance.compileValidationRules(input, rules);
+            const result = fn();
+            expect(result).to.not.be.fulfilled;
+            callback(false);
+            return expect(result).to.be.fulfilled.and.eventually.be.false;
+          });
+
+          it('should be able to return a string error message', () => {
+            let callback;
+            const input = {props: {name: 'myInput'}};
+            const rules = {myFn: (value, ctx, input, cb) => {
+              callback = cb;
+            }};
+            const errorMessage = 'my error message';
+            const fn = this.instance.compileValidationRules(input, rules);
+            const result = fn();
+            expect(result).to.not.be.fulfilled;
+            callback(errorMessage);
+            return expect(result).to.be.fulfilled.and.eventually.be.equal(errorMessage);
+          });
         });
 
         describe('when validate prop object has a function', ()=> {
           it('should call the validation function', () => {
             const input = {props: {name: 'myInput'}};
             const spy = sinon.spy();
-            const rules = {myFn: spy};
+            const rules = {myFn: (...args) => spy(...args) || true};
             const fn = this.instance.compileValidationRules(input, rules);
             const value = 'myvalue';
             const context = {};
-            fn(value, context);
-
-            expect(spy).to.have.been.calledWith(value, context, input);
+            return fn(value, context).then(() => {
+              expect(spy).to.have.been.calledWith(value, context, input);
+            });
           });
 
           it('should return false when the function returns false and no message is not supplied', () => {
@@ -1106,9 +1235,8 @@ describe('AvForm', function () {
             const fn = this.instance.compileValidationRules(input, rules);
             const value = 'myvalue';
             const context = {};
-            const result = fn(value, context);
 
-            expect(result).to.be.false;
+            return expect(fn(value, context)).to.eventually.be.false;
           });
 
           it('should return a string when the function returns false and message is provided on the input', () => {
@@ -1118,9 +1246,8 @@ describe('AvForm', function () {
             const fn = this.instance.compileValidationRules(input, rules);
             const value = 'myvalue';
             const context = {};
-            const result = fn(value, context);
 
-            expect(result).to.equal(errorMessage);
+            return expect(fn(value, context)).to.eventually.equal(errorMessage);
           });
 
           it('should return a string when the function returns false and message is mapped on the input', () => {
@@ -1130,9 +1257,8 @@ describe('AvForm', function () {
             const fn = this.instance.compileValidationRules(input, rules);
             const value = 'myvalue';
             const context = {};
-            const result = fn(value, context);
 
-            expect(result).to.equal(errorMessage.myFn);
+            return expect(fn(value, context)).to.eventually.equal(errorMessage.myFn);
           });
 
           it('should return a string when the function returns false and message is provided on the form', () => {
@@ -1143,9 +1269,8 @@ describe('AvForm', function () {
             const fn = this.instance.compileValidationRules(input, rules);
             const value = 'myvalue';
             const context = {};
-            const result = fn(value, context);
 
-            expect(result).to.equal(errorMessage);
+            return expect(fn(value, context)).to.eventually.equal(errorMessage);
           });
 
           it('should return a string when the function returns false and message is mapped on the form', () => {
@@ -1156,9 +1281,8 @@ describe('AvForm', function () {
             const fn = this.instance.compileValidationRules(input, rules);
             const value = 'myvalue';
             const context = {};
-            const result = fn(value, context);
 
-            expect(result).to.equal(errorMessage.myFn);
+            return expect(fn(value, context)).to.eventually.equal(errorMessage.myFn);
           });
 
           it('should return a string when the function returns a string', () => {
@@ -1168,9 +1292,8 @@ describe('AvForm', function () {
             const fn = this.instance.compileValidationRules(input, rules);
             const value = 'myvalue';
             const context = {};
-            const result = fn(value, context);
 
-            expect(result).to.equal(errorMessage);
+            return expect(fn(value, context)).to.eventually.equal(errorMessage);
           });
         });
 
@@ -1193,9 +1316,9 @@ describe('AvForm', function () {
             const fn = this.instance.compileValidationRules(input, rules);
             const value = 'myvalue';
             const context = {};
-            fn(value, context);
-
-            expect(this.minStub).to.have.been.calledWith(value, context, rules.min, input);
+            return fn(value, context).then(() => {
+              expect(this.minStub).to.have.been.calledWith(value, context, rules.min, input);
+            });
           });
 
           it('should return false when the function returns false and no message is not supplied', () => {
@@ -1204,9 +1327,8 @@ describe('AvForm', function () {
             const fn = this.instance.compileValidationRules(input, rules);
             const value = 'myvalue';
             const context = {};
-            const result = fn(value, context);
 
-            expect(result).to.be.false;
+            return expect(fn(value, context)).to.eventually.be.false;
           });
 
           it('should return a string when the function returns false and message is provided on the input', () => {
@@ -1216,9 +1338,8 @@ describe('AvForm', function () {
             const fn = this.instance.compileValidationRules(input, rules);
             const value = 'myvalue';
             const context = {};
-            const result = fn(value, context);
 
-            expect(result).to.equal(errorMessage);
+            return expect(fn(value, context)).to.eventually.equal(errorMessage);
           });
 
           it('should return a string when the function returns false and message is mapped on the input', () => {
@@ -1228,9 +1349,8 @@ describe('AvForm', function () {
             const fn = this.instance.compileValidationRules(input, rules);
             const value = 'myvalue';
             const context = {};
-            const result = fn(value, context);
 
-            expect(result).to.equal(errorMessage.min);
+            return expect(fn(value, context)).to.eventually.equal(errorMessage.min);
           });
 
           it('should return a string when the function returns false and message is provided on the form', () => {
@@ -1241,9 +1361,8 @@ describe('AvForm', function () {
             const fn = this.instance.compileValidationRules(input, rules);
             const value = 'myvalue';
             const context = {};
-            const result = fn(value, context);
 
-            expect(result).to.equal(errorMessage);
+            return expect(fn(value, context)).to.eventually.equal(errorMessage);
           });
 
           it('should return a string when the function returns false and message is mapped on the form', () => {
@@ -1254,9 +1373,8 @@ describe('AvForm', function () {
             const fn = this.instance.compileValidationRules(input, rules);
             const value = 'myvalue';
             const context = {};
-            const result = fn(value, context);
 
-            expect(result).to.equal(errorMessage.min);
+            return expect(fn(value, context)).to.eventually.equal(errorMessage.min);
           });
 
           it('should return a string when the function returns a string', () => {
@@ -1265,9 +1383,8 @@ describe('AvForm', function () {
             const fn = this.instance.compileValidationRules(input, rules);
             const value = 'myvalue';
             const context = {};
-            const result = fn(value, context);
 
-            expect(result).to.equal('Invalid Email');
+            return expect(fn(value, context)).to.eventually.equal('Invalid Email');
           });
         });
 
@@ -1288,20 +1405,18 @@ describe('AvForm', function () {
             const fn = this.instance.compileValidationRules(input, rules);
             const value = 'myvalue';
             const context = {};
-            const result = fn(value, context);
 
-            expect(result).to.be.true;
+            return expect(fn(value, context)).to.eventually.be.true;
           });
 
           it('should return false is any of the validations fail', () => {
             const input = {props: {name: 'myInput'}};
-            const rules = {myFn: () => true, max: {value:12}, min: {value: 6}};
+            const rules = {myFn: () => false, max: {value:12}, min: {value: 6}};
             const fn = this.instance.compileValidationRules(input, rules);
             const value = 'myvalue';
             const context = {};
-            const result = fn(value, context);
 
-            expect(result).to.be.false;
+            return expect(fn(value, context)).to.eventually.be.false;
           });
         });
       });

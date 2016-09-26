@@ -2,11 +2,13 @@ var jsdom = require('jsdom').jsdom;
 var chai = require('chai');
 var sinon = require('sinon');
 var sinonChai = require('sinon-chai');
+var chaiAsPromised = require('chai-as-promised');
 var chaiEnzyme = require('chai-enzyme');
 
 var exposedProperties = ['window', 'navigator', 'document'];
 
 chai.use(sinonChai);
+chai.use(chaiAsPromised);
 chai.use(chaiEnzyme());
 
 chai.config.includeStack = true;

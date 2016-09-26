@@ -12,7 +12,7 @@ export default () => {
             <NavLink tag={Link} className="nav-link" to="/components/" activeClassName="active">Components</NavLink>
           </NavItem>
           <NavItem>
-            <NavLink href="https://github.com/availity">Github</NavLink>
+            <NavLink href="https://github.com/availity/availity-reactstrap-validation">Github</NavLink>
           </NavItem>
         </Nav>
       </Container>

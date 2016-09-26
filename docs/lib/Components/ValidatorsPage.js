@@ -33,6 +33,8 @@ import ValidationRequiredExample from '../examples/ValidationRequired';
 const ValidationRequiredExampleSource = require('!!raw!../examples/ValidationRequired.js');
 import ValidationStepExample from '../examples/ValidationStep';
 const ValidationStepExampleSource = require('!!raw!../examples/ValidationStep.js');
+import ValidationAsyncExample from '../examples/ValidationAsync';
+const ValidationAsyncExampleSource = require('!!raw!../examples/ValidationAsync.js');
 
 export default class FormPage extends React.Component {
   render() {
@@ -190,6 +192,16 @@ export default class FormPage extends React.Component {
         <pre>
           <PrismCode className="language-jsx">
             {ValidationStepExampleSource}
+          </PrismCode>
+        </pre>
+
+        <h4>Custom / Async</h4>
+        <div className="docs-example">
+          <ValidationAsyncExample />
+        </div>
+        <pre>
+          <PrismCode className="language-jsx">
+            {ValidationAsyncExampleSource}
           </PrismCode>
         </pre>
       </div>
