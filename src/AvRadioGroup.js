@@ -70,6 +70,24 @@ export default class AvRadioGroup extends InputContainer {
     this.context.FormCtrl.validate(this.props.name); 
   }
 
+  getDefaultValue () {
+    let key = 'defaultValue';
+
+    const value = this.props[key] || this.context.FormCtrl.getDefaultValue(this.props.name) || '';
+
+    return {key, value};
+  }
+
+  reset () {
+    this.selection = this.getDefaultValue().value;
+    this.context.FormCtrl.setDirty(this.props.name, false);
+    this.context.FormCtrl.setTouched(this.props.name, false);
+    this.context.FormCtrl.setBad(this.props.name, false);
+    this.setState({selection: this.selection});
+    this.validate();
+    this.props.onReset && this.props.onReset(this.selection);
+  }
+
   getChildContext () {
     this.FormCtrl = {...this.context.FormCtrl};
     const registerValidator = this.FormCtrl.register;
@@ -91,6 +109,8 @@ export default class AvRadioGroup extends InputContainer {
       Group: {
         name: this.props.name,
         update: updateGroup,
+        inline: this.props.inline,
+        selection: this.selection,
         getInputState: ::this.getInputState,
       },
       FormCtrl: this.FormCtrl,
@@ -109,9 +129,12 @@ export default class AvRadioGroup extends InputContainer {
     const legend = (this.props.label) ? (<legend>{this.props.label}</legend>) : '';
     const validation = this.getInputState();
     const errorMessage = this.renderErrorMessage(validation);
+    const {
+      inline,
+      ...attributes} = this.props;
 
     return (
-      <FormGroup tag="fieldset" {...this.props} color={validation.color}>
+      <FormGroup tag="fieldset" {...attributes} color={validation.color}>
         {legend}
         {this.props.children}
         {errorMessage}

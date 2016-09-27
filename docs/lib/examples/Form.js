@@ -20,6 +20,13 @@ export default class FormExample extends React.Component {
           <AvRadio label="Charmander" value="Charmander" id="radioOption3"/>
           <AvRadio label="Pikachu" value="Pikachu" id="radioOption4" disabled/>
         </AvRadioGroup>
+
+        <AvRadioGroup inline name="radioExample2" label="Radio Buttons! (inline)" required>
+          <AvRadio label="Bulbasaur" value="Bulbasaur" id="radioOption5"/>
+          <AvRadio label="Squirtle" value="Squirtle" id="radioOption6"/>
+          <AvRadio label="Charmander" value="Charmander" id="radioOption7"/>
+          <AvRadio label="Pikachu" value="Pikachu" id="radioOption8" disabled/>
+        </AvRadioGroup>
         {/* With select and AvField */}
         <AvField type="select" name="select" label="Option" helpMessage="Idk, this is an example. Deal with it!">
           <option>1</option>

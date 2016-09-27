@@ -34,7 +34,7 @@ export default class AvRadio extends AvInput {
       validationEvent, 
       state, 
       className,
-      tag: Tag, 
+      tag: Tag,
       ...attributes} = this.props;
 
     const classes = classNames(
@@ -44,13 +44,9 @@ export default class AvRadio extends AvInput {
       this.context.FormCtrl.hasError[this.props.name] ? 'av-invalid' : 'av-valid'
     );
 
-    const labelClasses = classNames(
-      `form-check-${attributes.inline ? 'inline' : 'label'}` : false,
-    );
-
     return (
       <FormGroup check {...attributes}>
-        <Label className={labelClasses}>
+        <Label check inline={this.context.Group.inline}>
           <Input
             name={this.context.Group.name}
             type='radio'
@@ -59,6 +55,7 @@ export default class AvRadio extends AvInput {
             className={classes}
             onChange={this.onChangeHandler}
             value={this.props.value}
+            checked={this.props.value === this.context.Group.selection}
           /> {' '}
           {this.props.label}
         </Label>
