@@ -33,7 +33,7 @@ export default class AvGroup extends Component {
       },
       FormCtrl: this.FormCtrl,
     };
-  };
+  }
 
   getInputState () {
     return this.context.FormCtrl.getInputState(this.state.input.props.name);

@@ -18,6 +18,7 @@
     "build:docs": "cross-env WEBPACK_BUILD=production webpack --config ./webpack.dev.config.js --colors",
     "build": "cross-env WEBPACK_BUILD=production webpack --progress --colors && webpack --colors",
     "prebuild": "babel src --out-dir lib",
+    "lint": "eslint src",
     "create-release": "npm test && sh ./scripts/release",
     "publish-release": "npm test && sh ./scripts/publish"
   },
@@ -79,7 +80,7 @@
     "babel-preset-react": "^6.5.0",
     "babel-preset-stage-0": "^6.5.0",
     "babel-register": "^6.11.6",
-    "bootstrap": "^4.0.0-alpha.3",
+    "bootstrap": "^4.0.0-alpha.4",
     "chai": "^3.5.0",
     "chai-as-promised": "^5.3.0",
     "chai-enzyme": "^0.5.0",
