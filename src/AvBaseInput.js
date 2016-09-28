@@ -1,5 +1,6 @@
 import {Component, PropTypes} from 'react';
 import isUndefined from 'lodash.isundefined';
+import isEqual from 'lodash.isequal';
 
 const htmlValidationAttrs = ['min', 'max', 'minLength', 'maxLength', 'pattern', 'required', 'step'];
 const htmlValidationTypes = [
@@ -61,7 +62,7 @@ export default class AvBaseInput extends Component {
       this.value = nextProps.value;
       this.setState({value: nextProps.value});
     }
-    if (nextProps !== this.props) {
+    if (!isEqual(nextProps, this.props)) {
       this.updateValidations(nextProps);
     }
   }

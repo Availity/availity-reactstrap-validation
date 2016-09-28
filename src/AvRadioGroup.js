@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import InputContainer from './AvInputContainer';
 import AvFeedback from './AvFeedback';
+import isEqual from 'lodash.isequal';
 import { FormGroup } from 'reactstrap';
 
 const htmlValidationAttrs = ['required'];
@@ -50,7 +51,11 @@ export default class AvRadioGroup extends InputContainer {
   }
 
   componentWillUpdate(nextProps) {
-    if (nextProps !== this.props) {
+    if (nextProps.value !== this.props.value) {
+      this.value = nextProps.value;
+      this.setState({value: nextProps.value});
+    }
+    if (!isEqual(nextProps, this.props)) {
       this.updateValidations(nextProps);
     }
   }
