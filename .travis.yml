@@ -4,5 +4,7 @@ node_js:
 cache:
   directories:
     - node_modules
-after_success:
+scripts:
   - npm run ci
+after_success:
+  - npm run report-coverage
