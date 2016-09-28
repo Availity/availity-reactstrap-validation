@@ -69,6 +69,14 @@ describe('AvRadioGroup', () => {
     expect(component.getDefaultValue()).to.eql({key: 'defaultValue', value: 'momo'});
   });
 
+  it('should update the value when the value prop changes', () => {
+    const wrapper = shallow(<AvRadioGroup name="yo" defaultValue="momo" />, options);
+    const component = wrapper.instance();
+    expect(component.getValue()).to.equal('momo');
+    wrapper.setProps({value: 'yoyo'});
+    expect(component.getValue()).to.equal('yoyo');
+  });
+
   it('should give default value from context', () => {
     const wrapper = shallow(<AvRadioGroup name="yo" />, options);
     const component = wrapper.instance();
