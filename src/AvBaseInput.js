@@ -38,8 +38,6 @@ export default class AvBaseInput extends Component {
 
   state = { value: ''};
 
-  validations = {};
-
   componentWillMount() {
     this.value = this.getDefaultValue().value;
     this.setState({value: this.value});
@@ -138,6 +136,8 @@ export default class AvBaseInput extends Component {
   getValue() {
     return this.value;
   }
+
+  validations = {};
 
   value = '';
 
