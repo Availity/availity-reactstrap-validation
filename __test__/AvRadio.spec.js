@@ -1,16 +1,19 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { AvRadio } from 'availity-reactstrap-validation';
-import { Input } from 'reactstrap';
+import { Input, Label, FormGroup } from 'reactstrap';
 
-let options, props, inputState, component, setStateSpy;
+let options;
+let props;
+let inputState;
+let component;
 
 describe('AvRadio', () => {
   beforeEach(() => {
     options = {
       context: {
         Group: {
-          name: 'test'
+          name: 'test',
         },
         FormCtrl: {
           inputs: {},
@@ -84,20 +87,29 @@ describe('AvRadio', () => {
     expect(wrapper.find(Input).hasClass('av-invalid')).to.be.true;
   });
 
+  it('should wrap the children in a FormGroup when inline', () => {
+    const wrapper = shallow(<AvRadio name="yo" />, options);
+    expect(wrapper.type()).to.equal(FormGroup);
+  });
+
+  it('should not wrap the children in a FormGroup when inline', () => {
+    options.context.Group.inline = true;
+    const wrapper = shallow(<AvRadio name="yo" />, options);
+    expect(wrapper.type()).to.equal(Label);
+  });
+
   describe('on change handler', () => {
     beforeEach(() => {
       inputState = 'danger';
       props = {
         name: 'fieldName',
-        validateEvent: '',
-        validate: {},
         value: 'testValue'
       };
       options = {
         context: {
           Group: {
             name: 'test',
-            update: sinon.spy()
+            update: sinon.spy(),
           },
           FormCtrl: {
             inputs: {},
@@ -115,13 +127,12 @@ describe('AvRadio', () => {
             validationEvent: 'formCtrlValidationEvent',
             validation: {},
             parent: null,
-            },
+          },
         },
       };
 
       component = new AvRadio(props);
       component.context = options.context;
-      setStateSpy = component.setState = sinon.spy();
     });
 
     it('should update group value on change', () => {

@@ -32,27 +32,27 @@ export default class AvField extends Component {
     FormCtrl: PropTypes.object.isRequired,
   };
 
-  render () {
+  render() {
     let row = false;
-    let col = {};
-    let labelCol = {};
-    let {
+    const col = {};
+    const labelCol = {};
+    const {
       helpMessage,
       label,
       labelHidden,
       inputClass,
       labelClass,
       children,
-      id,
+      id: omit,
       size,
       disabled,
       readOnly,
       grid,
       labelAttrs,
       groupAttrs,
-      ...attributes
+      ...attributes,
     } = this.props;
-    id = id || attributes.name;
+    const id = this.props.id || attributes.name;
 
     if (grid) {
       colSizes.forEach(colSize => {

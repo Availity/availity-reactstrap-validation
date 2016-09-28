@@ -1,4 +1,4 @@
-import React, {Component, PropTypes} from 'react';
+import {Component, PropTypes} from 'react';
 import isUndefined from 'lodash.isundefined';
 
 const htmlValidationAttrs = ['min', 'max', 'minLength', 'maxLength', 'pattern', 'required', 'step'];
@@ -7,7 +7,7 @@ const htmlValidationTypes = [
   /*'range', 'month', 'week', 'time'*/ // These do not currently have validation
 ];
 
-const getFieldValue = event =>  event && event.target && !isUndefined(event.target.value) ? event.target.value : event;
+const getFieldValue = event => event && event.target && !isUndefined(event.target.value) ? event.target.value : event;
 
 export default class AvBaseInput extends Component {
   static propTypes = {
@@ -16,6 +16,9 @@ export default class AvBaseInput extends Component {
       '', 'onInput', 'onChange', 'onBlur', 'onFocus',
     ]),
     validate: PropTypes.object,
+    value: PropTypes.any,
+    state: PropTypes.bool,
+    type: PropTypes.string,
     onKeyUp: PropTypes.func,
     onInput: PropTypes.func,
     onFocus: PropTypes.func,
@@ -33,32 +36,17 @@ export default class AvBaseInput extends Component {
     validate: {},
   };
 
-  constructor (props) {
-    super(props);
+  state = { value: ''};
 
-    this.onKeyUpHandler = ::this.onKeyUpHandler;
-    this.onBlurHandler = ::this.onBlurHandler;
-    this.onInputHandler = ::this.onInputHandler;
-    this.onFocusHandler = ::this.onFocusHandler;
-    this.onChangeHandler = ::this.onChangeHandler;
-    this.validate = ::this.validate;
+  validations = {};
 
-    this.value = '';
-
-    this.state = {
-      value: this.value,
-    };
-
-    this.validations = props.validate;
-  }
-
-  componentWillMount () {
+  componentWillMount() {
     this.value = this.getDefaultValue().value;
     this.setState({value: this.value});
     this.updateValidations();
   }
 
-  componentWillUpdate (nextProps) {
+  componentWillUpdate(nextProps) {
     if (nextProps.value !== this.props.value) {
       this.value = nextProps.value;
       this.setState({value: nextProps.value});
@@ -66,32 +54,44 @@ export default class AvBaseInput extends Component {
     }
   }
 
-  updateValidations () {
-    this.validations = Object.assign({}, this.props.validate);
-
-    if (htmlValidationTypes.indexOf(this.props.type) > -1) {
-      this.validations[this.props.type] = this.validations[this.props.type] || true;
-    }
-
-    Object.keys(this.props)
-      .filter(val => htmlValidationAttrs.indexOf(val) > -1)
-      .forEach(attr => {
-        if (this.props[attr]) {
-          this.validations[attr] = this.validations[attr] || {value: this.props[attr]};
-        } else {
-          delete this.validations[attr];
-        }
-      });
-
-    this.context.FormCtrl.register(this);
-    this.validate();
-  }
-
-  componentWillUnmount () {
+  componentWillUnmount() {
     this.context.FormCtrl.unregister(this);
   }
 
-  getDefaultValue () {
+  onKeyUpHandler = (event) => {
+    if (event && event.target && event.target.validity &&
+      event.target.validity.badInput !== this.context.FormCtrl.isBad[this.props.name] &&
+      (event.target.validity.badInput !== false || this.context.FormCtrl.isBad[this.props.name] !== undefined)) {
+      this.context.FormCtrl.setBad(this.props.name, event.target.validity.badInput);
+      this.validate();
+    }
+    this.props.onKeyUp && this.props.onKeyUp(event);
+  };
+
+  onInputHandler = (_value) => {
+    this.value = getFieldValue(_value);
+    this.validateEvent('onInput');
+    !this.context.FormCtrl.isTouched[this.props.name] && this.context.FormCtrl.setTouched(this.props.name);
+  };
+
+  onBlurHandler = (_value) => {
+    this.value = getFieldValue(_value);
+    this.validateEvent('onBlur');
+    !this.context.FormCtrl.isTouched[this.props.name] && this.context.FormCtrl.setTouched(this.props.name);
+  };
+
+  onFocusHandler = (_value) => {
+    this.value = getFieldValue(_value);
+    this.validateEvent('onFocus');
+  };
+
+  onChangeHandler = (_value) => {
+    this.value = getFieldValue(_value);
+    this.validateEvent('onChange');
+    !this.context.FormCtrl.isDirty[this.props.name] && this.context.FormCtrl.setDirty(this.props.name);
+  };
+
+  getDefaultValue() {
     let key = 'defaultValue';
 
     if (this.props.type === 'checkbox') {
@@ -103,68 +103,13 @@ export default class AvBaseInput extends Component {
     return {key, value};
   }
 
-  onKeyUpHandler(event) {
-    if (event && event.target && event.target.validity &&
-      event.target.validity.badInput !== this.context.FormCtrl.isBad[this.props.name] &&
-      (event.target.validity.badInput !== false || this.context.FormCtrl.isBad[this.props.name] !== undefined)) {
-      this.context.FormCtrl.setBad(this.props.name, event.target.validity.badInput);
-      this.validate();
-    }
-    this.props.onKeyUp && this.props.onKeyUp(event);
-  }
-
-  onInputHandler (_value) {
-    this.value = getFieldValue(_value);
-    this.validateEvent('onInput');
-    !this.context.FormCtrl.isTouched[this.props.name] && this.context.FormCtrl.setTouched(this.props.name);
-  }
-
-  onBlurHandler (_value) {
-    this.value = getFieldValue(_value);
-    this.validateEvent('onBlur');
-    !this.context.FormCtrl.isTouched[this.props.name] && this.context.FormCtrl.setTouched(this.props.name);
-  }
-
-  onFocusHandler (_value) {
-    this.value = getFieldValue(_value);
-    this.validateEvent('onFocus');
-  }
-
-  onChangeHandler (_value) {
-    this.value = getFieldValue(_value);
-    this.validateEvent('onChange');
-    !this.context.FormCtrl.isDirty[this.props.name] && this.context.FormCtrl.setDirty(this.props.name);
-  }
-
-  validateEvent (eventName) {
-    if (this.getValidationEvent() === eventName) {
-      this.setState({value: this.value});
-      this.validate();
-    }
-    this.props[eventName] && this.props[eventName](this.value);
-  }
-
-  validate () {
-    this.context.FormCtrl.validate(this.props.name);
-  }
-
-  reset () {
-    this.value = this.getDefaultValue().value;
-    this.context.FormCtrl.setDirty(this.props.name, false);
-    this.context.FormCtrl.setTouched(this.props.name, false);
-    this.context.FormCtrl.setBad(this.props.name, false);
-    this.setState({value: this.value});
-    this.validate();
-    this.props.onReset && this.props.onReset(this.value);
-  }
-
-  getValidationEvent () {
+  getValidationEvent() {
     return (this.props.validationEvent)
       ? this.props.validationEvent
       : this.context.FormCtrl.validationEvent;
   }
 
-  getValidatorProps () {
+  getValidatorProps() {
     const state = this.props.state && this.context.FormCtrl.getInputState(this.props.name);
     const htmlValAttrs = Object.keys(this.props.validate)
       .filter(val => htmlValidationAttrs.indexOf(val) > -1)
@@ -190,7 +135,52 @@ export default class AvBaseInput extends Component {
     return newProps;
   }
 
-  getValue () {
+  getValue() {
     return this.value;
+  }
+
+  value = '';
+
+  reset() {
+    this.value = this.getDefaultValue().value;
+    this.context.FormCtrl.setDirty(this.props.name, false);
+    this.context.FormCtrl.setTouched(this.props.name, false);
+    this.context.FormCtrl.setBad(this.props.name, false);
+    this.setState({value: this.value});
+    this.validate();
+    this.props.onReset && this.props.onReset(this.value);
+  }
+
+  validateEvent(eventName) {
+    if (this.getValidationEvent() === eventName) {
+      this.setState({value: this.value});
+      this.validate();
+    }
+    this.props[eventName] && this.props[eventName](this.value);
+  }
+
+  validate = () => {
+    this.context.FormCtrl.validate(this.props.name);
+  };
+
+  updateValidations() {
+    this.validations = Object.assign({}, this.props.validate);
+
+    if (htmlValidationTypes.indexOf(this.props.type) > -1) {
+      this.validations[this.props.type] = this.validations[this.props.type] || true;
+    }
+
+    Object.keys(this.props)
+      .filter(val => htmlValidationAttrs.indexOf(val) > -1)
+      .forEach(attr => {
+        if (this.props[attr]) {
+          this.validations[attr] = this.validations[attr] || {value: this.props[attr]};
+        } else {
+          delete this.validations[attr];
+        }
+      });
+
+    this.context.FormCtrl.register(this);
+    this.validate();
   }
 }

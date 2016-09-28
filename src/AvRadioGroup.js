@@ -5,6 +5,8 @@ import { FormGroup } from 'reactstrap';
 
 const htmlValidationAttrs = ['required'];
 
+const noop = () => {};
+
 export default class AvRadioGroup extends InputContainer {
   static propTypes = Object.assign({}, FormGroup.propTypes, {
     name: PropTypes.string.isRequired,
@@ -19,25 +21,18 @@ export default class AvRadioGroup extends InputContainer {
     FormCtrl: PropTypes.object.isRequired,
   };
 
-  constructor (props) {
-    super(props);
+  state = {
+    invalidInputs: {},
+    dirtyInputs: {},
+    touchedInputs: {},
+    badInputs: {},
+    validate: {},
+    value: '',
+  };
 
-    this.state = {
-      invalidInputs: {},
-      dirtyInputs: {},
-      touchedInputs: {},
-      badInputs: {},
-      validate: {},
-      selection: '',
-    };
+  value = '';
 
-    this.selection = '';
-
-    this.validations = props.validate;
-  }
-
-  componentWillMount () {
-    this._inputs = {};
+  updateValidations() {
     this.validations = Object.assign({}, this.props.validate);
 
     Object.keys(this.props)
@@ -54,89 +49,104 @@ export default class AvRadioGroup extends InputContainer {
     this.validate();
   }
 
-  getValue () {
-    return this.selection;
+  componentWillMount() {
+    super.componentWillMount();
+    this.value = this.getDefaultValue().value;
+    this.setState({value: this.value});
+    this.updateValidations();
   }
 
-  componentWillUnmount () {
+  getValue() {
+    return this.value;
+  }
+
+  componentWillUnmount() {
     this.context.FormCtrl.unregister(this);
   }
 
-  getInputState () {
+  getInputState() {
     return this.context.FormCtrl.getInputState(this.props.name);
   }
 
-  validate () {
-    this.context.FormCtrl.validate(this.props.name); 
+  validate() {
+    this.context.FormCtrl.validate(this.props.name);
   }
 
-  getDefaultValue () {
-    let key = 'defaultValue';
+  getDefaultValue() {
+    const key = 'defaultValue';
 
     const value = this.props[key] || this.context.FormCtrl.getDefaultValue(this.props.name) || '';
 
     return {key, value};
   }
 
-  reset () {
-    this.selection = this.getDefaultValue().value;
+  reset() {
+    this.value = this.getDefaultValue().value;
     this.context.FormCtrl.setDirty(this.props.name, false);
     this.context.FormCtrl.setTouched(this.props.name, false);
     this.context.FormCtrl.setBad(this.props.name, false);
-    this.setState({selection: this.selection});
+    this.setState({value: this.value});
     this.validate();
-    this.props.onReset && this.props.onReset(this.selection);
+    this.props.onReset && this.props.onReset(this.value);
   }
 
-  getChildContext () {
+  getChildContext() {
     this.FormCtrl = {...this.context.FormCtrl};
-    const registerValidator = this.FormCtrl.register;
-    this.FormCtrl.register = (input) => {
-      // no :)
-    };
-    const parentValidate = this.FormCtrl.validate;
-    this.FormCtrl.validate = (input) => {
-      // no :)
-    }
+    this.FormCtrl.register = noop;
+    this.FormCtrl.validate = noop;
 
     const updateGroup = (value) => {
-      this.setState({selection: value});
-      this.selection = value;
+      this.setState({value});
+      this.value = value;
       this.validate();
-    }
+    };
 
     return {
       Group: {
         name: this.props.name,
         update: updateGroup,
         inline: this.props.inline,
-        selection: this.selection,
+        value: this.value,
         getInputState: ::this.getInputState,
       },
       FormCtrl: this.FormCtrl,
     };
   }
 
-  renderErrorMessage (validation) {
-    if (validation.errorMessage !== false) {
+  renderErrorMessage(validation) {
+    if (validation.errorMessage) {
       return (<AvFeedback>{validation.errorMessage}</AvFeedback>);
     }
 
     return null;
   }
 
-  render () {
+  render() {
     const legend = (this.props.label) ? (<legend>{this.props.label}</legend>) : '';
     const validation = this.getInputState();
     const errorMessage = this.renderErrorMessage(validation);
     const {
+      errorMessage: omit1,
+      validate: omit2,
+      validationEvent: omit3,
+      state: omit4,
+      label: omit5,
+      required: omit6,
       inline,
-      ...attributes} = this.props;
+      children,
+      ...attributes,
+    } = this.props;
+
+    let radios = children;
+
+    if (inline) {
+      radios = <FormGroup>{radios}</FormGroup>;
+    }
 
     return (
       <FormGroup tag="fieldset" {...attributes} color={validation.color}>
         {legend}
-        {this.props.children}
+        {radios}
         {errorMessage}
       </FormGroup>
     );

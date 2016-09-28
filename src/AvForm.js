@@ -7,14 +7,13 @@ import _get from 'lodash.get';
 import _set from 'lodash.set';
 import isString from 'lodash.isstring';
 
-const getInputErrorMessage =  (input, ruleName) => {
-  let errorMessage = input.props.errorMessage;
+const getInputErrorMessage = (input, ruleName) => {
+  const errorMessage = input.props.errorMessage;
 
   if (typeof errorMessage === 'object') {
     return errorMessage[ruleName];
-  } else {
-    return errorMessage;
   }
+  return errorMessage;
 };
 
 export default class AvForm extends InputContainer {
@@ -62,22 +61,48 @@ export default class AvForm extends InputContainer {
     onInvalidSubmit: () => {},
   };
 
-  constructor (props) {
-    super(props);
+  state = {
+    invalidInputs: {},
+    dirtyInputs: {},
+    touchedInputs: {},
+    badInputs: {},
+    submitted: false,
+  };
 
-    this.state = {
-      invalidInputs: {},
-      dirtyInputs: {},
-      touchedInputs: {},
-      badInputs: {},
-      submitted: false,
-    };
+  validations = {};
 
-    this.handleSubmit = ::this.handleSubmit;
-    this.handleNonFormSubmission = ::this.handleNonFormSubmission;
-  }
+  handleSubmit = async (e) => {
+    if (e && typeof e.preventDefault === 'function') {
+      e.preventDefault();
+    }
 
-  getChildContext () {
+    const values = this.getValues();
+
+    const {isValid, errors} = await this.validateAll(values);
+
+    this.setTouched(Object.keys(this._inputs));
+
+    this.props.onSubmit(e, errors, values);
+    if (isValid) {
+      this.props.onValidSubmit(e, values);
+    } else {
+      this.props.onInvalidSubmit(e, errors, values);
+    }
+
+    !this.state.submitted && this.setState({submitted: true});
+  };
+
+  handleNonFormSubmission = (event) => {
+    if (this.props.onKeyDown(event) !== false) {
+      if (event.type === 'keydown' && (event.which === 13 || event.keyCode === 13 || event.key === 'Enter')) {
+        event.stopPropagation();
+        event.preventDefault();
+        this.handleSubmit(event);
+      }
+    }
+  };
+
+  getChildContext() {
     return {
       FormCtrl: {
         inputs: this._inputs,
@@ -99,13 +124,13 @@ export default class AvForm extends InputContainer {
     };
   }
 
-  componentWillMount () {
+  componentWillMount() {
     super.componentWillMount();
 
     this._validators = {};
   }
 
-  registerInput (input) {
+  registerInput(input) {
     super.registerInput(input);
 
     if (typeof input.validations === 'object') {
@@ -113,33 +138,23 @@ export default class AvForm extends InputContainer {
     }
   }
 
-  unregisterInput (input) {
+  unregisterInput(input) {
     super.unregisterInput(input);
 
     delete this._validators[input.props.name];
   }
 
-  handleNonFormSubmission (event) {
-    if (this.props.onKeyDown(event) !== false) {
-      if (event.type === 'keydown' && (event.which === 13 || event.keyCode === 13 || event.key === 'Enter')) {
-        event.stopPropagation();
-        event.preventDefault();
-        this.handleSubmit(...arguments);
-      }
-    }
-  }
-
-  render () {
+  render() {
     const {
       tag: Tag,
-      errorMessage,
-      model,
-      onValidSubmit,
-      onInvalidSubmit,
-      validate,
-      validateOne,
-      validateAll,
-      validationEvent,
+      errorMessage: omit1,
+      model: omit2,
+      onValidSubmit: omit3,
+      onInvalidSubmit: omit4,
+      validate: omit5,
+      validateOne: omit6,
+      validateAll: omit7,
+      validationEvent: omit8,
       className,
       ...attributes,
     } = this.props;
@@ -159,11 +174,12 @@ export default class AvForm extends InputContainer {
         action="#"
         {...attributes}
         className={classes}
-        onSubmit={this.handleSubmit} />
+        onSubmit={this.handleSubmit}
+      />
     );
   }
 
-  getValues () {
+  getValues() {
     return Object.keys(this._inputs).reduce((values, inputName) => {
       _set(values, inputName, this.getValue(inputName));
 
@@ -171,50 +187,51 @@ export default class AvForm extends InputContainer {
     }, {});
   }
 
-  submit (...args) {
+  submit(...args) {
     this.handleSubmit(...args);
   }
 
-  reset () {
+  reset() {
     Object.keys(this._inputs).forEach(inputName => this._inputs[inputName].reset());
   }
 
-  validateInput (name) {
+  validateInput(name) {
     this.validateOne(name, this.getValues());
   }
 
-  getInputState (inputName) {
-    let errorMessage = this.isTouched(inputName) && this.hasError(inputName);
-    const error = !!errorMessage;
+  getInputState(inputName) {
+    let errorMessage;
+    const error = this.isTouched(inputName) && this.hasError(inputName);
     let color;
 
     if (error) {
+      errorMessage = this.state.invalidInputs[inputName];
       color = 'danger';
-      if (errorMessage === true) {
+      if (!isString(errorMessage)) {
         errorMessage = 'This field is invalid';
       }
     }
 
     return {color, error, errorMessage};
-  };
+  }
 
-  hasError (inputName) {
+  hasError(inputName) {
     return inputName ? !!this.state.invalidInputs[inputName] : Object.keys(this.state.invalidInputs).length > 0;
   }
 
-  isDirty (inputName) {
+  isDirty(inputName) {
     return inputName ? !!this.state.dirtyInputs[inputName] : Object.keys(this.state.dirtyInputs).length > 0;
   }
 
-  isTouched (inputName) {
+  isTouched(inputName) {
     return inputName ? !!this.state.touchedInputs[inputName] : Object.keys(this.state.touchedInputs).length > 0;
   }
 
-  isBad (inputName) {
+  isBad(inputName) {
     return inputName ? !!this.state.badInputs[inputName] : Object.keys(this.state.badInputs).length > 0;
   }
 
-  setError (inputName, error = true, errText = error) {
+  setError(inputName, error = true, errText = error) {
     if (error && !isString(errText) && typeof errText !== 'boolean') {
       errText = errText + '';
     }
@@ -233,7 +250,7 @@ export default class AvForm extends InputContainer {
     this.setState({invalidInputs});
   }
 
-  setDirty (inputs, dirty = true) {
+  setDirty(inputs, dirty = true) {
     let dirtyInputs = this.state.dirtyInputs;
     if (!Array.isArray(inputs)) {
       inputs = [inputs];
@@ -250,7 +267,7 @@ export default class AvForm extends InputContainer {
     this.setState({dirtyInputs});
   }
 
-  setTouched (inputs, touched = true) {
+  setTouched(inputs, touched = true) {
     let touchedInputs = this.state.touchedInputs;
     if (!Array.isArray(inputs)) {
       inputs = [inputs];
@@ -267,7 +284,7 @@ export default class AvForm extends InputContainer {
     this.setState({touchedInputs});
   }
 
-  setBad (inputs, isBad = true) {
+  setBad(inputs, isBad = true) {
     let badInputs = this.state.badInputs;
     if (!Array.isArray(inputs)) {
       inputs = [inputs];
@@ -284,7 +301,7 @@ export default class AvForm extends InputContainer {
     this.setState({badInputs});
   }
 
-  async validateOne (inputName, context) {
+  async validateOne(inputName, context) {
     const input = this._inputs[inputName];
 
     if (Array.isArray(input)) {
@@ -318,11 +335,11 @@ export default class AvForm extends InputContainer {
     return isValid;
   }
 
-  async validateAll (context) {
+  async validateAll(context) {
     const errors = [];
     let isValid = true;
 
-    for(const inputName in this._inputs) {
+    for (const inputName in this._inputs) {
       /* istanbul ignore else  */
       if (this._inputs.hasOwnProperty(inputName)) {
         const valid = await this.validateOne(inputName, context);
@@ -346,12 +363,12 @@ export default class AvForm extends InputContainer {
     }
 
     return {
-      isValid: isValid,
-      errors: errors,
+      isValid,
+      errors,
     };
   }
 
-  compileValidationRules (input, ruleProp) {
+  compileValidationRules(input, ruleProp) {
     return async (val, context) => {
       if (this.isBad(input.props.name)) {
         return false;
@@ -360,7 +377,7 @@ export default class AvForm extends InputContainer {
       let result = true;
       const validations = [];
 
-      for(const rule in ruleProp) {
+      for (const rule in ruleProp) {
         /* istanbul ignore else  */
         if (ruleProp.hasOwnProperty(rule)) {
           let ruleResult;
@@ -380,10 +397,10 @@ export default class AvForm extends InputContainer {
 
             if (ruleResult && typeof ruleResult.then === 'function'){
               ruleResult.then(callback);
-            }else if (ruleResult !== undefined) {
+            } else if (ruleResult !== undefined) {
               callback(ruleResult);
             } else {
-              //they are using the callback
+              // they are using the callback
             }
           });
 
@@ -407,11 +424,11 @@ export default class AvForm extends InputContainer {
     };
   }
 
-  getDefaultValue (inputName) {
-    return _get(this.props.model, inputName)
+  getDefaultValue(inputName) {
+    return _get(this.props.model, inputName);
   }
 
-  getValue (inputName) {
+  getValue(inputName) {
     const input = this._inputs[inputName];
 
     if (Array.isArray(input)) {
@@ -419,26 +436,5 @@ export default class AvForm extends InputContainer {
     }
 
     return input.getValue();
-  }
-
-  async handleSubmit (e) {
-    if (e && typeof e.preventDefault === 'function') {
-      e.preventDefault();
-    }
-
-    const values = this.getValues();
-
-    const {isValid, errors} = await this.validateAll(values);
-
-    this.setTouched(Object.keys(this._inputs));
-
-    this.props.onSubmit(e, errors, values);
-    if (isValid) {
-      this.props.onValidSubmit(e, values);
-    } else {
-      this.props.onInvalidSubmit(e, errors, values);
-    }
-
-    !this.state.submitted && this.setState({submitted: true});
   }
 }

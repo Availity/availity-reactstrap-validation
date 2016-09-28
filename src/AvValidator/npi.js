@@ -2,7 +2,7 @@ import { isEmpty } from './utils';
 
 const INTEGER_REGEX = /^\d*$/;
 
-export default function validate (value, context, {errorMessage = false} = {}) {
+export default function validate(value, context, {errorMessage = false} = {}) {
   if (isEmpty(value)) return true;
 
   value = value + '';
@@ -39,4 +39,4 @@ export default function validate (value, context, {errorMessage = false} = {}) {
   const calculatedCheck = roundUp - total;
 
   return calculatedCheck === digit || errorMessage;
-};
+}

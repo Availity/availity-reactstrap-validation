@@ -1,17 +1,17 @@
-const path = require('path');
-const webpack = require('webpack');
+var path = require('path');
+var webpack = require('webpack');
 
-const libraryName = 'AvailityReactstrapValidation';
+var libraryName = 'AvailityReactstrapValidation';
 
-module.exports = function (env) {
-  let outputFile;
-  const plugins = [
+module.exports = function(env) {
+  var outputFile;
+  var plugins = [
     new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(env)
+      'process.env.NODE_ENV': JSON.stringify(env),
     }),
     new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.OccurenceOrderPlugin()
+    new webpack.optimize.OccurenceOrderPlugin(),
   ];
 
   if (env === 'production') {
@@ -19,9 +19,9 @@ module.exports = function (env) {
       {
         minimize: true,
         compress: {
-          warnings: false
+          warnings: false,
         },
-        mangle: true
+        mangle: true,
       }
     ));
     outputFile = libraryName.toLowerCase() + '.min.js';
@@ -29,7 +29,7 @@ module.exports = function (env) {
     outputFile = libraryName.toLowerCase() + '.js';
   }
 
-  const config = {
+  var config = {
     devtool: 'source-map',
     entry: [__dirname + '/src/index.js'],
     output: {
@@ -37,7 +37,7 @@ module.exports = function (env) {
       filename: outputFile,
       library: libraryName,
       libraryTarget: 'umd',
-      umdNamedDefine: true
+      umdNamedDefine: true,
     },
     externals: [
       {
@@ -45,53 +45,53 @@ module.exports = function (env) {
           root: 'React',
           commonjs2: 'react',
           commonjs: 'react',
-          amd: 'react'
-        }
+          amd: 'react',
+        },
       },
       {
         'react-dom': {
           root: 'ReactDOM',
           commonjs2: 'react-dom',
           commonjs: 'react-dom',
-          amd: 'react-dom'
-        }
+          amd: 'react-dom',
+        },
       },
       {
         'react-addons-transition-group': {
           commonjs: 'react-addons-transition-group',
           commonjs2: 'react-addons-transition-group',
           amd: 'react-addons-transition-group',
-          root: ['React', 'addons', 'TransitionGroup']
-        }
-      }
+          root: ['React', 'addons', 'TransitionGroup'],
+        },
+      },
     ],
     module: {
       loaders: [
         {
           test: /\.(json)$/,
           loaders: [
-            'json-loader?cacheDirectory'
-          ]
+            'json-loader?cacheDirectory',
+          ],
         },
         {
           test: /\.(js|jsx)$/,
           exclude: /node_modules/,
           loaders: [
-            'babel-loader?cacheDirectory'
-          ]
+            'babel-loader?cacheDirectory',
+          ],
         },
-      ]
+      ],
     },
     resolve: {
       alias: {
-        'avility-reactstrap-validation': 'src/index'
+        'avility-reactstrap-validation': 'src/index',
       },
       extensions: ['', '.js', '.jsx', '.json'],
       root: [
-        path.resolve('./src')
-      ]
+        path.resolve('./src'),
+      ],
     },
-    plugins: plugins
+    plugins: plugins,
   };
 
   return config;

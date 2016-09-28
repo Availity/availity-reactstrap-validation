@@ -442,7 +442,7 @@ describe('AvForm', function () {
           const inputName = 'myInput';
           const result = this.instance.getInputState(inputName);
           expect(this.isTouchedSpy).to.have.been.calledWith(inputName);
-          expect(result).to.deep.equal({color: undefined, error: false, errorMessage: false});
+          expect(result).to.deep.equal({color: undefined, error: false, errorMessage: undefined});
         });
 
         it('should not check for an error',() => {
@@ -470,7 +470,7 @@ describe('AvForm', function () {
           sinon.stub(this.instance, 'hasError').returns(false);
           const inputName = 'myInput';
           const result = this.instance.getInputState(inputName);
-          expect(result).to.deep.equal({color: undefined, error: false, errorMessage: false});
+          expect(result).to.deep.equal({color: undefined, error: false, errorMessage: undefined});
         });
 
         describe('with an error', () => {
@@ -512,8 +512,9 @@ describe('AvForm', function () {
 
             it('should be the string returned from validation',() => {
               const message = 'my error message';
-              sinon.stub(this.instance, 'hasError').returns(message);
+              sinon.stub(this.instance, 'hasError').returns(true);
               const inputName = 'myInput';
+              this.instance.state.invalidInputs[inputName] = message;
               const result = this.instance.getInputState(inputName);
               expect(result.errorMessage).to.equal(message);
             });

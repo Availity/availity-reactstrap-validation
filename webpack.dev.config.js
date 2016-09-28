@@ -14,7 +14,7 @@ var paths = [
   '/components/',
   '/components/validators/',
   '/components/avform/',
-  '/404.html'
+  '/404.html',
 ];
 
 var basepath = env === 'production' ? '/availity-reactstrap-validation/' : '/';
@@ -24,61 +24,61 @@ var config = [{
   devServer: {
     contentBase: './build',
     stats: {
-      chunks: false
-    }
+      chunks: false,
+    },
   },
   entry: {
-    main: './docs/lib/app.js'
+    main: './docs/lib/app.js',
   },
   node: {
-    fs: 'empty'
+    fs: 'empty',
   },
   output: {
     filename: 'bundle.js',
     publicPath: basepath,
     path: './build',
-    libraryTarget: 'umd'
+    libraryTarget: 'umd',
   },
   plugins: [
     new CleanWebpackPlugin(['build']),
     new CopyWebpackPlugin([{ from: './docs/static', to: 'assets' }]),
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(env)
+      'process.env.NODE_ENV': JSON.stringify(env),
     }),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurenceOrderPlugin(),
     new StaticSiteGeneratorPlugin('main', paths, {basename: basepath}),
     new webpack.NoErrorsPlugin(),
-    new ExtractTextPlugin("/assets/style.css")
+    new ExtractTextPlugin('/assets/style.css'),
   ],
   module: {
     loaders: [
       {
         test: /\.(json)$/,
         loaders: [
-          'json-loader?cacheDirectory'
-        ]
+          'json-loader?cacheDirectory',
+        ],
       },
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         loaders: [
-          'babel-loader?cacheDirectory'
-        ]
+          'babel-loader?cacheDirectory',
+        ],
       },
       {
         test: /\.css$/,
-        loader: ExtractTextPlugin.extract("style-loader", "css-loader")
+        loader: ExtractTextPlugin.extract('style-loader', 'css-loader'),
       },
-    ]
+    ],
   },
   resolve: {
     extensions: ['', '.js', '.jsx', '.json'],
     alias: {
       'bootstrap-css': path.join(__dirname,'node_modules/bootstrap/dist/css/bootstrap.css'),
-      'availity-reactstrap-validation': path.resolve('./src')
-    }
-  }
+      'availity-reactstrap-validation': path.resolve('./src'),
+    },
+  },
 }];
 
 if (env === 'development') {
@@ -89,9 +89,9 @@ if (env === 'development') {
     {
       minimize: true,
       compress: {
-        warnings: false
+        warnings: false,
       },
-      mangle: true
+      mangle: true,
     }
   ));
 }

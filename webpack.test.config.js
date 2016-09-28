@@ -9,33 +9,33 @@ var webpackConfig = {
     'availity-reactstrap-validation': ['./index.js']
   },
   node: {
-    fs: 'empty'
+    fs: 'empty',
   },
   plugins: [
-    new webpack.NoErrorsPlugin()
+    new webpack.NoErrorsPlugin(),
   ],
   module: {
     loaders: [
       {
         test: /\.(json)$/,
         loaders: [
-          'json-loader?cacheDirectory'
-        ]
+          'json-loader?cacheDirectory',
+        ],
       },
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         loaders: [
-          'babel-loader?cacheDirectory'
-        ]
+          'babel-loader?cacheDirectory',
+        ],
       },
-    ]
+    ],
   },
   resolve: {
     alias: {
-      'availity-reactstrap-validation': path.resolve('./src')
+      'availity-reactstrap-validation': path.resolve('./src'),
     },
-    extensions: ['', '.js', '.jsx', '.json']
+    extensions: ['', '.js', '.jsx', '.json'],
   },
   externals: {
     'react/lib/ExecutionEnvironment': true,
@@ -43,8 +43,8 @@ var webpackConfig = {
     'react/addons': true,
   },
   output: {
-    devtoolModuleFilenameTemplate        : '[absolute-resource-path]',
-    devtoolFallbackModuleFilenameTemplate: '[absolute-resource-path]?[hash]'
+    devtoolModuleFilenameTemplate: '[absolute-resource-path]',
+    devtoolFallbackModuleFilenameTemplate: '[absolute-resource-path]?[hash]',
   },
   webpackServer: {
     noInfo: true,

@@ -1,12 +1,12 @@
-import React, {PropTypes} from 'react';
+import React, {Component, PropTypes} from 'react';
 import classNames from 'classnames';
 import {Input, FormGroup, Label} from 'reactstrap';
-import AvInput from './AvInput'
+import AvInput from './AvInput';
 
-let radioPropTypes = Object.assign({}, AvInput.propTypes);
+const radioPropTypes = Object.assign({}, AvInput.propTypes);
 delete radioPropTypes.name;
 
-export default class AvRadio extends AvInput {
+export default class AvRadio extends Component {
 
   static contextTypes = Object.assign({}, AvInput.contextTypes, {
     Group: PropTypes.object.isRequired,
@@ -14,27 +14,16 @@ export default class AvRadio extends AvInput {
 
   static propTypes = radioPropTypes;
 
-  constructor (props) {
-    super(props);
-
-    this.onChangeHandler = ::this.onChangeHandler;
-  }
-
-  onChangeHandler () {
+  onChangeHandler = (e) => {
     this.context.Group.update(this.props.value);
-    if(this.props.onChange) {
-      this.props.onChange();
+    if (this.props.onChange) {
+      this.props.onChange(e);
     }
-  }
+  };
 
-  render () {
+  render() {
     const {
-      errorMessage, 
-      validate, 
-      validationEvent, 
-      state, 
       className,
-      tag: Tag,
       ...attributes} = this.props;
 
     const classes = classNames(
@@ -44,21 +33,24 @@ export default class AvRadio extends AvInput {
       this.context.FormCtrl.hasError[this.props.name] ? 'av-invalid' : 'av-valid'
     );
 
+    const input = (<Label check inline={this.context.Group.inline} disabled={this.props.disabled}>
+      <Input
+        name={this.context.Group.name}
+        type='radio'
+        {...attributes}
+        className={classes}
+        onChange={this.onChangeHandler}
+        checked={this.props.value === this.context.Group.value}
+      /> {this.props.label}
+    </Label>);
+
+    if (this.context.Group.inline) {
+      return input;
+    }
+
     return (
-      <FormGroup check {...attributes}>
-        <Label check inline={this.context.Group.inline}>
-          <Input
-            name={this.context.Group.name}
-            type='radio'
-            {...attributes}
-            {...this.getValidatorProps()}
-            className={classes}
-            onChange={this.onChangeHandler}
-            value={this.props.value}
-            checked={this.props.value === this.context.Group.selection}
-          /> {' '}
-          {this.props.label}
-        </Label>
+      <FormGroup check disabled={this.props.disabled}>
+        {input}
       </FormGroup>
     );
   }

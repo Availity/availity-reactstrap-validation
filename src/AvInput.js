@@ -1,7 +1,7 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
 import classNames from 'classnames';
 import {Input} from 'reactstrap';
-import AvBaseInput from './AvBaseInput'
+import AvBaseInput from './AvBaseInput';
 
 
 export default class AvInput extends AvBaseInput {
@@ -9,8 +9,16 @@ export default class AvInput extends AvBaseInput {
     tag: Input,
   });
 
-  render () {
-    const {errorMessage, validate, validationEvent, state, className, tag: Tag, ...attributes} = this.props;
+  render() {
+    const {
+      errorMessage: omit1,
+      validate: omit2,
+      validationEvent: omit3,
+      state: omit4,
+      className,
+      tag: Tag,
+      ...attributes,
+    } = this.props;
 
     const classes = classNames(
       className,

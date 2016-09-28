@@ -1,5 +1,5 @@
 import React from 'react';
-import { AvForm, AvField, AvGroup, AvInput, AvFeedback } from 'availity-reactstrap-validation';
+import { AvForm, AvField, AvGroup, AvInput, AvFeedback, AvRadioGroup, AvRadio } from 'availity-reactstrap-validation';
 import { Button, Label, FormGroup } from 'reactstrap';
 
 export default class Example extends React.Component {
@@ -27,6 +27,13 @@ export default class Example extends React.Component {
             {/* this only shows when there is an error, use reactstrap's FormFeedback if you want is to always be displayed */}
             <AvFeedback>This is an error!</AvFeedback>
           </AvGroup>
+          {/* Radios */}
+          <AvRadioGroup inline name="radioExample2" label="Radio Buttons! (inline)" required>
+            <AvRadio label="Bulbasaur" value="Bulbasaur" id="radioOption5" />
+            <AvRadio label="Squirtle" value="Squirtle" id="radioOption6" />
+            <AvRadio label="Charmander" value="Charmander" id="radioOption7" />
+            <AvRadio label="Pikachu" value="Pikachu" id="radioOption8" disabled />
+          </AvRadioGroup>
           {/* With select and AvField */}
           <AvField type="select" name="select" label="Option" helpMessage="Idk, this is an example. Deal with it!">
             <option>1</option>

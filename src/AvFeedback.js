@@ -9,7 +9,7 @@ export default class AvFeedback extends Component {
     Group: React.PropTypes.object.isRequired,
   };
 
-  render () {
+  render() {
     const validation = this.context.Group.getInputState();
     return validation.color ? <FormFeedback {...this.props} /> : null;
   }

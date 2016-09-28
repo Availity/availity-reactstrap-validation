@@ -1,5 +1,5 @@
 import React from 'react';
-import { AvForm, AvField, AvGroup, AvInput, AvFeedback } from 'availity-reactstrap-validation';
+import { AvForm, AvField, AvGroup, AvInput, AvFeedback, AvRadioGroup, AvRadio } from 'availity-reactstrap-validation';
 import { Button, Row, Col, Label, FormGroup  } from 'reactstrap';
 
 export default class Example extends React.Component {
@@ -16,19 +16,26 @@ export default class Example extends React.Component {
 
   render() {
     const defaultValues = {
+      locationType: 'work',
       name: 'Availity',
       location: {
         street: '10752 Deerwood Park Blvd',
         suite: '110',
         city: 'Jacksonville',
         state: 'Florida',
-        zip: '32256'
-      }
+        zip: '32256',
+      },
     };
 
     return (
       <div>
         <AvForm onSubmit={this.handleSubmit} model={defaultValues}>
+          {/* Radios */}
+          <AvRadioGroup inline name="locationType" label="Location Type" required>
+            <AvRadio label="Residential" value="home" />
+            <AvRadio label="Business" value="work" />
+            <AvRadio label="Awesome" value="awesome" />
+          </AvRadioGroup>
           {/* With AvField */}
           <AvField name="name" label="Name" required />
           <Row>

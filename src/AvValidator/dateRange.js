@@ -1,7 +1,32 @@
 import moment from 'moment';
 import { isEmpty, isoDateFormat } from './utils';
 
-export default function validate (value, context, { format = 'MM/DD/YYYY', displayFormat = 'MM/DD/YYYY', start = {}, end = {}, errorMessage } = {}) {
+function setMin(value) {
+  value.set('hours', 0);
+  value.set('minutes', 0);
+  value.set('seconds', 0);
+
+  return value;
+}
+
+function setMax(value) {
+  value.set('hours', 23);
+  value.set('minutes', 59);
+  value.set('seconds', 59);
+
+  return value;
+}
+
+
+function getStartDate(start) {
+  return setMin(moment().add(start.value, start.units));
+}
+
+function getEndDate(end) {
+  return setMax(moment().add(end.value, end.units));
+}
+
+export default function validate(value, context, { format = 'MM/DD/YYYY', displayFormat = 'MM/DD/YYYY', start = {}, end = {}, errorMessage } = {}) {
   if (isEmpty(value)) return true;
 
   let startDate;
@@ -21,28 +46,4 @@ export default function validate (value, context, { format = 'MM/DD/YYYY', displ
   return (date.isValid() &&
     (date.isBetween(startDate, endDate, 'day') || date.isSame(startDate, 'day') || date.isSame(endDate, 'day'))) ||
     errorMessage;
-};
-
-function getStartDate (start) {
-  return setMin(moment().add(start.value, start.units));
-}
-
-function getEndDate (end) {
-  return setMax(moment().add(end.value, end.units));
-}
-
-function setMin (value) {
-  value.set('hours', 0);
-  value.set('minutes', 0);
-  value.set('seconds', 0);
-
-  return value;
-}
-
-function setMax (value) {
-  value.set('hours', 23);
-  value.set('minutes', 59);
-  value.set('seconds', 59);
-
-  return value;
 }

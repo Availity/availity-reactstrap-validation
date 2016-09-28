@@ -13,13 +13,13 @@ export default class AvGroup extends Component {
     FormCtrl: PropTypes.object.isRequired,
   };
 
-  constructor (props) {
+  constructor(props) {
     super(props);
 
     this.state = {input: {props: {}}};
   }
 
-  getChildContext () {
+  getChildContext() {
     this.FormCtrl = {...this.context.FormCtrl};
     const registerValidator = this.FormCtrl.register;
     this.FormCtrl.register = (input) => {
@@ -35,11 +35,11 @@ export default class AvGroup extends Component {
     };
   }
 
-  getInputState () {
+  getInputState() {
     return this.context.FormCtrl.getInputState(this.state.input.props.name);
   }
 
-  render () {
+  render() {
     const validation = this.getInputState();
     return (
       <FormGroup color={validation.color} {...this.props} />

@@ -4,5 +4,5 @@ node_js:
 cache:
   directories:
     - node_modules
-after_script:
+after_success:
   - npm run ci
