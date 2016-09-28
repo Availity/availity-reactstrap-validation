@@ -39,7 +39,7 @@ describe('AvRadio', () => {
   it('should render a reactstrap Input', () => {
     const wrapper = shallow(<AvRadio name="yo" />, options);
 
-    expect(wrapper.type()).to.not.eql(undefined);
+    expect(wrapper.type()).to.not.be.undefined;
   });
 
   it('should have "av-untouched" class when untouched', () => {

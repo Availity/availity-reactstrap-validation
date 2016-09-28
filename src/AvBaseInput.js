@@ -36,7 +36,19 @@ export default class AvBaseInput extends Component {
     validate: {},
   };
 
-  state = { value: ''};
+  constructor(props) {
+    super(props);
+
+    this.state = { value: ''};
+    this.validations = {};
+    this.value = '';
+    this.onKeyUpHandler = ::this.onKeyUpHandler;
+    this.onInputHandler = ::this.onInputHandler;
+    this.onBlurHandler = ::this.onBlurHandler;
+    this.onFocusHandler = ::this.onFocusHandler;
+    this.onChangeHandler = ::this.onChangeHandler;
+    this.validate = ::this.validate;
+  }
 
   componentWillMount() {
     this.value = this.getDefaultValue().value;
@@ -48,7 +60,9 @@ export default class AvBaseInput extends Component {
     if (nextProps.value !== this.props.value) {
       this.value = nextProps.value;
       this.setState({value: nextProps.value});
-      this.validate();
+    }
+    if (nextProps !== this.props) {
+      this.updateValidations(nextProps);
     }
   }
 
@@ -56,7 +70,7 @@ export default class AvBaseInput extends Component {
     this.context.FormCtrl.unregister(this);
   }
 
-  onKeyUpHandler = (event) => {
+  onKeyUpHandler(event) {
     if (event && event.target && event.target.validity &&
       event.target.validity.badInput !== this.context.FormCtrl.isBad[this.props.name] &&
       (event.target.validity.badInput !== false || this.context.FormCtrl.isBad[this.props.name] !== undefined)) {
@@ -64,30 +78,30 @@ export default class AvBaseInput extends Component {
       this.validate();
     }
     this.props.onKeyUp && this.props.onKeyUp(event);
-  };
+  }
 
-  onInputHandler = (_value) => {
+  onInputHandler(_value) {
     this.value = getFieldValue(_value);
     this.validateEvent('onInput');
     !this.context.FormCtrl.isTouched[this.props.name] && this.context.FormCtrl.setTouched(this.props.name);
-  };
+  }
 
-  onBlurHandler = (_value) => {
+  onBlurHandler(_value) {
     this.value = getFieldValue(_value);
     this.validateEvent('onBlur');
     !this.context.FormCtrl.isTouched[this.props.name] && this.context.FormCtrl.setTouched(this.props.name);
-  };
+  }
 
-  onFocusHandler = (_value) => {
+  onFocusHandler(_value) {
     this.value = getFieldValue(_value);
     this.validateEvent('onFocus');
-  };
+  }
 
-  onChangeHandler = (_value) => {
+  onChangeHandler(_value) {
     this.value = getFieldValue(_value);
     this.validateEvent('onChange');
     !this.context.FormCtrl.isDirty[this.props.name] && this.context.FormCtrl.setDirty(this.props.name);
-  };
+  }
 
   getDefaultValue() {
     let key = 'defaultValue';
@@ -137,10 +151,6 @@ export default class AvBaseInput extends Component {
     return this.value;
   }
 
-  validations = {};
-
-  value = '';
-
   reset() {
     this.value = this.getDefaultValue().value;
     this.context.FormCtrl.setDirty(this.props.name, false);
@@ -159,22 +169,22 @@ export default class AvBaseInput extends Component {
     this.props[eventName] && this.props[eventName](this.value);
   }
 
-  validate = () => {
+  validate() {
     this.context.FormCtrl.validate(this.props.name);
-  };
+  }
 
-  updateValidations() {
-    this.validations = Object.assign({}, this.props.validate);
+  updateValidations(props = this.props) {
+    this.validations = Object.assign({}, props.validate);
 
-    if (htmlValidationTypes.indexOf(this.props.type) > -1) {
-      this.validations[this.props.type] = this.validations[this.props.type] || true;
+    if (htmlValidationTypes.indexOf(props.type) > -1) {
+      this.validations[props.type] = this.validations[props.type] || true;
     }
 
-    Object.keys(this.props)
+    Object.keys(props)
       .filter(val => htmlValidationAttrs.indexOf(val) > -1)
       .forEach(attr => {
-        if (this.props[attr]) {
-          this.validations[attr] = this.validations[attr] || {value: this.props[attr]};
+        if (props[attr]) {
+          this.validations[attr] = this.validations[attr] || {value: props[attr]};
         } else {
           delete this.validations[attr];
         }

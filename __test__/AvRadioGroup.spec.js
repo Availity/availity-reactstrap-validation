@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { AvRadioGroup, AvFeedback } from 'availity-reactstrap-validation';
-import { Input, FormGroup } from 'reactstrap';
+import { FormGroup } from 'reactstrap';
 
 let options;
 
@@ -37,48 +37,41 @@ describe('AvRadioGroup', () => {
   });
 
   it('should register a validation', () => {
-    let component = new AvRadioGroup({validate: ()=> {}});
-    component.props.required = true;
-    component.context = options.context;
-    component.componentWillMount();
-    expect(component.validations.required).to.eql({value: true});
-    component.props.required = false;
-    component.componentWillMount();
-    expect(component.validations.required).to.eql(undefined);
+    const wrapper = shallow(<AvRadioGroup name="yo" required />, options);
+    const instance = wrapper.instance();
+    expect(instance.validations.required.value).to.be.true;
   });
 
   it('should register then remove a disabled validation', () => {
-    let component = new AvRadioGroup({validate: ()=> {}});
-    component.props.required = true;
-    component.context = options.context;
-    component.componentWillMount();
-    component.props.required = false;
-    component.componentWillMount();
-    expect(component.validations.required).to.eql(undefined);
+    const wrapper = shallow(<AvRadioGroup name="yo" required />, options);
+    const instance = wrapper.instance();
+    expect(instance.validations.required.value).to.be.true;
+    wrapper.setProps({required: false});
+    expect(instance.validations.required).to.be.undefined;
   });
 
   it('should return the set value', ()=> {
-    let component = new AvRadioGroup({validate: ()=> {}});
+    const wrapper = shallow(<AvRadioGroup name="yo" />, options);
+    const component = wrapper.instance();
     component.value = 'boop';
     expect(component.getValue()).to.equal('boop');
   });
 
   it('should unregister when unmounted', ()=> {
-    let component = new AvRadioGroup({validate: ()=> {}});
-    component.context = options.context;
-    component.componentWillUnmount();
+    const wrapper = shallow(<AvRadioGroup name="yo" />, options);
+    wrapper.unmount();
     expect(options.context.FormCtrl.unregister).to.have.been.called;
   });
 
   it('should give default value from props', () => {
-    let component = new AvRadioGroup({validate: ()=> {}});
-    component.props.defaultValue = 'momo';
+    const wrapper = shallow(<AvRadioGroup name="yo" defaultValue="momo" />, options);
+    const component = wrapper.instance();
     expect(component.getDefaultValue()).to.eql({key: 'defaultValue', value: 'momo'});
   });
 
   it('should give default value from context', () => {
-    let component = new AvRadioGroup({validate: ()=> {}});
-    component.context = options.context;
+    const wrapper = shallow(<AvRadioGroup name="yo" />, options);
+    const component = wrapper.instance();
     component.context.FormCtrl.getDefaultValue = () => {
       return 'jiri';
     };
@@ -86,17 +79,15 @@ describe('AvRadioGroup', () => {
   });
 
   it('should give default fallback when no one set up their stuff', () => {
-    let component = new AvRadioGroup({validate: ()=> {}});
-    component.context = options.context;
+    const wrapper = shallow(<AvRadioGroup name="yo" />, options);
+    const component = wrapper.instance();
     expect(component.getDefaultValue()).to.eql({key: 'defaultValue', value: ''});
   });
 
   it('should reset properly', () => {
-    let component = new AvRadioGroup({validate: ()=> {}});
-    component.context = options.context;
+    const wrapper = shallow(<AvRadioGroup name="test" defaultValue="momo" />, options);
+    const component = wrapper.instance();
     component.setState = sinon.spy();
-    component.props.defaultValue = 'momo';
-    component.props.name = 'test';
     component.reset();
     expect(component.value).to.equal('momo');
     expect(component.setState).to.have.been.calledWith({value: 'momo'});
@@ -107,25 +98,18 @@ describe('AvRadioGroup', () => {
   });
 
   it('should reset properly and call props reset', () => {
-    let component = new AvRadioGroup({validate: ()=> {}});
-    component.context = options.context;
-    component.props.defaultValue = 'momo';
-    component.props.name = 'test';
-    component.setState = sinon.spy();
-    component.props.onReset = sinon.spy();
+    const spy = sinon.spy();
+    const wrapper = shallow(<AvRadioGroup defaultValue="momo" name="test" onReset={spy} />, options);
+    const component = wrapper.instance();
     component.reset();
-    expect(component.value).to.equal('momo');
-    expect(component.setState).to.have.been.calledWith({value: 'momo'});
-    expect(options.context.FormCtrl.setDirty).to.have.been.calledWith('test', false);
-    expect(options.context.FormCtrl.setTouched).to.have.been.calledWith('test', false);
-    expect(options.context.FormCtrl.setBad).to.have.been.calledWith('test', false);
-    expect(options.context.FormCtrl.validate).to.have.been.calledWith('test');
-    expect(component.props.onReset).to.have.been.calledWith('momo');
+    expect(spy).to.have.been.calledWith('momo');
   });
 
   it('should disconnect child context from form registration and validation', () => {
-    let component = new AvRadioGroup({validate: ()=> {}});
-    component.context = options.context;
+    const wrapper = shallow(<AvRadioGroup name="yo" />, options);
+    const component = wrapper.instance();
+    options.context.FormCtrl.register.reset();
+    options.context.FormCtrl.validate.reset();
     component.getChildContext().FormCtrl.register('charmander');
     component.getChildContext().FormCtrl.validate('squirtle');
     expect(options.context.FormCtrl.register).to.not.have.been.called;
@@ -133,8 +117,8 @@ describe('AvRadioGroup', () => {
   });
 
   it('should update the group via child context', () => {
-    let component = new AvRadioGroup({validate: ()=> {}});
-    component.context = options.context;
+    const wrapper = shallow(<AvRadioGroup name="yo" />, options);
+    const component = wrapper.instance();
     component.setState = sinon.spy();
     component.getChildContext().Group.update('momo');
     expect(component.value).to.equal('momo');
@@ -160,7 +144,7 @@ describe('AvRadioGroup', () => {
 
   it('should show a legend if we defined a label', () => {
     const wrapper = shallow(<AvRadioGroup name="yo" label="test" />, options);
-     expect(wrapper.contains(<legend>test</legend>)).to.equal(true)
+    expect(wrapper.contains(<legend>test</legend>)).to.be.true;
   });
 
   it('should wrap the children in a FormGroup when inline', () => {

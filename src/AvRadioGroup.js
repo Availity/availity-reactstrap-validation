@@ -32,14 +32,14 @@ export default class AvRadioGroup extends InputContainer {
 
   value = '';
 
-  updateValidations() {
-    this.validations = Object.assign({}, this.props.validate);
+  updateValidations(props = this.props) {
+    this.validations = Object.assign({}, props.validate);
 
-    Object.keys(this.props)
+    Object.keys(props)
       .filter(val => htmlValidationAttrs.indexOf(val) > -1)
       .forEach(attr => {
-        if (this.props[attr]) {
-          this.validations[attr] = this.validations[attr] || {value: this.props[attr]};
+        if (props[attr]) {
+          this.validations[attr] = this.validations[attr] || {value: props[attr]};
         } else {
           delete this.validations[attr];
         }
@@ -47,6 +47,12 @@ export default class AvRadioGroup extends InputContainer {
 
     this.context.FormCtrl.register(this);
     this.validate();
+  }
+
+  componentWillUpdate(nextProps) {
+    if (nextProps !== this.props) {
+      this.updateValidations(nextProps);
+    }
   }
 
   componentWillMount() {

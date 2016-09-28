@@ -1,6 +1,6 @@
 import { AvBaseInput } from 'availity-reactstrap-validation';
 
-describe('BaseInput', function () {
+describe('BaseInput', function() {
   beforeEach(() => {
     this.inputState = 'danger';
     this.props = {
@@ -66,7 +66,7 @@ describe('BaseInput', function () {
       this.component.componentWillMount();
       expect(this.setStateSpy).to.have.been.calledWithMatch({value: defaultValue});
     });
-    
+
     it('should trigger validation', () => {
       const spy = sinon.spy(this.component, 'validate');
       this.component.componentWillMount();
