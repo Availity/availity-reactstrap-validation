@@ -50,7 +50,7 @@ export default class AvRadioGroup extends InputContainer {
     this.validate();
   }
 
-  componentWillUpdate(nextProps) {
+  componentWillReceiveProps(nextProps) {
     if (nextProps.value !== this.props.value) {
       this.value = nextProps.value;
       this.setState({value: nextProps.value});
