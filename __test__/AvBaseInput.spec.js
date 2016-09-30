@@ -74,11 +74,11 @@ describe('BaseInput', function() {
     });
   });
 
-  describe('component will update', () => {
+  describe('component will receive props', () => {
     it('should do nothing if the value hasn\'t changed', () => {
       this.props.value = 123;
       const spy = sinon.spy(this.component, 'validate');
-      this.component.componentWillUpdate(this.props);
+      this.component.componentWillReceiveProps(this.props);
       expect(this.setStateSpy).to.not.have.been.called;
       expect(spy).to.not.have.been.called;
     });
@@ -86,20 +86,20 @@ describe('BaseInput', function() {
     describe('when the value changed', () => {
       it('should set the value to the new value', () => {
         const newValue = 2342;
-        this.component.componentWillUpdate({value: newValue});
+        this.component.componentWillReceiveProps({value: newValue});
         expect(this.component.value).to.equal(newValue);
       });
 
       it('should set the state value to the default value', () => {
         const newValue = 2342;
-        this.component.componentWillUpdate({value: newValue});
+        this.component.componentWillReceiveProps({value: newValue});
         expect(this.setStateSpy).to.have.been.calledWithMatch({value: newValue});
       });
 
       it('should trigger validation', () => {
         const newValue = 2342;
         const spy = sinon.spy(this.component, 'validate');
-        this.component.componentWillUpdate({value: newValue});
+        this.component.componentWillReceiveProps({value: newValue});
         expect(spy).to.have.been.calledOnce;
       });
     });
