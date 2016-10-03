@@ -33,12 +33,24 @@ describe('BaseInput', function() {
   });
 
   describe('class constructor', () => {
-    it('should set the initial value to an empty string', () => {
+    it('should set the initial value to this.props.value or empty string', () => {
       expect(this.component.value).to.equal('');
+
+      const initialValue = "1";
+      this.props.value = initialValue;
+      this.component = new AvBaseInput(this.props);
+      this.component.context = this.context;
+      expect(this.component.value).to.equal(initialValue);
     });
 
-    it('should set the initial state value to an empty string', () => {
+    it('should set the initial state value to this.props.value or empty string', () => {
       expect(this.component.state.value).to.equal('');
+
+      const initialValue = "1";
+      this.props.value = initialValue;
+      this.component = new AvBaseInput(this.props);
+      this.component.context = this.context;
+      expect(this.component.state.value).to.equal(initialValue);
     });
 
     it('should set the initial validations to an empty object', () => {
