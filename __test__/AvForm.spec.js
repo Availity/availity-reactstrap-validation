@@ -334,6 +334,38 @@ describe('AvForm', function () {
         expect(this.instance._validators[input.props.name]).to.not.exist;
       });
 
+      it('should remove the input error state', () => {
+        const input = {props: {name: 'myInput'}, validations: {}};
+        this.wrapper.setState({invalidInputs: {[input.props.name]: true}});
+        expect(this.wrapper.state('invalidInputs')[input.props.name]).to.be.true;
+        this.instance.unregisterInput(input);
+        expect(this.wrapper.state('invalidInputs')[input.props.name]).to.not.exist;
+      });
+
+      it('should remove the input dirty state', () => {
+        const input = {props: {name: 'myInput'}, validations: {}};
+        this.wrapper.setState({dirtyInputs: {[input.props.name]: true}});
+        expect(this.wrapper.state('dirtyInputs')[input.props.name]).to.be.true;
+        this.instance.unregisterInput(input);
+        expect(this.wrapper.state('dirtyInputs')[input.props.name]).to.not.exist;
+      });
+
+      it('should remove the input touched state', () => {
+        const input = {props: {name: 'myInput'}, validations: {}};
+        this.wrapper.setState({touchedInputs: {[input.props.name]: true}});
+        expect(this.wrapper.state('touchedInputs')[input.props.name]).to.be.true;
+        this.instance.unregisterInput(input);
+        expect(this.wrapper.state('touchedInputs')[input.props.name]).to.not.exist;
+      });
+
+      it('should remove the input bad input state', () => {
+        const input = {props: {name: 'myInput'}, validations: {}};
+        this.wrapper.setState({badInputs: {[input.props.name]: true}});
+        expect(this.wrapper.state('badInputs')[input.props.name]).to.be.true;
+        this.instance.unregisterInput(input);
+        expect(this.wrapper.state('badInputs')[input.props.name]).to.not.exist;
+      });
+
       it('should not care if the input was not registered', () => {
         const input = {props: {name: 'myInput'}, validations: {}};
         expect(this.instance._validators[input.props.name]).to.not.exist;

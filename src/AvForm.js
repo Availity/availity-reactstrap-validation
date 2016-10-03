@@ -142,6 +142,10 @@ export default class AvForm extends InputContainer {
     super.unregisterInput(input);
 
     delete this._validators[input.props.name];
+    this.setError(input.props.name, false);
+    this.setDirty(input.props.name, false);
+    this.setTouched(input.props.name, false);
+    this.setBad(input.props.name, false);
   }
 
   render() {
