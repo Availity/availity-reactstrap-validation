@@ -63,10 +63,16 @@ describe('AvRadioGroup', () => {
     expect(options.context.FormCtrl.unregister).to.have.been.called;
   });
 
-  it('should give default value from props', () => {
+  it('should give default value from value prop', () => {
+    const wrapper = shallow(<AvRadioGroup name="yo" value="momo" />, options);
+    const component = wrapper.instance();
+    expect(component.value).to.eql('momo');
+  });
+
+  it('should give default value from defaultValue prop when there is no value prop', () => {
     const wrapper = shallow(<AvRadioGroup name="yo" defaultValue="momo" />, options);
     const component = wrapper.instance();
-    expect(component.getDefaultValue()).to.eql({key: 'defaultValue', value: 'momo'});
+    expect(component.value).to.eql('momo');
   });
 
   it('should update the value when the value prop changes', () => {
@@ -75,6 +81,22 @@ describe('AvRadioGroup', () => {
     expect(component.getValue()).to.equal('momo');
     wrapper.setProps({value: 'yoyo'});
     expect(component.getValue()).to.equal('yoyo');
+  });
+
+  it('should update the validations when the props change', () => {
+    const wrapper = shallow(<AvRadioGroup name="yo" defaultValue="momo" />, options);
+    const component = wrapper.instance();
+    const spy = sinon.spy(component, 'updateValidations');
+    wrapper.setProps({required: true});
+    expect(spy).to.have.been.called;
+  });
+
+  it('should not update the validations when the props did not change', () => {
+    const wrapper = shallow(<AvRadioGroup name="yo" defaultValue="momo" />, options);
+    const component = wrapper.instance();
+    const spy = sinon.spy(component, 'updateValidations');
+    wrapper.setProps({defaultValue: 'momo'});
+    expect(spy).to.not.have.been.called;
   });
 
   it('should give default value from context', () => {

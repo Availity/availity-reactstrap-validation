@@ -67,6 +67,20 @@ describe('BaseInput', function() {
       expect(this.setStateSpy).to.have.been.calledWithMatch({value: defaultValue});
     });
 
+    it('should set the value to the value prop if provided', () => {
+      const defaultValue = 'some value';
+      this.component.props.value = defaultValue;
+      this.component.componentWillMount();
+      expect(this.component.value).to.equal(defaultValue);
+    });
+
+    it('should set the state value to the value prop if provided', () => {
+      const defaultValue = 'some value';
+      this.component.props.value = defaultValue;
+      this.component.componentWillMount();
+      expect(this.setStateSpy).to.have.been.calledWithMatch({value: defaultValue});
+    });
+
     it('should trigger validation', () => {
       const spy = sinon.spy(this.component, 'validate');
       this.component.componentWillMount();
