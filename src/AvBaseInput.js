@@ -40,9 +40,9 @@ export default class AvBaseInput extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { value: this.props.value || ''};
+    this.state = { value: ''};
     this.validations = {};
-    this.value = this.state.value;
+    this.value = '';
     this.onKeyUpHandler = ::this.onKeyUpHandler;
     this.onInputHandler = ::this.onInputHandler;
     this.onBlurHandler = ::this.onBlurHandler;
