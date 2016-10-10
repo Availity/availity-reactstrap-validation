@@ -8,8 +8,6 @@ const htmlValidationTypes = [
   /*'range', 'month', 'week', 'time'*/ // These do not currently have validation
 ];
 
-const getFieldValue = event => event && event.target && !isUndefined(event.target.value) ? event.target.value : event;
-
 export default class AvBaseInput extends Component {
   static propTypes = {
     name: PropTypes.string.isRequired,
@@ -82,24 +80,24 @@ export default class AvBaseInput extends Component {
   }
 
   onInputHandler(_value) {
-    this.value = getFieldValue(_value);
+    this.value = this.getFieldValue(_value);
     this.validateEvent('onInput');
     !this.context.FormCtrl.isTouched[this.props.name] && this.context.FormCtrl.setTouched(this.props.name);
   }
 
   onBlurHandler(_value) {
-    this.value = getFieldValue(_value);
+    this.value = this.getFieldValue(_value);
     this.validateEvent('onBlur');
     !this.context.FormCtrl.isTouched[this.props.name] && this.context.FormCtrl.setTouched(this.props.name);
   }
 
   onFocusHandler(_value) {
-    this.value = getFieldValue(_value);
+    this.value = this.getFieldValue(_value);
     this.validateEvent('onFocus');
   }
 
   onChangeHandler(_value) {
-    this.value = getFieldValue(_value);
+    this.value = this.getFieldValue(_value);
     this.validateEvent('onChange');
     !this.context.FormCtrl.isDirty[this.props.name] && this.context.FormCtrl.setDirty(this.props.name);
   }
@@ -114,6 +112,13 @@ export default class AvBaseInput extends Component {
     const value = this.props[key] || this.context.FormCtrl.getDefaultValue(this.props.name) || '';
 
     return {key, value};
+  }
+
+  getFieldValue(event){
+    if (this.props.type === 'checkbox') {
+      return event.target.checked;
+    }
+    return event && event.target && !isUndefined(event.target.value) ? event.target.value : event;
   }
 
   getValidationEvent() {

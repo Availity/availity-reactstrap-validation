@@ -393,6 +393,36 @@ describe('BaseInput', function() {
     });
   });
 
+  describe('get field value', () => {
+    it('should give the value of "checked" for a checkbox', () => {
+      this.props.type = 'checkbox';
+      const event = {target: {checked: {}}};
+      const result = this.component.getFieldValue(event);
+      expect(result).to.equal(event.target.checked);
+    });
+
+    it('should give the value of "value" for non checkboxs which have it defined', () => {
+      this.props.type = 'text';
+      const event = {target: {value: {}}};
+      const result = this.component.getFieldValue(event);
+      expect(result).to.equal(event.target.value);
+    });
+
+    it('should give the event for non checkboxs which do not have a target', () => {
+      this.props.type = 'text';
+      const event = {noTarget: {value: {}}};
+      const result = this.component.getFieldValue(event);
+      expect(result).to.equal(event);
+    });
+
+    it('should give the event for non checkboxs which do not have a value defined', () => {
+      this.props.type = 'text';
+      const event = {target: {noValue: {}}};
+      const result = this.component.getFieldValue(event);
+      expect(result).to.equal(event);
+    });
+  });
+
   describe('validate event', () => {
     it('should use getValidationEvent to get the validation event', () => {
       const spy = sinon.spy(this.component, 'getValidationEvent');
