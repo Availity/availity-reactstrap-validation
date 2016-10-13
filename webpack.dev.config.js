@@ -13,6 +13,7 @@ var paths = [
   '/',
   '/components/',
   '/components/validators/',
+  '/components/checkboxes/',
   '/components/avform/',
   '/404.html',
 ];

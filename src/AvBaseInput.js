@@ -16,6 +16,11 @@ export default class AvBaseInput extends Component {
     ]),
     validate: PropTypes.object,
     value: PropTypes.any,
+    defaultValue: PropTypes.any,
+    trueValue: PropTypes.any,
+    falseValue: PropTypes.any,
+    checked: PropTypes.bool,
+    defaultChecked: PropTypes.bool,
     state: PropTypes.bool,
     type: PropTypes.string,
     onKeyUp: PropTypes.func,
@@ -33,6 +38,8 @@ export default class AvBaseInput extends Component {
   static defaultProps = {
     validationEvent: '',
     validate: {},
+    trueValue: true,
+    falseValue: false,
   };
 
   constructor(props) {
@@ -50,16 +57,28 @@ export default class AvBaseInput extends Component {
   }
 
   componentWillMount() {
-    this.value = this.props.value || this.getDefaultValue().value;
+    this.value = this.props.value || this.getDefaultValue();
     this.setState({value: this.value});
     this.updateValidations();
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.value !== this.props.value) {
-      this.value = nextProps.value;
-      this.setState({value: nextProps.value});
+    if (nextProps.type === 'checkbox') {
+      if (nextProps.checked !== this.props.checked) {
+        if (nextProps.checked) {
+          this.value = nextProps.trueValue;
+        } else {
+          this.value = nextProps.falseValue;
+        }
+        this.setState({value: this.value});
+      }
+    } else {
+      if (nextProps.value !== this.props.value) {
+        this.value = nextProps.value;
+        this.setState({ value: nextProps.value });
+      }
     }
+
     if (!isEqual(nextProps, this.props)) {
       this.updateValidations(nextProps);
     }
@@ -103,20 +122,27 @@ export default class AvBaseInput extends Component {
   }
 
   getDefaultValue() {
-    let key = 'defaultValue';
+    let defaultValue = '';
 
     if (this.props.type === 'checkbox') {
-      key = 'defaultChecked';
+      if (!isUndefined(this.props.defaultChecked)) {
+        return this.props.defaultChecked ? this.props.trueValue : this.props.falseValue;
+      }
+      defaultValue = this.props.falseValue;
     }
 
-    const value = this.props[key] || this.context.FormCtrl.getDefaultValue(this.props.name) || '';
+    let value = this.props.defaultValue || this.context.FormCtrl.getDefaultValue(this.props.name);
 
-    return {key, value};
+    if (this.props.type === 'checkbox' && value !== this.props.trueValue) {
+      value = defaultValue;
+    }
+
+    return isUndefined(value) ? defaultValue : value;
   }
 
   getFieldValue(event){
     if (this.props.type === 'checkbox') {
-      return event.target.checked;
+      return event.target.checked ? this.props.trueValue : this.props.falseValue;
     }
     return event && event.target && !isUndefined(event.target.value) ? event.target.value : event;
   }
@@ -146,6 +172,10 @@ export default class AvBaseInput extends Component {
       ...htmlValAttrs,
     };
 
+    if (this.props.type === 'checkbox') {
+      newProps.checked = this.value === this.props.trueValue;
+    }
+
     if (state) {
       newProps.state = state;
     }
@@ -158,7 +188,7 @@ export default class AvBaseInput extends Component {
   }
 
   reset() {
-    this.value = this.getDefaultValue().value;
+    this.value = this.getDefaultValue();
     this.context.FormCtrl.setDirty(this.props.name, false);
     this.context.FormCtrl.setTouched(this.props.name, false);
     this.context.FormCtrl.setBad(this.props.name, false);

@@ -1,17 +1,20 @@
 import { AvBaseInput } from 'availity-reactstrap-validation';
 
-describe('BaseInput', function() {
+describe('BaseInput', function () {
   beforeEach(() => {
     this.inputState = 'danger';
     this.props = {
       name: 'fieldName',
+      // default props
       validateEvent: '',
       validate: {},
+      trueValue: true,
+      falseValue: false,
     };
     this.context = {
       FormCtrl: {
         inputs: {},
-        getDefaultValue: sinon.spy(),
+        getDefaultValue: sinon.stub(),
         getInputState: sinon.stub().returns(this.inputState),
         hasError: {},
         isDirty: {},
@@ -64,7 +67,7 @@ describe('BaseInput', function() {
       const defaultValue = 'some value';
       this.component.props.defaultValue = defaultValue;
       this.component.componentWillMount();
-      expect(this.setStateSpy).to.have.been.calledWithMatch({value: defaultValue});
+      expect(this.setStateSpy).to.have.been.calledWithMatch({ value: defaultValue });
     });
 
     it('should set the value to the value prop if provided', () => {
@@ -78,7 +81,7 @@ describe('BaseInput', function() {
       const defaultValue = 'some value';
       this.component.props.value = defaultValue;
       this.component.componentWillMount();
-      expect(this.setStateSpy).to.have.been.calledWithMatch({value: defaultValue});
+      expect(this.setStateSpy).to.have.been.calledWithMatch({ value: defaultValue });
     });
 
     it('should trigger validation', () => {
@@ -89,7 +92,7 @@ describe('BaseInput', function() {
   });
 
   describe('component will receive props', () => {
-    it('should do nothing if the value hasn\'t changed', () => {
+    it('should do nothing if the value has not changed', () => {
       this.props.value = 123;
       const spy = sinon.spy(this.component, 'validate');
       this.component.componentWillReceiveProps(this.props);
@@ -100,21 +103,71 @@ describe('BaseInput', function() {
     describe('when the value changed', () => {
       it('should set the value to the new value', () => {
         const newValue = 2342;
-        this.component.componentWillReceiveProps({value: newValue});
+        this.component.componentWillReceiveProps({ value: newValue });
         expect(this.component.value).to.equal(newValue);
       });
 
       it('should set the state value to the default value', () => {
         const newValue = 2342;
-        this.component.componentWillReceiveProps({value: newValue});
-        expect(this.setStateSpy).to.have.been.calledWithMatch({value: newValue});
+        this.component.componentWillReceiveProps({ value: newValue });
+        expect(this.setStateSpy).to.have.been.calledWithMatch({ value: newValue });
       });
 
       it('should trigger validation', () => {
         const newValue = 2342;
         const spy = sinon.spy(this.component, 'validate');
-        this.component.componentWillReceiveProps({value: newValue});
+        this.component.componentWillReceiveProps({ value: newValue });
         expect(spy).to.have.been.calledOnce;
+      });
+    });
+
+    describe('when it is a checkbox', () => {
+      describe('when the checked prop changes', () => {
+        it('should set the value to the trueValue when the next props checked prop is true', () => {
+          this.props.checked = false;
+          this.component.componentWillReceiveProps({
+            type: 'checkbox',
+            checked: true,
+            trueValue: true,
+            falseValue: false,
+          });
+          expect(this.component.value).to.equal(this.props.trueValue);
+        });
+
+        it('should set the value to the falseValue when the next props checked prop is false', () => {
+          this.props.checked = true;
+          this.component.componentWillReceiveProps({
+            type: 'checkbox',
+            checked: false,
+            trueValue: true,
+            falseValue: false,
+          });
+          expect(this.component.value).to.equal(this.props.falseValue);
+        });
+
+        it('should set the state to the new value', () => {
+          this.props.checked = false;
+          this.component.componentWillReceiveProps({
+            type: 'checkbox',
+            checked: true,
+            trueValue: true,
+            falseValue: false,
+          });
+          expect(this.setStateSpy).to.have.been.calledWithMatch({ value: this.props.trueValue });
+        });
+      });
+
+      describe('when the checked prop changes', () => {
+        it('should not set the state', () => {
+          this.props.checked = true;
+          this.component.componentWillReceiveProps({
+            type: 'checkbox',
+            checked: true,
+            trueValue: true,
+            falseValue: false,
+          });
+          expect(this.setStateSpy).to.not.have.been.called;
+        });
       });
     });
   });
@@ -166,7 +219,7 @@ describe('BaseInput', function() {
         });
       });
 
-      describe('with value',() => {
+      describe('with value', () => {
         it('should add validators to the list which when the attribute can trigger a validation', () => {
           this.component.props.min = 6;
           this.component.props.max = 12;
@@ -198,44 +251,68 @@ describe('BaseInput', function() {
   });
 
   describe('get default value', () => {
-    it('it should return an object', () => {
-      const result = this.component.getDefaultValue();
-      expect(result).to.be.an('object');
-    });
-
     describe('for non checkbox', () => {
-      it('should return "defaultValue" as the key', () => {
-        const result = this.component.getDefaultValue();
-        expect(result.key).to.equal('defaultValue');
-      });
-
       it('should return the prop value based on the key', () => {
         this.props.defaultValue = 'my default';
         const result = this.component.getDefaultValue();
         expect(this.context.FormCtrl.getDefaultValue).to.not.have.been.called;
-        expect(result.value).to.equal(this.props.defaultValue);
+        expect(result).to.equal(this.props.defaultValue);
       });
 
       it('should return the default value from the model when the prop is not present', () => {
+        const defaultValue = 'something';
+        this.context.FormCtrl.getDefaultValue.returns(defaultValue);
         const result = this.component.getDefaultValue();
         expect(this.context.FormCtrl.getDefaultValue).to.have.been.calledOnce;
-        expect(result.value).to.equal('');
+        expect(result).to.equal(defaultValue);
+      });
+
+      it('should return and empty string when the default value from the model and the prop are not present', () => {
+        this.context.FormCtrl.getDefaultValue.returns(undefined);
+        const result = this.component.getDefaultValue();
+        expect(result).to.equal('');
       });
     });
 
     describe('for a checkbox', () => {
-      it('should return "defaultChecked" key when', () => {
+      it('should return the trueValue prop when defaultChecked is true', () => {
         this.props.type = 'checkbox';
-        const result = this.component.getDefaultValue();
-        expect(result.key).to.equal('defaultChecked');
-      });
-
-      it('should return the prop value based on the key', () => {
-        this.props.type = 'checkbox';
-        this.props.defaultChecked = 'my default';
+        this.props.defaultChecked = true;
         const result = this.component.getDefaultValue();
         expect(this.context.FormCtrl.getDefaultValue).to.not.have.been.called;
-        expect(result.value).to.equal(this.props.defaultChecked);
+        expect(result).to.equal(this.props.trueValue);
+      });
+
+      it('should return the falseValue prop when defaultChecked is false', () => {
+        this.props.type = 'checkbox';
+        this.props.defaultChecked = false;
+        const result = this.component.getDefaultValue();
+        expect(this.context.FormCtrl.getDefaultValue).to.not.have.been.called;
+        expect(result).to.equal(this.props.falseValue);
+      });
+
+      it('should return the default value from the model when the defaultChecked is not present', () => {
+        this.props.type = 'checkbox';
+        const defaultValue = 'something';
+        this.props.trueValue = defaultValue;
+        this.context.FormCtrl.getDefaultValue.returns(defaultValue);
+        const result = this.component.getDefaultValue();
+        expect(this.context.FormCtrl.getDefaultValue).to.have.been.calledOnce;
+        expect(result).to.equal(defaultValue);
+      });
+
+      it('should return the falseValue when the model and the defaultChecked are not present', () => {
+        this.props.type = 'checkbox';
+        this.context.FormCtrl.getDefaultValue.returns(undefined);
+        const result = this.component.getDefaultValue();
+        expect(result).to.equal(this.props.falseValue);
+      });
+
+      it('should return the falseValue when there is a value that is not the trueValue', () => {
+        this.props.type = 'checkbox';
+        this.context.FormCtrl.getDefaultValue.returns('something else');
+        const result = this.component.getDefaultValue();
+        expect(result).to.equal(this.props.falseValue);
       });
     });
   });
@@ -250,22 +327,22 @@ describe('BaseInput', function() {
     });
 
     it('should not throw when event.target.validity is undefined', () => {
-      expect(this.component.onKeyUpHandler.bind(this.component, {target: {}})).to.not.throw();
+      expect(this.component.onKeyUpHandler.bind(this.component, { target: {} })).to.not.throw();
     });
 
     it('should not call setBadInput if it has not changed', () => {
       this.context.FormCtrl.isBad[this.props.name] = true;
-      this.component.onKeyUpHandler({target: {validity: {badInput: true}}});
+      this.component.onKeyUpHandler({ target: { validity: { badInput: true } } });
       expect(this.context.FormCtrl.setBad).to.not.have.been.called;
     });
 
     it('should call setBadInput if it has changed', () => {
       this.context.FormCtrl.isBad[this.props.name] = true;
-      this.component.onKeyUpHandler({target: {validity: {badInput: false}}});
+      this.component.onKeyUpHandler({ target: { validity: { badInput: false } } });
       expect(this.context.FormCtrl.setBad).to.have.been.calledWith(this.props.name, false);
 
       this.context.FormCtrl.isBad[this.props.name] = false;
-      this.component.onKeyUpHandler({target: {validity: {badInput: true}}});
+      this.component.onKeyUpHandler({ target: { validity: { badInput: true } } });
       expect(this.context.FormCtrl.setBad).to.have.been.calledWith(this.props.name, true);
     });
 
@@ -279,13 +356,13 @@ describe('BaseInput', function() {
 
   describe('on input handler', () => {
     it('should set the internal value to the passed value', () => {
-      const value = {some: 'value'};
+      const value = { some: 'value' };
       this.component.onInputHandler(value);
       expect(this.component.value).to.equal(value);
     });
 
     it('should set the internal value to the passed event value', () => {
-      const event = {target: {value: 'value'}};
+      const event = { target: { value: 'value' } };
       this.component.onInputHandler(event);
       expect(this.component.value).to.equal(event.target.value);
     });
@@ -311,13 +388,13 @@ describe('BaseInput', function() {
 
   describe('on blur handler', () => {
     it('should set the internal value to the passed value', () => {
-      const value = {some: 'value'};
+      const value = { some: 'value' };
       this.component.onBlurHandler(value);
       expect(this.component.value).to.equal(value);
     });
 
     it('should set the internal value to the passed event value', () => {
-      const event = {target: {value: 'value'}};
+      const event = { target: { value: 'value' } };
       this.component.onBlurHandler(event);
       expect(this.component.value).to.equal(event.target.value);
     });
@@ -343,13 +420,13 @@ describe('BaseInput', function() {
 
   describe('on focus handler', () => {
     it('should set the internal value to the passed value', () => {
-      const value = {some: 'value'};
+      const value = { some: 'value' };
       this.component.onFocusHandler(value);
       expect(this.component.value).to.equal(value);
     });
 
     it('should set the internal value to the passed event value', () => {
-      const event = {target: {value: 'value'}};
+      const event = { target: { value: 'value' } };
       this.component.onFocusHandler(event);
       expect(this.component.value).to.equal(event.target.value);
     });
@@ -363,13 +440,13 @@ describe('BaseInput', function() {
 
   describe('on change handler', () => {
     it('should set the internal value to the passed value', () => {
-      const value = {some: 'value'};
+      const value = { some: 'value' };
       this.component.onChangeHandler(value);
       expect(this.component.value).to.equal(value);
     });
 
     it('should set the internal value to the passed event value', () => {
-      const event = {target: {value: 'value'}};
+      const event = { target: { value: 'value' } };
       this.component.onChangeHandler(event);
       expect(this.component.value).to.equal(event.target.value);
     });
@@ -394,30 +471,53 @@ describe('BaseInput', function() {
   });
 
   describe('get field value', () => {
-    it('should give the value of "checked" for a checkbox', () => {
+    it('should give `true` for a checkbox when it is checked and not trueValue is defined', () => {
       this.props.type = 'checkbox';
-      const event = {target: {checked: {}}};
+      const event = { target: { checked: true } };
       const result = this.component.getFieldValue(event);
-      expect(result).to.equal(event.target.checked);
+      expect(result).to.be.true;
+    });
+
+    it('should give `false` for a checkbox when it is not checked and not falseValue is defined', () => {
+      this.props.type = 'checkbox';
+      const event = { target: { checked: false } };
+      const result = this.component.getFieldValue(event);
+      expect(result).to.be.false;
+    });
+
+    it('should give the value of the "trueValue" props for a checkbox when it is checked', () => {
+      this.props.type = 'checkbox';
+      this.props.trueValue = {};
+      const event = { target: { checked: true } };
+      const result = this.component.getFieldValue(event);
+      expect(result).to.equal(this.props.trueValue);
+    });
+
+    it('should give the value of the "falseValue" props for a checkbox when it is not checked', () => {
+      this.props.type = 'checkbox';
+      this.props.falseValue = {};
+      const event = { target: { checked: false } };
+      const result = this.component.getFieldValue(event);
+      expect(result).to.equal(this.props.falseValue);
     });
 
     it('should give the value of "value" for non checkboxs which have it defined', () => {
       this.props.type = 'text';
-      const event = {target: {value: {}}};
+      const event = { target: { value: {} } };
       const result = this.component.getFieldValue(event);
       expect(result).to.equal(event.target.value);
     });
 
     it('should give the event for non checkboxs which do not have a target', () => {
       this.props.type = 'text';
-      const event = {noTarget: {value: {}}};
+      const event = { noTarget: { value: {} } };
       const result = this.component.getFieldValue(event);
       expect(result).to.equal(event);
     });
 
     it('should give the event for non checkboxs which do not have a value defined', () => {
       this.props.type = 'text';
-      const event = {target: {noValue: {}}};
+      const event = { target: { noValue: {} } };
       const result = this.component.getFieldValue(event);
       expect(result).to.equal(event);
     });
@@ -464,7 +564,7 @@ describe('BaseInput', function() {
         const value = {};
         this.component.value = value;
         this.component.validateEvent('onChange');
-        expect(this.setStateSpy).to.have.been.calledWithMatch({value});
+        expect(this.setStateSpy).to.have.been.calledWithMatch({ value });
       });
 
       it('should try to validate', () => {
@@ -517,7 +617,7 @@ describe('BaseInput', function() {
       const defaultValue = 'some value';
       this.component.props.defaultValue = defaultValue;
       this.component.reset();
-      expect(this.setStateSpy).to.have.been.calledWithMatch({value: defaultValue});
+      expect(this.setStateSpy).to.have.been.calledWithMatch({ value: defaultValue });
     });
 
     it('should trigger validation', () => {
@@ -563,30 +663,48 @@ describe('BaseInput', function() {
       this.props.state = true;
       const result = this.component.getValidatorProps();
       expect(this.context.FormCtrl.getInputState).to.have.been.calledWith(this.props.name);
-      expect(result).to.include({state: this.inputState});
+      expect(result).to.include({ state: this.inputState });
     });
 
     it('should turn the validations in the validate prop into attrs if they are legit attrs', () => {
       this.props.validate = {
-        min: {value: 6},
+        min: { value: 6 },
         required: true,
-        match: {value: 'something'},
+        match: { value: 'something' },
       };
       const result = this.component.getValidatorProps();
-      expect(result).to.include({min: 6, required: true}).and.not.include.keys('match');
+      expect(result).to.include({ min: 6, required: true }).and.not.include.keys('match');
     });
 
     describe('returned object', () => {
       it('should have the default event handlers', () => {
         const result = this.component.getValidatorProps();
-        expect(result).to.include.all.keys('onKeyUp', 'onBlur','onInput','onChange','onFocus');
+        expect(result).to.include.all.keys('onKeyUp', 'onBlur', 'onInput', 'onChange', 'onFocus');
       });
 
       it('should have the current value', () => {
         const value = 'something';
         this.component.value = value;
         const result = this.component.getValidatorProps();
-        expect(result).to.include({value});
+        expect(result).to.include({ value });
+      });
+
+      describe('when a checkbox', () => {
+        it('should set the checked attribute to true when the value matches the trueValue', () => {
+          this.props.type = 'checkbox';
+          this.props.trueValue = 'yes';
+          this.component.value = 'yes';
+          const result = this.component.getValidatorProps();
+          expect(result.checked).to.be.true;
+        });
+
+        it('should set the checked attribute to false when the value does not match the trueValue', () => {
+          this.props.type = 'checkbox';
+          this.props.trueValue = 'yes';
+          this.component.value = true;
+          const result = this.component.getValidatorProps();
+          expect(result.checked).to.be.false;
+        });
       });
     });
   });

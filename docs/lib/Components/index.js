@@ -21,13 +21,17 @@ class Components extends React.Component {
       navItems: [
         {
           name: 'AvForm',
-          to: '/components/avform/'
+          to: '/components/avform/',
         },
         {
           name: 'Validators',
-          to: '/components/validators/'
+          to: '/components/validators/',
         },
-      ]
+        {
+          name: 'Checkboxes',
+          to: '/components/checkboxes/',
+        },
+      ],
     };
   }
   render() {

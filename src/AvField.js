@@ -83,7 +83,7 @@ export default class AvField extends Component {
 
     return (
       <AvGroup disabled={disabled} row={row} {...groupAttrs}>
-        <Label
+        {label && <Label
           for={id}
           className={labelClass}
           hidden={labelHidden}
@@ -92,7 +92,7 @@ export default class AvField extends Component {
           {...labelAttrs}
         >
           {label}
-        </Label>
+        </Label>}
         {row ? <Col {...col}>{input}{feedback}{help}</Col> : input}
         {!row && feedback}
         {!row && help}

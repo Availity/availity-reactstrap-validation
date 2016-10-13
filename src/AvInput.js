@@ -15,6 +15,8 @@ export default class AvInput extends AvBaseInput {
       validate: omit2,
       validationEvent: omit3,
       state: omit4,
+      trueValue: omit5,
+      falseValue: omit6,
       className,
       tag: Tag,
       ...attributes,
