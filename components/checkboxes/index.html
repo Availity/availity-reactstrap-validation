@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+      <html>
+        <head>
+          <meta charset="utf-8">
+          <meta http-equiv="X-UA-Compatible" content="IE=edge">
+          <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+          <title data-react-helmet="true">Availity reactstrap Validation - Checkboxes</title>
+          <meta data-react-helmet="true" name="description" content="Availity reactstrap Validation - easy to use form validation for reactstrap"/><meta data-react-helmet="true" property="og:type" content="article"/>
+          <link rel=icon href="/availity-reactstrap-validation/assets/favicon.ico">
+          <link rel="stylesheet" href="/availity-reactstrap-validation/assets/style.css"/>
+          <link rel="stylesheet" href="/availity-reactstrap-validation/assets/docs.css"/>
+        </head>
+        <body>
+          <div id="app"><div class="wrapper" data-reactroot="" data-reactid="1" data-react-checksum="1713567126"><!-- react-empty: 2 --><nav role="navigation" class="header navbar navbar-light bg-faded" data-reactid="3"><div class="container-fluid" data-reactid="4"><a class="navbar-brand" href="/availity-reactstrap-validation/" data-reactid="5">Availity reactstrap Validation</a><ul class="nav navbar-nav pull-xs-right nav" data-reactid="6"><li class="nav-item" data-reactid="7"><a class="nav-link nav-link active" href="/availity-reactstrap-validation/components/" data-reactid="8">Components</a></li><li class="nav-item" data-reactid="9"><a href="https://github.com/availity/availity-reactstrap-validation" class="nav-link" data-reactid="10">Github</a></li></ul></div></nav><div class="content container-fluid" data-reactid="11"><div class="row" data-reactid="12"><div class="col-xs-12 col-md-3 push-md-9" data-reactid="13"><div class="docs-sidebar m-b-3" data-reactid="14"><h5 data-reactid="15">Components</h5><ul class="nav" data-reactid="16"><li class="nav-item" data-reactid="17"><a class="nav-link" href="/availity-reactstrap-validation/components/avform/" data-reactid="18">AvForm</a></li><li class="nav-item" data-reactid="19"><a class="nav-link" href="/availity-reactstrap-validation/components/validators/" data-reactid="20">Validators</a></li><li class="nav-item" data-reactid="21"><a class="nav-link active" href="/availity-reactstrap-validation/components/checkboxes/" data-reactid="22">Checkboxes</a></li></ul></div></div><div class="col-xs-12 col-md-9 pull-md-3" data-reactid="23"><div data-reactid="24"><!-- react-empty: 25 --><h3 data-reactid="26">Checkboxes</h3><p data-reactid="27"><!-- react-text: 28 -->Checkboxes are slightly special as the user cannot define a value, but only check and uncheck the box. There are special props, <!-- /react-text --><code data-reactid="29">trueValue</code><!-- react-text: 30 --> and <!-- /react-text --><code data-reactid="31">falseValue</code><!-- react-text: 32 --> which allow you to determine what the value returned will be when the box is check or not checked respectfully. <!-- /react-text --><code data-reactid="33">trueValue</code><!-- react-text: 34 --> will default to <!-- /react-text --><code data-reactid="35">true</code><!-- react-text: 36 --> and <!-- /react-text --><code data-reactid="37">falseValue</code><!-- react-text: 38 --> will default to <!-- /react-text --><code data-reactid="39">false</code><!-- react-text: 40 -->.<!-- /react-text --></p><div class="docs-example" data-reactid="41"><div data-reactid="42"><form novalidate="" action="#" method="get" class="av-valid" data-reactid="43"><div class="form-group" data-reactid="44"><label class="form-check-inline " data-reactid="45"><input type="checkbox" name="checkbox" value="false" class="av-untouched av-pristine av-valid form-check-input" data-reactid="46"/><!-- react-text: 47 --> Check it Out<!-- /react-text --></label></div><div class="form-group" data-reactid="48"><label class="form-check-inline " data-reactid="49"><input type="checkbox" name="inOrOut" value="NOPE!" class="av-untouched av-pristine av-valid form-check-input" data-reactid="50"/><!-- react-text: 51 --> Are You In?<!-- /react-text --></label></div><div class="form-group" data-reactid="52"><button class="btn btn-primary" data-reactid="53">Submit</button></div></form></div></div><pre data-reactid="54"><code class="language-jsx" data-reactid="55">import React from &#x27;react&#x27;;
+import { AvForm, AvGroup, AvInput } from &#x27;availity-reactstrap-validation&#x27;;
+import { Button, Label, FormGroup } from &#x27;reactstrap&#x27;;
+
+export default class Example extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.state = {};
+  }
+
+  handleSubmit(event, errors, values) {
+    this.setState({errors, values});
+  }
+
+  render() {
+    return (
+      &lt;div&gt;
+        &lt;AvForm onSubmit={this.handleSubmit}&gt;
+          &lt;AvGroup&gt;
+            &lt;Label check inline&gt;
+              &lt;AvInput type=&quot;checkbox&quot; name=&quot;checkbox&quot; /&gt; Check it Out
+            &lt;/Label&gt;
+          &lt;/AvGroup&gt;
+          &lt;AvGroup&gt;
+            &lt;Label check inline&gt;
+              &lt;AvInput type=&quot;checkbox&quot; name=&quot;inOrOut&quot; trueValue=&quot;Yes, I&#x27;m in!&quot; falseValue=&quot;NOPE!&quot; /&gt; Are You In?
+            &lt;/Label&gt;
+          &lt;/AvGroup&gt;
+          &lt;FormGroup&gt;
+            &lt;Button&gt;Submit&lt;/Button&gt;
+          &lt;/FormGroup&gt;
+        &lt;/AvForm&gt;
+        {this.state.values &amp;&amp; &lt;div&gt;
+          &lt;h5&gt;Submission values&lt;/h5&gt;
+          Invalid: {this.state.errors.join(&#x27;, &#x27;)}&lt;br /&gt;
+          Values: &lt;pre&gt;{JSON.stringify(this.state.values, null, 2)}&lt;/pre&gt;
+        &lt;/div&gt;}
+      &lt;/div&gt;
+    );
+  }
+}
+</code></pre><h4 data-reactid="56">True Value</h4><p data-reactid="57"><!-- react-text: 58 -->Checking the boxes and submitting the form, you will see the value passed is the <!-- /react-text --><code data-reactid="59">trueValue</code><!-- react-text: 60 --> for the checkbox; <!-- /react-text --><code data-reactid="61">true</code><!-- react-text: 62 --> by default.<!-- /react-text --></p><div class="docs-example" data-reactid="63"><div data-reactid="64"><form novalidate="" action="#" method="get" class="av-valid" data-reactid="65"><div class="form-group" data-reactid="66"><label class="form-check-inline " data-reactid="67"><input type="checkbox" name="agree" required="" value="false" class="av-untouched av-pristine av-valid form-check-input" data-reactid="68"/><!-- react-text: 69 --> Agree to this!<!-- /react-text --></label></div><div class="form-group" data-reactid="70"><button class="btn btn-primary" data-reactid="71">Submit</button></div></form></div></div><pre data-reactid="72"><code class="language-jsx" data-reactid="73">import React from &#x27;react&#x27;;
+import { AvForm, AvGroup, AvInput } from &#x27;availity-reactstrap-validation&#x27;;
+import { Button, Label, FormGroup } from &#x27;reactstrap&#x27;;
+
+export default class Example extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.state = {};
+  }
+
+  handleSubmit(event, errors, values) {
+    this.setState({errors, values});
+  }
+
+  render() {
+    return (
+      &lt;div&gt;
+        &lt;AvForm onSubmit={this.handleSubmit}&gt;
+          &lt;AvGroup&gt;
+            &lt;Label check inline&gt;
+              &lt;AvInput type=&quot;checkbox&quot; name=&quot;agree&quot; trueValue=&quot;User Agreed&quot; required /&gt; Agree to this!
+            &lt;/Label&gt;
+          &lt;/AvGroup&gt;
+          &lt;FormGroup&gt;
+            &lt;Button&gt;Submit&lt;/Button&gt;
+          &lt;/FormGroup&gt;
+        &lt;/AvForm&gt;
+        {this.state.values &amp;&amp; &lt;div&gt;
+          &lt;h5&gt;Submission values&lt;/h5&gt;
+          Invalid: {this.state.errors.join(&#x27;, &#x27;)}&lt;br /&gt;
+          Values: &lt;pre&gt;{JSON.stringify(this.state.values, null, 2)}&lt;/pre&gt;
+        &lt;/div&gt;}
+      &lt;/div&gt;
+    );
+  }
+}
+</code></pre><h4 data-reactid="74">False Value</h4><p data-reactid="75"><!-- react-text: 76 -->Leaving the boxes unchecked and submitting the form, you will see the value passed is the<!-- /react-text --><code data-reactid="77">falseValue</code><!-- react-text: 78 --> for the checkbox; <!-- /react-text --><code data-reactid="79">false</code><!-- react-text: 80 --> by default.<!-- /react-text --></p><div class="docs-example" data-reactid="81"><div data-reactid="82"><form novalidate="" action="#" method="get" class="av-valid" data-reactid="83"><div class="form-group" data-reactid="84"><label class="form-check-inline " data-reactid="85"><input type="checkbox" name="doNotAgree" value="User Does Not Agreed" class="av-untouched av-pristine av-valid form-check-input" data-reactid="86"/><!-- react-text: 87 --> Agree to this!<!-- /react-text --></label></div><div class="form-group" data-reactid="88"><button class="btn btn-primary" data-reactid="89">Submit</button></div></form></div></div><pre data-reactid="90"><code class="language-jsx" data-reactid="91">import React from &#x27;react&#x27;;
+import { AvForm, AvGroup, AvInput } from &#x27;availity-reactstrap-validation&#x27;;
+import { Button, Label, FormGroup  } from &#x27;reactstrap&#x27;;
+
+export default class Example extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.state = {};
+  }
+
+  handleSubmit(event, errors, values) {
+    this.setState({errors, values});
+  }
+
+  render() {
+    return (
+      &lt;div&gt;
+        &lt;AvForm onSubmit={this.handleSubmit}&gt;
+          &lt;AvGroup&gt;
+            &lt;Label check inline&gt;
+              &lt;AvInput type=&quot;checkbox&quot; name=&quot;doNotAgree&quot; falseValue=&quot;User Does Not Agreed&quot; /&gt; Agree to this!
+            &lt;/Label&gt;
+          &lt;/AvGroup&gt;
+          &lt;FormGroup&gt;
+            &lt;Button&gt;Submit&lt;/Button&gt;
+          &lt;/FormGroup&gt;
+        &lt;/AvForm&gt;
+        {this.state.values &amp;&amp; &lt;div&gt;
+          &lt;h5&gt;Submission values&lt;/h5&gt;
+          Invalid: {this.state.errors.join(&#x27;, &#x27;)}&lt;br /&gt;
+          Values: &lt;pre&gt;{JSON.stringify(this.state.values, null, 2)}&lt;/pre&gt;
+        &lt;/div&gt;}
+      &lt;/div&gt;
+    );
+  }
+}
+</code></pre><h4 data-reactid="92">Model Default Values</h4><p data-reactid="93">Using the model prop on the form, you can indicate if the checkboxes should be checked or unchecked when initialized by providing the trueValue or falseValue in the model prop on the form.</p><div class="docs-example" data-reactid="94"><div data-reactid="95"><form novalidate="" action="#" method="get" class="av-valid" data-reactid="96"><div class="form-group" data-reactid="97"><label class="form-check-inline " data-reactid="98"><input type="checkbox" name="checkbox1" value="true" checked="" class="av-untouched av-pristine av-valid form-check-input" data-reactid="99"/><!-- react-text: 100 --> true is &quot;checked&quot; (default)<!-- /react-text --></label></div><div class="form-group" data-reactid="101"><label class="form-check-inline " data-reactid="102"><input type="checkbox" name="checkbox2" value="false" class="av-untouched av-pristine av-valid form-check-input" data-reactid="103"/><!-- react-text: 104 --> false is &quot;unchecked&quot; (default)<!-- /react-text --></label></div><div class="form-group" data-reactid="105"><label class="form-check-inline " data-reactid="106"><input type="checkbox" name="checkbox3" value="false" checked="" class="av-untouched av-pristine av-valid form-check-input" data-reactid="107"/><!-- react-text: 108 --> false can be &quot;checked&quot;<!-- /react-text --></label></div><div class="form-group" data-reactid="109"><label class="form-check-inline " data-reactid="110"><input type="checkbox" name="checkbox4" value="true" class="av-untouched av-pristine av-valid form-check-input" data-reactid="111"/><!-- react-text: 112 --> true can be &quot;unchecked&quot;<!-- /react-text --></label></div><div class="form-group" data-reactid="113"><label class="form-check-inline " data-reactid="114"><input type="checkbox" name="checkbox5" value="yes" checked="" class="av-untouched av-pristine av-valid form-check-input" data-reactid="115"/><!-- react-text: 116 --> make &quot;yes&quot; checked<!-- /react-text --></label></div><div class="form-group" data-reactid="117"><label class="form-check-inline " data-reactid="118"><input type="checkbox" name="checkbox6" value="yes" class="av-untouched av-pristine av-valid form-check-input" data-reactid="119"/><!-- react-text: 120 --> make &quot;yes&quot; unchecked<!-- /react-text --></label></div><div class="form-group" data-reactid="121"><label class="form-check-inline " data-reactid="122"><input type="checkbox" name="checkbox7" value="no" checked="" class="av-untouched av-pristine av-valid form-check-input" data-reactid="123"/><!-- react-text: 124 --> make &quot;no&quot; checked<!-- /react-text --></label></div><div class="form-group" data-reactid="125"><label class="form-check-inline " data-reactid="126"><input type="checkbox" name="checkbox8" value="no" class="av-untouched av-pristine av-valid form-check-input" data-reactid="127"/><!-- react-text: 128 --> make &quot;no&quot; unchecked<!-- /react-text --></label></div><div class="form-group" data-reactid="129"><label class="form-check-inline " data-reactid="130"><input type="checkbox" name="checkbox9" value="false" class="av-untouched av-pristine av-valid form-check-input" data-reactid="131"/><!-- react-text: 132 --> any values that are not the trueValue is unchecked<!-- /react-text --></label></div><div class="form-group" data-reactid="133"><button class="btn btn-primary" data-reactid="134">Submit</button></div></form></div></div><pre data-reactid="135"><code class="language-jsx" data-reactid="136">import React from &#x27;react&#x27;;
+import { AvForm, AvGroup, AvInput } from &#x27;availity-reactstrap-validation&#x27;;
+import { Button, Label, FormGroup } from &#x27;reactstrap&#x27;;
+
+export default class Example extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.state = {};
+  }
+
+  handleSubmit(event, errors, values) {
+    this.setState({errors, values});
+  }
+
+  render() {
+    const model = {
+      checkbox1: true,
+      checkbox2: false,
+      checkbox3: false,
+      checkbox4: true,
+      checkbox5: &#x27;yes&#x27;,
+      checkbox6: &#x27;yes&#x27;,
+      checkbox7: &#x27;no&#x27;,
+      checkbox8: &#x27;no&#x27;,
+      checkbox9: &#x27;other?&#x27;,
+    };
+
+    return (
+      &lt;div&gt;
+        &lt;AvForm onSubmit={this.handleSubmit} model={model}&gt;
+          &lt;AvGroup&gt;
+            &lt;Label check inline&gt;
+              &lt;AvInput type=&quot;checkbox&quot; name=&quot;checkbox1&quot; /&gt; true is &quot;checked&quot; (default)
+            &lt;/Label&gt;
+          &lt;/AvGroup&gt;
+          &lt;AvGroup&gt;
+            &lt;Label check inline&gt;
+              &lt;AvInput type=&quot;checkbox&quot; name=&quot;checkbox2&quot; /&gt; false is &quot;unchecked&quot; (default)
+            &lt;/Label&gt;
+          &lt;/AvGroup&gt;
+          &lt;AvGroup&gt;
+            &lt;Label check inline&gt;
+              &lt;AvInput type=&quot;checkbox&quot; trueValue={false} falseValue name=&quot;checkbox3&quot; /&gt; false can be &quot;checked&quot;
+            &lt;/Label&gt;
+          &lt;/AvGroup&gt;
+          &lt;AvGroup&gt;
+            &lt;Label check inline&gt;
+              &lt;AvInput type=&quot;checkbox&quot; trueValue={false} falseValue name=&quot;checkbox4&quot; /&gt; true can be &quot;unchecked&quot;
+            &lt;/Label&gt;
+          &lt;/AvGroup&gt;
+          &lt;AvGroup&gt;
+            &lt;Label check inline&gt;
+              &lt;AvInput type=&quot;checkbox&quot; trueValue=&quot;yes&quot; name=&quot;checkbox5&quot; /&gt; make &quot;yes&quot; checked
+            &lt;/Label&gt;
+          &lt;/AvGroup&gt;
+          &lt;AvGroup&gt;
+            &lt;Label check inline&gt;
+              &lt;AvInput type=&quot;checkbox&quot; falseValue=&quot;yes&quot; name=&quot;checkbox6&quot; /&gt; make &quot;yes&quot; unchecked
+            &lt;/Label&gt;
+          &lt;/AvGroup&gt;
+          &lt;AvGroup&gt;
+            &lt;Label check inline&gt;
+              &lt;AvInput type=&quot;checkbox&quot; trueValue=&quot;no&quot; falseValue=&quot;yes&quot; name=&quot;checkbox7&quot; /&gt; make &quot;no&quot; checked
+            &lt;/Label&gt;
+          &lt;/AvGroup&gt;
+          &lt;AvGroup&gt;
+            &lt;Label check inline&gt;
+              &lt;AvInput type=&quot;checkbox&quot; trueValue=&quot;yes&quot; falseValue=&quot;no&quot; name=&quot;checkbox8&quot; /&gt; make &quot;no&quot; unchecked
+            &lt;/Label&gt;
+          &lt;/AvGroup&gt;
+          &lt;AvGroup&gt;
+            &lt;Label check inline&gt;
+              &lt;AvInput type=&quot;checkbox&quot; name=&quot;checkbox9&quot; /&gt; any values that are not the trueValue is unchecked
+            &lt;/Label&gt;
+          &lt;/AvGroup&gt;
+          &lt;FormGroup&gt;
+            &lt;Button&gt;Submit&lt;/Button&gt;
+          &lt;/FormGroup&gt;
+        &lt;/AvForm&gt;
+        {this.state.values &amp;&amp; &lt;div&gt;
+          &lt;h5&gt;Submission values&lt;/h5&gt;
+          Invalid: {this.state.errors.join(&#x27;, &#x27;)}&lt;br /&gt;
+          Values: &lt;pre&gt;{JSON.stringify(this.state.values, null, 2)}&lt;/pre&gt;
+        &lt;/div&gt;}
+      &lt;/div&gt;
+    );
+  }
+}
+</code></pre></div></div></div></div><div class="footer" data-reactid="137"><div class="container-fluid" data-reactid="138"><div class="row" data-reactid="139"><div class="text-xs-center col-xs-12" data-reactid="140"><p class="social" data-reactid="141"><!-- react-text: 142 -->© 2016 Availity<!-- /react-text --><!-- react-text: 143 --> <!-- /react-text --><iframe src="https://ghbtns.com/github-btn.html?user=availity&amp;repo=availity-reactstrap-validation&amp;type=star&amp;count=true" frameborder="0" scrolling="0" width="100" height="20px" data-reactid="144"></iframe><iframe src="https://ghbtns.com/github-btn.html?user=availity&amp;repo=availity-reactstrap-validation&amp;type=fork&amp;count=true" frameborder="0" scrolling="0" width="100" height="20px" data-reactid="145"></iframe></p></div></div></div></div></div></div>
+          <script src="/availity-reactstrap-validation/assets/prism.js" data-manual></script>
+          <script>window.basename = '/availity-reactstrap-validation';</script>
+          <script src="/availity-reactstrap-validation/bundle.js"></script>
+        </body>
+      </html>
