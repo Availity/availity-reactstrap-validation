@@ -160,7 +160,7 @@ export default class AvForm extends InputContainer {
       validateAll: omit7,
       validationEvent: omit8,
       className,
-      ...attributes,
+      ...attributes
     } = this.props;
 
     const classes = classNames(

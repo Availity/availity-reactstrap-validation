@@ -50,7 +50,7 @@ export default class AvField extends Component {
       grid,
       labelAttrs,
       groupAttrs,
-      ...attributes,
+      ...attributes
     } = this.props;
     const id = this.props.id || attributes.name;
 

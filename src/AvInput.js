@@ -19,7 +19,7 @@ export default class AvInput extends AvBaseInput {
       falseValue: omit6,
       className,
       tag: Tag,
-      ...attributes,
+      ...attributes
     } = this.props;
 
     const classes = classNames(

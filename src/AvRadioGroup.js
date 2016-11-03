@@ -145,7 +145,7 @@ export default class AvRadioGroup extends InputContainer {
       required: omit6,
       inline,
       children,
-      ...attributes,
+      ...attributes
     } = this.props;
 
     let radios = children;

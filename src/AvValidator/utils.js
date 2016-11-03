@@ -19,7 +19,7 @@ if (typeof document !== 'undefined' && typeof document.createElement === 'functi
 
   for (const i in inputType) {
     if (inputType.hasOwnProperty(i)) {
-      tester.type = i;
+      tester.setAttribute('type', i);
       tester.value = ':(';
 
       if (tester.type === i && tester.value === '') {
