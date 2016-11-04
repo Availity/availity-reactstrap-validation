@@ -1,6 +1,6 @@
 {
   "name": "availity-reactstrap-validation",
-  "version": "1.3.1",
+  "version": "1.3.2",
   "author": "Evan Sharp <evan.sharp@availity.com>",
   "description": "Form validation helpers for reactstrap",
   "main": "lib/index.js",
@@ -76,6 +76,9 @@
     "babel-eslint": "^6.1.2",
     "babel-loader": "^6.2.5",
     "babel-plugin-istanbul": "^1.1.0",
+    "babel-plugin-transform-class-properties": "^6.18.0",
+    "babel-plugin-transform-proto-to-assign": "^6.9.0",
+    "babel-plugin-transform-runtime": "^6.15.0",
     "babel-polyfill": "^6.13.0",
     "babel-preset-es2015": "^6.13.2",
     "babel-preset-es2015-loose": "^7.0.0",

@@ -9,6 +9,8 @@ export default class AvInput extends AvBaseInput {
     tag: Input,
   });
 
+  static contextTypes = AvBaseInput.contextTypes;
+
   render() {
     const {
       errorMessage: omit1,

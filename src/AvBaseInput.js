@@ -155,7 +155,7 @@ export default class AvBaseInput extends Component {
 
   getValidatorProps() {
     const state = this.props.state && this.context.FormCtrl.getInputState(this.props.name);
-    const htmlValAttrs = Object.keys(this.props.validate)
+    const htmlValAttrs = Object.keys(this.props.validate || {})
       .filter(val => htmlValidationAttrs.indexOf(val) > -1)
       .reduce((result, item) => {
         result[item] = this.props.validate[item].value || this.props.validate[item];
@@ -226,7 +226,7 @@ export default class AvBaseInput extends Component {
         }
       });
 
-    this.context.FormCtrl.register(this);
+    this.context.FormCtrl && this.context.FormCtrl.register(this);
     this.validate();
   }
 }
