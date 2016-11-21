@@ -40,8 +40,13 @@ export default class AvForm extends InputContainer {
     ]),
     onValidSubmit: PropTypes.func,
     onInvalidSubmit: PropTypes.func,
-    validationEvent: PropTypes.oneOf([
-      'onInput', 'onChange', 'onBlur', 'onFocus',
+    validationEvent: PropTypes.oneOfType([
+      PropTypes.oneOf([
+        'onInput', 'onChange', 'onBlur', 'onFocus',
+      ]),
+      PropTypes.arrayOf(PropTypes.oneOf([
+        'onInput', 'onChange', 'onBlur', 'onFocus',
+      ])),
     ]),
     errorMessage: PropTypes.oneOfType([
       PropTypes.object,
@@ -53,7 +58,7 @@ export default class AvForm extends InputContainer {
   static defaultProps = {
     tag: Form,
     model: {},
-    validationEvent: 'onChange',
+    validationEvent: ['onChange', 'onInput'],
     method: 'get',
     onSubmit: () => {},
     onKeyDown: () => {},

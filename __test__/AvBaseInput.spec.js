@@ -373,16 +373,16 @@ describe('BaseInput', function () {
       expect(spy).to.have.been.calledWith('onInput');
     });
 
-    it('should call setTouched if the control was not previously touched', () => {
-      this.context.FormCtrl.isTouched[this.props.name] = false;
+    it('should call setDirty if the control was not previously dirty', () => {
+      this.context.FormCtrl.isDirty[this.props.name] = false;
       this.component.onInputHandler('something');
-      expect(this.context.FormCtrl.setTouched).to.have.been.calledWith(this.props.name);
+      expect(this.context.FormCtrl.setDirty).to.have.been.calledWith(this.props.name);
     });
 
-    it('should not call setTouched if the control was previously touched', () => {
-      this.context.FormCtrl.isTouched[this.props.name] = true;
+    it('should not call setDirty if the control was previously dirty', () => {
+      this.context.FormCtrl.isDirty[this.props.name] = true;
       this.component.onInputHandler('something');
-      expect(this.context.FormCtrl.setTouched).to.not.have.been.called;
+      expect(this.context.FormCtrl.setDirty).to.not.have.been.called;
     });
   });
 
@@ -451,7 +451,7 @@ describe('BaseInput', function () {
       expect(this.component.value).to.equal(event.target.value);
     });
 
-    it('should call valitateEvent with the onInput event', () => {
+    it('should call valitateEvent with the onChange event', () => {
       const spy = sinon.spy(this.component, 'validateEvent');
       this.component.onChangeHandler('something');
       expect(spy).to.have.been.calledWith('onChange');
@@ -638,12 +638,12 @@ describe('BaseInput', function () {
   describe('get validation event', () => {
     it('should return the validation event pass via props if present', () => {
       this.props.validationEvent = 'myEvent';
-      expect(this.component.getValidationEvent()).to.equal(this.props.validationEvent);
+      expect(this.component.getValidationEvent()).to.eql([this.props.validationEvent]);
     });
 
     it('should return the validation event from the form control if not from props', () => {
       this.props.validationEvent = '';
-      expect(this.component.getValidationEvent()).to.equal(this.context.FormCtrl.validationEvent);
+      expect(this.component.getValidationEvent()).to.eql([this.context.FormCtrl.validationEvent]);
     });
   });
 

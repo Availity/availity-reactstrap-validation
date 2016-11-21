@@ -11,8 +11,13 @@ const htmlValidationTypes = [
 export default class AvBaseInput extends Component {
   static propTypes = {
     name: PropTypes.string.isRequired,
-    validationEvent: PropTypes.oneOf([
-      '', 'onInput', 'onChange', 'onBlur', 'onFocus',
+    validationEvent: PropTypes.oneOfType([
+      PropTypes.oneOf([
+        '', 'onInput', 'onChange', 'onBlur', 'onFocus',
+      ]),
+      PropTypes.arrayOf(PropTypes.oneOf([
+        'onInput', 'onChange', 'onBlur', 'onFocus',
+      ])),
     ]),
     validate: PropTypes.object,
     value: PropTypes.any,
@@ -101,7 +106,7 @@ export default class AvBaseInput extends Component {
   onInputHandler(_value) {
     this.value = this.getFieldValue(_value);
     this.validateEvent('onInput');
-    !this.context.FormCtrl.isTouched[this.props.name] && this.context.FormCtrl.setTouched(this.props.name);
+    !this.context.FormCtrl.isDirty[this.props.name] && this.context.FormCtrl.setDirty(this.props.name);
   }
 
   onBlurHandler(_value) {
@@ -148,9 +153,10 @@ export default class AvBaseInput extends Component {
   }
 
   getValidationEvent() {
-    return (this.props.validationEvent)
+    const validationEvent = this.props.validationEvent
       ? this.props.validationEvent
       : this.context.FormCtrl.validationEvent;
+    return Array.isArray(validationEvent) ? validationEvent : [validationEvent];
   }
 
   getValidatorProps() {
@@ -198,7 +204,7 @@ export default class AvBaseInput extends Component {
   }
 
   validateEvent(eventName) {
-    if (this.getValidationEvent() === eventName) {
+    if (this.getValidationEvent().includes(eventName)) {
       this.setState({value: this.value});
       this.validate();
     }
