@@ -14,10 +14,10 @@ export default class AvRadio extends Component {
 
   static propTypes = radioPropTypes;
 
-  onChangeHandler = (e) => {
+  onChangeHandler = (...args) => {
     this.context.Group.update(this.props.value);
     if (this.props.onChange) {
-      this.props.onChange(e);
+      this.props.onChange(...args);
     }
   };
 

@@ -546,12 +546,13 @@ describe('BaseInput', function () {
         expect(spy).to.not.have.been.called;
       });
 
-      it('should trigger the callback from props with the value', () => {
+      it('should trigger the callback from props with the original event and the value', () => {
         this.props.onChange = sinon.spy();
         const value = {};
+        const originalEvent = {};
         this.component.value = value;
-        this.component.validateEvent('onChange');
-        expect(this.props.onChange).to.have.been.calledWith(value);
+        this.component.validateEvent('onChange', originalEvent);
+        expect(this.props.onChange).to.have.been.calledWith(originalEvent, value);
       });
     });
 
@@ -576,9 +577,10 @@ describe('BaseInput', function () {
       it('should trigger the callback from props with the value', () => {
         this.props.onChange = sinon.spy();
         const value = {};
+        const originalEvent = {};
         this.component.value = value;
-        this.component.validateEvent('onChange');
-        expect(this.props.onChange).to.have.been.calledWith(value);
+        this.component.validateEvent('onChange', originalEvent);
+        expect(this.props.onChange).to.have.been.calledWith(originalEvent, value);
       });
     });
   });

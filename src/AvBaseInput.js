@@ -105,24 +105,24 @@ export default class AvBaseInput extends Component {
 
   onInputHandler(_value) {
     this.value = this.getFieldValue(_value);
-    this.validateEvent('onInput');
+    this.validateEvent('onInput', _value);
     !this.context.FormCtrl.isDirty[this.props.name] && this.context.FormCtrl.setDirty(this.props.name);
   }
 
   onBlurHandler(_value) {
     this.value = this.getFieldValue(_value);
-    this.validateEvent('onBlur');
+    this.validateEvent('onBlur', _value);
     !this.context.FormCtrl.isTouched[this.props.name] && this.context.FormCtrl.setTouched(this.props.name);
   }
 
   onFocusHandler(_value) {
     this.value = this.getFieldValue(_value);
-    this.validateEvent('onFocus');
+    this.validateEvent('onFocus', _value);
   }
 
   onChangeHandler(_value) {
     this.value = this.getFieldValue(_value);
-    this.validateEvent('onChange');
+    this.validateEvent('onChange', _value);
     !this.context.FormCtrl.isDirty[this.props.name] && this.context.FormCtrl.setDirty(this.props.name);
   }
 
@@ -203,12 +203,12 @@ export default class AvBaseInput extends Component {
     this.props.onReset && this.props.onReset(this.value);
   }
 
-  validateEvent(eventName) {
+  validateEvent(eventName, _event) {
     if (this.getValidationEvent().includes(eventName)) {
       this.setState({value: this.value});
       this.validate();
     }
-    this.props[eventName] && this.props[eventName](this.value);
+    this.props[eventName] && this.props[eventName](_event, this.value);
   }
 
   validate() {
