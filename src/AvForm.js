@@ -204,8 +204,9 @@ export default class AvForm extends InputContainer {
     Object.keys(this._inputs).forEach(inputName => this._inputs[inputName].reset());
   }
 
-  validateInput(name) {
-    this.validateOne(name, this.getValues());
+  async validateInput(name) {
+    await this.validateOne(name, this.getValues());
+    this.forceUpdate();
   }
 
   getInputState(inputName) {

@@ -98,6 +98,12 @@ describe('AvRadio', () => {
     expect(wrapper.type()).to.equal(Label);
   });
 
+
+  it('should toString the value to add it to the DOM via Input', () => {
+    const wrapper = shallow(<AvRadio name="yo" value="yes" />, options);
+    expect(wrapper.find(Input).prop('value')).to.eql('yes');
+  });
+
   describe('on change handler', () => {
     beforeEach(() => {
       inputState = 'danger';
@@ -136,8 +142,9 @@ describe('AvRadio', () => {
     });
 
     it('should update group value on change', () => {
-      component.onChangeHandler();
-      expect(options.context.Group.update).to.have.been.calledWith(props.value);
+      const event = {};
+      component.onChangeHandler(event);
+      expect(options.context.Group.update).to.have.been.calledWith(event, props.value);
     });
 
     it('should run props on change if it\'s there', () => {

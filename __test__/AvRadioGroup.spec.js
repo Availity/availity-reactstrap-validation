@@ -150,10 +150,19 @@ describe('AvRadioGroup', () => {
     const wrapper = shallow(<AvRadioGroup name="yo" />, options);
     const component = wrapper.instance();
     component.setState = sinon.spy();
-    component.getChildContext().Group.update('momo');
+    component.getChildContext().Group.update({}, 'momo');
     expect(component.value).to.equal('momo');
     expect(component.setState).to.have.been.calledWith({value: 'momo'});
     expect(options.context.FormCtrl.validate).to.have.been.called;
+  });
+
+  it('should trigger the change callback when the value is updated', () => {
+    const spy = sinon.spy();
+    const wrapper = shallow(<AvRadioGroup name="yo" onChange={spy} />, options);
+    const component = wrapper.instance();
+    const event = {};
+    component.getChildContext().Group.update(event, 'momo');
+    expect(spy).to.have.been.calledWith(event, 'momo');
   });
 
   it('should render validation message when sent', () => {

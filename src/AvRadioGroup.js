@@ -106,10 +106,13 @@ export default class AvRadioGroup extends InputContainer {
     this.FormCtrl.register = noop;
     this.FormCtrl.validate = noop;
 
-    const updateGroup = (value) => {
+    const updateGroup = (e, value) => {
       this.setState({value});
       this.value = value;
       this.validate();
+      !this.context.FormCtrl.isTouched[this.props.name] && this.context.FormCtrl.setTouched(this.props.name);
+      !this.context.FormCtrl.isDirty[this.props.name] && this.context.FormCtrl.setDirty(this.props.name);
+      this.props.onChange && this.props.onChange(e, value);
     };
 
     return {
