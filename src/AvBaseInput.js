@@ -49,8 +49,7 @@ export default class AvBaseInput extends Component {
 
   constructor(props) {
     super(props);
-
-    this.state = { value: ''};
+    this.state = { value: (this.props.multiple ? [] : '')};
     this.validations = {};
     this.value = '';
     this.onKeyUpHandler = ::this.onKeyUpHandler;
@@ -135,6 +134,9 @@ export default class AvBaseInput extends Component {
       }
       defaultValue = this.props.falseValue;
     }
+    if (this.props.type === 'select' && this.props.multiple){
+        defaultValue = [];
+    }
 
     let value = this.props.defaultValue || this.context.FormCtrl.getDefaultValue(this.props.name);
 
@@ -148,6 +150,9 @@ export default class AvBaseInput extends Component {
   getFieldValue(event){
     if (this.props.type === 'checkbox') {
       return event.target.checked ? this.props.trueValue : this.props.falseValue;
+    }
+    if (this.props.type === 'select' && this.props.multiple){
+        return [...event.target.options].filter(({selected}) => selected).map(({value}) => value)
     }
     return event && event.target && !isUndefined(event.target.value) ? event.target.value : event;
   }
