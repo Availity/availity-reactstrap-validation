@@ -77,6 +77,10 @@ export default class AvBaseInput extends Component {
         this.setState({value: this.value});
       }
     } else {
+      if (nextProps.multiple !== this.props.multiple){
+        this.value = (nextProps.multiple ? [] : '');
+        this.setState({ value: this.value });
+      }
       if (nextProps.value !== this.props.value) {
         this.value = nextProps.value;
         this.setState({ value: nextProps.value });
@@ -134,8 +138,9 @@ export default class AvBaseInput extends Component {
       }
       defaultValue = this.props.falseValue;
     }
+
     if (this.props.type === 'select' && this.props.multiple){
-        defaultValue = [];
+      defaultValue = [];
     }
 
     let value = this.props.defaultValue || this.context.FormCtrl.getDefaultValue(this.props.name);
@@ -152,7 +157,7 @@ export default class AvBaseInput extends Component {
       return event.target.checked ? this.props.trueValue : this.props.falseValue;
     }
     if (this.props.type === 'select' && this.props.multiple){
-        return [...event.target.options].filter(({selected}) => selected).map(({value}) => value)
+      return [...event.target.options].filter(({selected}) => selected).map(({value}) => value)
     }
     return event && event.target && !isUndefined(event.target.value) ? event.target.value : event;
   }
