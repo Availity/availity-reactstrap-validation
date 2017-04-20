@@ -28,6 +28,7 @@ export default class AvBaseInput extends Component {
     defaultChecked: PropTypes.bool,
     state: PropTypes.bool,
     type: PropTypes.string,
+    multiple: PropTypes.bool,
     onKeyUp: PropTypes.func,
     onInput: PropTypes.func,
     onFocus: PropTypes.func,
@@ -157,7 +158,7 @@ export default class AvBaseInput extends Component {
       return event.target.checked ? this.props.trueValue : this.props.falseValue;
     }
     if (this.props.type === 'select' && this.props.multiple){
-      return [...event.target.options].filter(({selected}) => selected).map(({value}) => value)
+      return [...event.target.options].filter(({selected}) => selected).map(({value}) => value);
     }
     return event && event.target && !isUndefined(event.target.value) ? event.target.value : event;
   }
