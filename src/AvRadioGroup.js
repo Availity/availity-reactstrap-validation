@@ -1,7 +1,8 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import InputContainer from './AvInputContainer';
 import AvFeedback from './AvFeedback';
-import isEqual from 'lodash.isequal';
+import { isEqual } from 'lodash';
 import { FormGroup } from 'reactstrap';
 
 const htmlValidationAttrs = ['required'];

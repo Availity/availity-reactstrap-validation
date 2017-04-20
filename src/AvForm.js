@@ -1,11 +1,10 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import InputContainer from './AvInputContainer';
 import AvValidator from './AvValidator';
 import { Form } from 'reactstrap';
 import classNames from 'classnames';
-import _get from 'lodash.get';
-import _set from 'lodash.set';
-import isString from 'lodash.isstring';
+import {get as _get, set as _set, isString} from 'lodash';
 
 const getInputErrorMessage = (input, ruleName) => {
   const errorMessage = input.props.errorMessage;

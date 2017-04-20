@@ -1,5 +1,4 @@
-import isNumber from 'lodash.isnumber';
-import toNumber from 'lodash.tonumber';
+import { isNumber, toNumber } from 'lodash';
 import { isEmpty } from './utils';
 
 export default function validate(value, context, {errorMessage = false} = {}) {

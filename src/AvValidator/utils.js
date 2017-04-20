@@ -1,5 +1,4 @@
-import isString from 'lodash.isstring';
-import isUndefined from 'lodash.isundefined';
+import { isString, isUndefined } from 'lodash';
 /* global document */
 export const isoDateFormat = 'YYYY-MM-DD';
 

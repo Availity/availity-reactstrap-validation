@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import {Component} from 'react';
 
 function validComponent(input) {
   const type = input && input.props ? input.props.type : undefined;

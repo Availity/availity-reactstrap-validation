@@ -1,4 +1,4 @@
-import toNumber from 'lodash.tonumber';
+import { toNumber } from 'lodash';
 import { isEmpty } from './utils';
 
 export default function validate(value, context, constraint = {}) {

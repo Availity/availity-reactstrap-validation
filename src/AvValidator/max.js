@@ -1,5 +1,5 @@
 import moment from 'moment';
-import toNumber from 'lodash.tonumber';
+import { toNumber } from 'lodash';
 import { isEmpty, isoDateFormat } from './utils';
 
 export default function validate(value, context, constraint = {}, input = {}) {
