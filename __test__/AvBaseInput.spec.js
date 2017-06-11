@@ -552,7 +552,7 @@ describe('BaseInput', function () {
       expect(result).to.equal(event);
     });
 
-    it('something something todo', () => {
+    it('should give the selected options', () => {
       this.props.type = 'select';
       this.props.multiple = true;
       const event = { target: { options: [ { value: 'selected', selected: true }, { value: 'notSelected', selected: false } ] } };
