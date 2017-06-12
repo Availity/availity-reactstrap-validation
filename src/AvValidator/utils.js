@@ -3,7 +3,7 @@ import { isString, isUndefined } from 'lodash';
 export const isoDateFormat = 'YYYY-MM-DD';
 
 export function isEmpty(value) {
-  return isUndefined(value) || (isString(value) && value.trim() === '') || value === false;
+  return isUndefined(value) || (isString(value) && value.trim() === '') || value === false || (Array.isArray(value) && value.length === 0 );
 }
 
 export const inputType = {date: false, number: false, time: false, month: false, week: false};

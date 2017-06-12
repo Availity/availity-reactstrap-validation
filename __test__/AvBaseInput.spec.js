@@ -10,6 +10,7 @@ describe('BaseInput', function () {
       validate: {},
       trueValue: true,
       falseValue: false,
+      multiple: false,
     };
     this.context = {
       FormCtrl: {
@@ -46,6 +47,12 @@ describe('BaseInput', function () {
 
     it('should set the initial validations to an empty object', () => {
       expect(this.component.validations).to.deep.equal({});
+    });
+
+    it('should set the initial state value to an empty array if multiple is specified', () => {
+      this.props.multiple = true;
+      this.component.constructor(this.props);
+      expect(this.component.state.value).to.be.empty;
     });
   });
 
@@ -118,6 +125,19 @@ describe('BaseInput', function () {
         const spy = sinon.spy(this.component, 'validate');
         this.component.componentWillReceiveProps({ value: newValue });
         expect(spy).to.have.been.calledOnce;
+      });
+
+      it('should reset the value if multiple has changed from false to true', () => {
+        this.props.multiple = false;
+        this.component.componentWillReceiveProps({multiple: true});
+        expect(this.component.value).to.be.empty;
+        expect(this.component.state.value).to.be.empty;
+      });
+
+      it('should reset the value if multiple has changed from true to false', () => {
+        this.props.multiple = true;
+        this.component.componentWillReceiveProps({multiple: false});
+        expect(this.component.value).to.equal('');
       });
     });
 
@@ -274,6 +294,15 @@ describe('BaseInput', function () {
       });
     });
 
+    describe('for select', () => {
+      it('should return empty array', () => {
+        this.props.type = 'select';
+        this.props.multiple = true;
+        const result = this.component.getDefaultValue();
+        expect(result).to.be.empty;
+      });
+    });
+
     describe('for a checkbox', () => {
       it('should return the trueValue prop when defaultChecked is true', () => {
         this.props.type = 'checkbox';
@@ -315,6 +344,7 @@ describe('BaseInput', function () {
         expect(result).to.equal(this.props.falseValue);
       });
     });
+
   });
 
   describe('on key up handler', () => {
@@ -520,6 +550,14 @@ describe('BaseInput', function () {
       const event = { target: { noValue: {} } };
       const result = this.component.getFieldValue(event);
       expect(result).to.equal(event);
+    });
+
+    it('should give the selected options', () => {
+      this.props.type = 'select';
+      this.props.multiple = true;
+      const event = { target: { options: [ { value: 'selected', selected: true }, { value: 'notSelected', selected: false } ] } };
+      const result = this.component.getFieldValue(event);
+      expect(result).to.deep.equal([ 'selected' ]);
     });
   });
 
