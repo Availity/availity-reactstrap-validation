@@ -7,7 +7,7 @@ export default class AvFeedback extends Component {
 
   static contextTypes = {
     FormCtrl: PropTypes.object.isRequired,
-    Group: React.PropTypes.object.isRequired,
+    Group: PropTypes.object.isRequired,
   };
 
   render() {
