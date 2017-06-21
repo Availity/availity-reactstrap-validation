@@ -2,9 +2,9 @@ import React from 'react';
 import classNames from 'classnames';
 import {Input} from 'reactstrap';
 import AvBaseInput from './AvBaseInput';
+import {observer} from 'mobx-react';
 
-
-export default class AvInput extends AvBaseInput {
+export class AvInput extends AvBaseInput {
   static defaultProps = Object.assign({}, AvBaseInput.defaultProps, {
     tag: Input,
   });
@@ -41,3 +41,5 @@ export default class AvInput extends AvBaseInput {
     );
   }
 }
+
+export default observer(AvInput);

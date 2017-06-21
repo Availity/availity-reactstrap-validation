@@ -4,10 +4,11 @@ import AvInput from './AvInput';
 import AvGroup from './AvGroup';
 import AvFeedback from './AvFeedback';
 import {Col, FormText, Label} from 'reactstrap';
+import {observer} from 'mobx-react';
 
 const colSizes = ['xs', 'sm', 'md', 'lg', 'xl'];
 
-export default class AvField extends Component {
+export class AvField extends Component {
   static propTypes = Object.assign({}, AvInput.propTypes, {
     label: PropTypes.node,
     labelHidden: PropTypes.bool,
@@ -101,3 +102,5 @@ export default class AvField extends Component {
     );
   }
 }
+
+export default observer(AvField);

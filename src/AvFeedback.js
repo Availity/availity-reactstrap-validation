@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import { FormFeedback } from 'reactstrap';
+import {observer} from 'mobx-react';
 
-export default class AvFeedback extends Component {
+export class AvFeedback extends Component {
   static propTypes = Object.assign({}, FormFeedback.propTypes);
 
   static contextTypes = {
@@ -15,3 +16,5 @@ export default class AvFeedback extends Component {
     return validation.color ? <FormFeedback {...this.props} /> : null;
   }
 }
+
+export default observer(AvFeedback);

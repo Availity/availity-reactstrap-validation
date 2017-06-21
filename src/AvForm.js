@@ -5,6 +5,7 @@ import AvValidator from './AvValidator';
 import { Form } from 'reactstrap';
 import classNames from 'classnames';
 import {get as _get, set as _set, isString} from 'lodash';
+import {observer} from 'mobx-react';
 
 const getInputErrorMessage = (input, ruleName) => {
   const errorMessage = input.props.errorMessage;
@@ -15,7 +16,7 @@ const getInputErrorMessage = (input, ruleName) => {
   return errorMessage;
 };
 
-export default class AvForm extends InputContainer {
+export class AvForm extends InputContainer {
   static childContextTypes = {
     FormCtrl: PropTypes.object.isRequired,
   };
@@ -447,3 +448,5 @@ export default class AvForm extends InputContainer {
     return input.getValue();
   }
 }
+
+export default observer(AvForm);
