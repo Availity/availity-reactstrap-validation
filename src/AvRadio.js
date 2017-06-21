@@ -3,11 +3,12 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import {Input, FormGroup, Label} from 'reactstrap';
 import AvInput from './AvInput';
+import {observer} from 'mobx-react';
 
 const radioPropTypes = Object.assign({}, AvInput.propTypes);
 delete radioPropTypes.name;
 
-export default class AvRadio extends Component {
+export class AvRadio extends Component {
 
   static contextTypes = Object.assign({}, AvInput.contextTypes, {
     Group: PropTypes.object.isRequired,
@@ -57,3 +58,5 @@ export default class AvRadio extends Component {
     );
   }
 }
+
+export default observer(AvRadio);

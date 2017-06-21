@@ -4,12 +4,13 @@ import InputContainer from './AvInputContainer';
 import AvFeedback from './AvFeedback';
 import { isEqual } from 'lodash';
 import { FormGroup } from 'reactstrap';
+import {observer} from 'mobx-react';
 
 const htmlValidationAttrs = ['required'];
 
 const noop = () => {};
 
-export default class AvRadioGroup extends InputContainer {
+export class AvRadioGroup extends InputContainer {
   static propTypes = Object.assign({}, FormGroup.propTypes, {
     name: PropTypes.string.isRequired,
   });
@@ -167,3 +168,5 @@ export default class AvRadioGroup extends InputContainer {
     );
   }
 }
+
+export default observer(AvRadioGroup);

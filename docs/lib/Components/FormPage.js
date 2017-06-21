@@ -5,6 +5,8 @@ import Helmet from 'react-helmet';
 
 import FormExample from '../examples/Form';
 const FormExampleSource = require('!!raw!../examples/Form.js');
+import MobxFormExample from '../examples/MobxForm';
+const MobxFormExampleSource = require('!!raw!../examples/MobxForm.js');
 import FormOnSubmitExample from '../examples/FormOnSubmit';
 const FormOnSubmitExampleSource = require('!!raw!../examples/FormOnSubmit.js');
 import FormOnValidSubmitExample from '../examples/FormOnValidSubmit';
@@ -21,12 +23,24 @@ export default class FormPage extends React.Component {
         <Helmet title="Form" />
         <h3>AvForm</h3>
         <p>The AvForm component wraps reactstrap's form to add context that the other Av components know about to help share validation state</p>
+
         <div className="docs-example">
           <FormExample />
         </div>
         <pre>
           <PrismCode className="language-jsx">
             {FormExampleSource}
+          </PrismCode>
+        </pre>
+
+        <h3>AvForm with Mobx</h3>
+        <p>The AvForm component wrapped by Mobx's observer</p>
+        <div className="docs-example">
+          <MobxFormExample />
+        </div>
+        <pre>
+          <PrismCode className="language-jsx">
+            {MobxFormExampleSource}
           </PrismCode>
         </pre>
 

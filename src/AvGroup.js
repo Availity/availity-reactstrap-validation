@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import { FormGroup } from 'reactstrap';
+import {observer} from 'mobx-react';
 
-export default class AvGroup extends Component {
+export class AvGroup extends Component {
   static propTypes = Object.assign({}, FormGroup.propTypes);
 
   static contextTypes = {
@@ -47,3 +48,5 @@ export default class AvGroup extends Component {
     );
   }
 }
+
+export default observer(AvGroup);
