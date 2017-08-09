@@ -53,8 +53,7 @@
     "url": "https://github.com/Availity/availity-reactstrap-validation/issues"
   },
   "homepage": "https://github.com/Availity/availity-reactstrap-validation",
-  "dependencies": {
-    "babel-polyfill": "^6.13.0",
+  "dependencies": {    
     "classnames": "^2.2.3",
     "lodash": "^4.17.4",
     "moment": "^2.14.1"
