@@ -13,6 +13,14 @@ Install `availity-reactstrap-validation` via NPM
 npm install --save availity-reactstrap-validation
 ```
 
+If applicable, install a `Promise` polyfill.  For example:
+
+```sh
+npm install es6-promise --save
+```
+
+The polyfill can be applied into your web application by using tools like Webpack or Babel.
+
 Import the components you need, example:
 
 ```js
@@ -27,7 +35,7 @@ Install dependencies:
 npm install
 ```
 
-Run examples at [http://localhost:8080/](http://localhost:8080/) with webpack dev server:
+Run examples at [http://localhost:8080/](http://localhost:8080/) with Webpack dev server:
 
 ```sh
 npm start
