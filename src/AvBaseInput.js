@@ -215,7 +215,7 @@ export default class AvBaseInput extends Component {
   }
 
   validateEvent(eventName, _event) {
-    if (this.getValidationEvent().includes(eventName)) {
+    if (this.getValidationEvent().indexOf(eventName) > -1) {
       this.setState({value: this.value});
       this.validate();
     }

@@ -53,8 +53,7 @@
     "url": "https://github.com/Availity/availity-reactstrap-validation/issues"
   },
   "homepage": "https://github.com/Availity/availity-reactstrap-validation",
-  "dependencies": {
-    "babel-polyfill": "^6.13.0",
+  "dependencies": {    
     "classnames": "^2.2.3",
     "lodash": "^4.17.4",
     "moment": "^2.14.1"
@@ -94,7 +93,9 @@
     "enzyme": "^2.8.2",
     "eslint": "^3.3.1",
     "eslint-config-availity": "^2.1.0",
+    "eslint-plugin-import": "^2.3.0",
     "eslint-plugin-react": "^6.10.3",
+    "eslint-plugin-jsx-a11y": "^5.0.3",
     "extract-text-webpack-plugin": "^1.0.1",
     "history": "^2.0.0",
     "jsdom": "^9.4.2",
