@@ -10,7 +10,7 @@ export default class AvGroup extends Component {
   };
 
   static childContextTypes = {
-    Group: React.PropTypes.object.isRequired,
+    Group: PropTypes.object.isRequired,
     FormCtrl: PropTypes.object.isRequired,
   };
 
