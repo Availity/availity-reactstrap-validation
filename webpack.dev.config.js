@@ -18,7 +18,7 @@ var paths = [
   '/404.html',
 ];
 
-var basepath = env === 'production' ? '/availity-reactstrap-validation/' : '/';
+var basepath = env === 'production' ? process.env.BASEPATH || '/availity-reactstrap-validation/' : '/';
 
 var config = [{
   devtool: 'source-map',
