@@ -121,6 +121,7 @@ export default class AvRadioGroup extends InputContainer {
         name: this.props.name,
         update: updateGroup,
         inline: this.props.inline,
+        required: this.props.required,
         value: this.value,
         getInputState: ::this.getInputState,
       },

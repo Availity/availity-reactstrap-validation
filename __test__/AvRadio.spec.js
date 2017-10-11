@@ -87,18 +87,6 @@ describe('AvRadio', () => {
     expect(wrapper.find(Input).hasClass('av-invalid')).to.be.true;
   });
 
-  it('should wrap the children in a FormGroup when inline', () => {
-    const wrapper = shallow(<AvRadio name="yo" />, options);
-    expect(wrapper.type()).to.equal(FormGroup);
-  });
-
-  it('should not wrap the children in a FormGroup when inline', () => {
-    options.context.Group.inline = true;
-    const wrapper = shallow(<AvRadio name="yo" />, options);
-    expect(wrapper.type()).to.equal(Label);
-  });
-
-
   it('should toString the value to add it to the DOM via Input', () => {
     const wrapper = shallow(<AvRadio name="yo" value="yes" />, options);
     expect(wrapper.find(Input).prop('value')).to.eql('yes');

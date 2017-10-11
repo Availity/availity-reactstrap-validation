@@ -72,8 +72,8 @@ export default class Example extends React.Component {
               <AvField name="location.zip" label="ZIP Code" required />
             </Col>
           </Row>
-          <AvGroup>
-            <Label check inline for="checkItOut">
+          <AvGroup check>
+            <Label check for="checkItOut">
               <AvInput type="checkbox" name="checkItOut" /> Check it out!
             </Label>
           </AvGroup>

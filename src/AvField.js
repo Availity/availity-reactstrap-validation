@@ -44,7 +44,7 @@ export default class AvField extends Component {
       inputClass,
       labelClass,
       children,
-      id: omit,
+      id = this.props.name,
       size,
       disabled,
       readOnly,
@@ -53,7 +53,6 @@ export default class AvField extends Component {
       groupAttrs,
       ...attributes
     } = this.props;
-    const id = this.props.id || attributes.name;
 
     if (grid) {
       colSizes.forEach(colSize => {

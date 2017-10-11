@@ -30,48 +30,48 @@ export default class Example extends React.Component {
     return (
       <div>
         <AvForm onSubmit={this.handleSubmit} model={model}>
-          <AvGroup>
-            <Label check inline>
+          <AvGroup check>
+            <Label check>
               <AvInput type="checkbox" name="checkbox1" /> true is "checked" (default)
             </Label>
           </AvGroup>
-          <AvGroup>
-            <Label check inline>
+          <AvGroup check>
+            <Label check>
               <AvInput type="checkbox" name="checkbox2" /> false is "unchecked" (default)
             </Label>
           </AvGroup>
-          <AvGroup>
-            <Label check inline>
+          <AvGroup check>
+            <Label check>
               <AvInput type="checkbox" trueValue={false} falseValue name="checkbox3" /> false can be "checked"
             </Label>
           </AvGroup>
-          <AvGroup>
-            <Label check inline>
+          <AvGroup check>
+            <Label check>
               <AvInput type="checkbox" trueValue={false} falseValue name="checkbox4" /> true can be "unchecked"
             </Label>
           </AvGroup>
-          <AvGroup>
-            <Label check inline>
+          <AvGroup check>
+            <Label check>
               <AvInput type="checkbox" trueValue="yes" name="checkbox5" /> make "yes" checked
             </Label>
           </AvGroup>
-          <AvGroup>
-            <Label check inline>
+          <AvGroup check>
+            <Label check>
               <AvInput type="checkbox" falseValue="yes" name="checkbox6" /> make "yes" unchecked
             </Label>
           </AvGroup>
-          <AvGroup>
-            <Label check inline>
+          <AvGroup check>
+            <Label check>
               <AvInput type="checkbox" trueValue="no" falseValue="yes" name="checkbox7" /> make "no" checked
             </Label>
           </AvGroup>
-          <AvGroup>
-            <Label check inline>
+          <AvGroup check>
+            <Label check>
               <AvInput type="checkbox" trueValue="yes" falseValue="no" name="checkbox8" /> make "no" unchecked
             </Label>
           </AvGroup>
-          <AvGroup>
-            <Label check inline>
+          <AvGroup check>
+            <Label check>
               <AvInput type="checkbox" name="checkbox9" /> any values that are not the trueValue is unchecked
             </Label>
           </AvGroup>

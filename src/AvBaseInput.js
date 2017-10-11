@@ -171,7 +171,7 @@ export default class AvBaseInput extends Component {
   }
 
   getValidatorProps() {
-    const state = this.props.state && this.context.FormCtrl.getInputState(this.props.name);
+    const validatity = this.context.FormCtrl.getInputState(this.props.name);
     const htmlValAttrs = Object.keys(this.props.validate || {})
       .filter(val => htmlValidationAttrs.indexOf(val) > -1)
       .reduce((result, item) => {
@@ -193,8 +193,8 @@ export default class AvBaseInput extends Component {
       newProps.checked = this.value === this.props.trueValue;
     }
 
-    if (state) {
-      newProps.state = state;
+    if (this.props.state || (validatity && validatity.errorMessage)) {
+      newProps.valid = !(validatity && validatity.errorMessage);
     }
 
     return newProps;

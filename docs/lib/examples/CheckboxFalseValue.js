@@ -18,8 +18,8 @@ export default class Example extends React.Component {
     return (
       <div>
         <AvForm onSubmit={this.handleSubmit}>
-          <AvGroup>
-            <Label check inline>
+          <AvGroup check>
+            <Label check>
               <AvInput type="checkbox" name="doNotAgree" falseValue="User Does Not Agreed" /> Agree to this!
             </Label>
           </AvGroup>

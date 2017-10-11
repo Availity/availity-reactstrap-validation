@@ -18,13 +18,13 @@ export default class Example extends React.Component {
     return (
       <div>
         <AvForm onSubmit={this.handleSubmit}>
-          <AvGroup>
-            <Label check inline>
+          <AvGroup check>
+            <Label check>
               <AvInput type="checkbox" name="checkbox" /> Check it Out
             </Label>
           </AvGroup>
-          <AvGroup>
-            <Label check inline>
+          <AvGroup check>
+            <Label check>
               <AvInput type="checkbox" name="inOrOut" trueValue="Yes, I'm in!" falseValue="NOPE!" /> Are You In?
             </Label>
           </AvGroup>

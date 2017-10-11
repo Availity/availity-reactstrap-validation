@@ -34,25 +34,20 @@ export default class AvRadio extends Component {
       this.context.FormCtrl.hasError[this.props.name] ? 'av-invalid' : 'av-valid'
     );
 
-    const input = (<Label check inline={this.context.Group.inline} disabled={this.props.disabled}>
-      <Input
-        name={this.context.Group.name}
-        type='radio'
-        {...attributes}
-        className={classes}
-        onChange={this.onChangeHandler}
-        checked={this.props.value === this.context.Group.value}
-        value={this.props.value && this.props.value.toString()}
-      /> {this.props.label}
-    </Label>);
-
-    if (this.context.Group.inline) {
-      return input;
-    }
-
     return (
-      <FormGroup check disabled={this.props.disabled}>
-        {input}
+      <FormGroup check inline={this.context.Group.inline} disabled={this.props.disabled}>
+        <Label check>
+          <Input
+            name={this.context.Group.name}
+            type='radio'
+            {...attributes}
+            className={classes}
+            onChange={this.onChangeHandler}
+            checked={this.props.value === this.context.Group.value}
+            value={this.props.value && this.props.value.toString()}
+            required={this.context.Group.required}
+          /> {this.props.label}
+        </Label>
       </FormGroup>
     );
   }

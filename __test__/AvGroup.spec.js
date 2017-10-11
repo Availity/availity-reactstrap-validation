@@ -28,7 +28,7 @@ describe('AvGroup', function() {
   it('should render color prop based on inputState', () => {
     const wrapper = shallow(<AvGroup>Yo!</AvGroup>, this.options);
 
-    expect(wrapper.prop('color')).to.equal(this.inputState.color);
+    expect(wrapper.prop('className')).to.equal(`text-${this.inputState.color}`);
   });
 
   it('should render children inside the FormGroup', () => {

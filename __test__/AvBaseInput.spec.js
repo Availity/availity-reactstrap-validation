@@ -692,20 +692,6 @@ describe('BaseInput', function () {
       expect(this.component.getValidatorProps()).to.be.an('object');
     });
 
-    it('should not get the input state if the props do not allow it', () => {
-      this.props.state = false;
-      const result = this.component.getValidatorProps();
-      expect(this.context.FormCtrl.getInputState).to.not.have.been.called;
-      expect(result).to.not.include.keys('state');
-    });
-
-    it('should get the input state if the props allow it', () => {
-      this.props.state = true;
-      const result = this.component.getValidatorProps();
-      expect(this.context.FormCtrl.getInputState).to.have.been.calledWith(this.props.name);
-      expect(result).to.include({ state: this.inputState });
-    });
-
     it('should turn the validations in the validate prop into attrs if they are legit attrs', () => {
       this.props.validate = {
         min: { value: 6 },

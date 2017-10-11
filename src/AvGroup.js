@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { FormGroup } from 'reactstrap';
 
@@ -42,8 +43,9 @@ export default class AvGroup extends Component {
 
   render() {
     const validation = this.getInputState();
+    const classname = classNames(this.props.className, validation.color && `text-${validation.color}`);
     return (
-      <FormGroup color={validation.color} {...this.props} />
+      <FormGroup className={classname} {...this.props} />
     );
   }
 }
