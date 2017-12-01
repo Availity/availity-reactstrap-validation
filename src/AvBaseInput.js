@@ -1,6 +1,7 @@
 import {Component} from 'react';
 import PropTypes from 'prop-types';
-import {isUndefined, isEqual} from 'lodash';
+import isUndefined from 'lodash/isUndefined';
+import isEqual from 'lodash/isEqual';
 
 const htmlValidationAttrs = ['min', 'max', 'minLength', 'maxLength', 'pattern', 'required', 'step'];
 const htmlValidationTypes = [

@@ -1,4 +1,4 @@
-import {isRegExp} from 'lodash';
+import isRegExp from 'lodash/isRegExp';
 import { isEmpty } from './utils';
 
 const REGEX = /^\/(.*)\/([gim]*)$/; // regular expression to test a regular expression

@@ -1,4 +1,4 @@
-import { toNumber } from 'lodash';
+import toNumber from 'lodash/toNumber';
 import { isEmpty } from './utils';
 
 // http://stackoverflow.com/a/31711034/1873485
