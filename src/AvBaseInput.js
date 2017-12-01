@@ -158,7 +158,14 @@ export default class AvBaseInput extends Component {
       return event.target.checked ? this.props.trueValue : this.props.falseValue;
     }
     if (this.props.type === 'select' && this.props.multiple){
-      return [...event.target.options].filter(({selected}) => selected).map(({value}) => value);
+      let ret = [];
+      let options = event.target.options;
+      for (let i = 0; i < options.length; i++){
+        if (options[i].selected){
+          ret.push(options[i].value);
+        }
+      }
+      return ret;
     }
     return event && event.target && !isUndefined(event.target.value) ? event.target.value : event;
   }
