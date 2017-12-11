@@ -4,7 +4,9 @@ import InputContainer from './AvInputContainer';
 import AvValidator from './AvValidator';
 import { Form } from 'reactstrap';
 import classNames from 'classnames';
-import {get as _get, set as _set, isString} from 'lodash';
+import _get from 'lodash/get';
+import _set from 'lodash/set';
+import isString from 'lodash/isString';
 
 const getInputErrorMessage = (input, ruleName) => {
   const errorMessage = input.props.errorMessage;
