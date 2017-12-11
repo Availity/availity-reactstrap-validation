@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import InputContainer from './AvInputContainer';
 import AvFeedback from './AvFeedback';
-import { isEqual } from 'lodash';
+import isEqual from 'lodash/isEqual';
 import { FormGroup } from 'reactstrap';
 
 const htmlValidationAttrs = ['required'];

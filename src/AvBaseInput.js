@@ -1,6 +1,7 @@
 import {Component} from 'react';
 import PropTypes from 'prop-types';
-import {isUndefined, isEqual} from 'lodash';
+import isUndefined from 'lodash/isUndefined';
+import isEqual from 'lodash/isEqual';
 
 const htmlValidationAttrs = ['min', 'max', 'minLength', 'maxLength', 'pattern', 'required', 'step'];
 const htmlValidationTypes = [
@@ -158,7 +159,14 @@ export default class AvBaseInput extends Component {
       return event.target.checked ? this.props.trueValue : this.props.falseValue;
     }
     if (this.props.type === 'select' && this.props.multiple){
-      return [...event.target.options].filter(({selected}) => selected).map(({value}) => value);
+      const ret = [];
+      const options = event.target.options;
+      for (let i = 0; i < options.length; i++){
+        if (options[i].selected){
+          ret.push(options[i].value);
+        }
+      }
+      return ret;
     }
     return event && event.target && !isUndefined(event.target.value) ? event.target.value : event;
   }
