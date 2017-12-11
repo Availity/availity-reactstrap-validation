@@ -1,6 +1,6 @@
 {
   "name": "availity-reactstrap-validation",
-  "version": "2.0.0-alpha.0",
+  "version": "2.0.0-alpha.1",
   "author": "Evan Sharp <evan.sharp@availity.com>",
   "description": "Form validation helpers for reactstrap",
   "main": "lib/index.js",
@@ -61,7 +61,7 @@
   "peerDependencies": {
     "react": "^0.14.9 || ^15.3.0 || ^16.0.0",
     "react-dom": "^0.14.9 || ^15.3.0 || ^16.0.0",
-    "reactstrap": ">= 5.0.0-alpha.3"
+    "reactstrap": ">= 5.0.0-alpha.4"
   },
   "devDependencies": {
     "babel-cli": "^6.10.1",
@@ -116,7 +116,7 @@
     "react-router": "^2.0.1",
     "react-test-renderer": "^15.5.4",
     "react-transition-group": "^1.1.3",
-    "reactstrap": "^5.0.0-alpha.3",
+    "reactstrap": "^5.0.0-alpha.4",
     "rimraf": "^2.5.4",
     "sinon": "^2.1.0",
     "sinon-chai": "^2.8.0",
