@@ -12,6 +12,7 @@ describe('Email Validation', () => {
     expect(fn('evan.sharp+more-things@availity.com')).to.be.true;
     expect(fn('evan.sharp@availity.com.co')).to.be.true;
     expect(fn('evan.sharp@development.availity.com')).to.be.true;
+    expect(fn('Evan.Sharp@Availity.com')).to.be.true;
   });
 
   it('should return false for an invalid email', () => {
@@ -21,5 +22,6 @@ describe('Email Validation', () => {
     expect(fn('evan.sharp@.com')).to.be.false;
     expect(fn('evan.sharp')).to.be.false;
     expect(fn('availity.com')).to.be.false;
+    expect(fn('Evan@Sharp@Availity.com')).to.be.false;
   });
 });
