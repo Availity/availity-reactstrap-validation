@@ -13,6 +13,7 @@ class AvStore {
     inputId: value
   */
   values; // store level values, used as defaults
+
   /* validation object structure:
     validationKey: {
       fields: [] array of fields to watch, this id ignored because always checked
@@ -34,7 +35,7 @@ class AvStore {
     if input has error with errorKey: true, will search here for string/fn to display
   */
 
-  validate; // store level validators
+  validators; // store level validator definitions
   validations; // store default validations for child inputs
   /*
     inputId: inputValidations
