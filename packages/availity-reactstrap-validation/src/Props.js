@@ -1,8 +1,10 @@
-
 import PropTypes from 'prop-types';
 
 export const eventProps = PropTypes.oneOf([
-  'onInput', 'onChange', 'onBlur', 'onFocus',
+  'onInput',
+  'onChange',
+  'onBlur',
+  'onFocus',
 ]);
 
 const validatorProp = PropTypes.oneOfType([PropTypes.string, PropTypes.func]);

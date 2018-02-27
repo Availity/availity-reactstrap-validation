@@ -4,7 +4,6 @@ import isFunction from 'lodash/isFunction';
 import isString from 'lodash/isString';
 
 class AvStore {
-
   // TODO: make this changeable?
   defaultValidationEvents = ['onChange', 'onInput', 'onBlur'];
 
@@ -66,12 +65,7 @@ class AvStore {
   subscribers = {}; // store all subscribers
 
   constructor(options = {}) {
-    const {
-      values,
-      validators,
-      errorMessages,
-      validations,
-    } = options;
+    const { values, validators, errorMessages, validations } = options;
     this.values = values;
     this.validators = validators;
     this.errorMessages = errorMessages;
@@ -111,7 +105,7 @@ class AvStore {
     };
 
     if (options) {
-      const {state, validations, value} = options;
+      const { state, validations, value } = options;
       if (validations) {
         this.updateInputValidations(validations, name);
       }
@@ -132,12 +126,13 @@ class AvStore {
     };
   }
 
-  notifySubscriber = (inputId) => {
+  notifySubscriber = inputId => {
     // TODO: determine what information to provide on notification
-    this.subscribers[inputId]();
-  }
+    const state = this.getInput(inputId);
+    this.subscribers[inputId](state);
+  };
 
-  updateValues = (values) => {
+  updateValues = values => {
     this.values = values;
     Object.keys(this.inputs).forEach(inputId => {
       const newValue = this.getDefaultValue(inputId);
@@ -146,21 +141,21 @@ class AvStore {
         this.updateInput(inputId, newValue, true);
       }
     });
-  }
+  };
 
   updateValue = (inputId, value, validate) => {
-    this.updateInput(inputId, {value}, validate);
-  }
+    this.updateInput(inputId, { value }, validate);
+  };
 
   updateInput = (inputId, input, validate) => {
     Object.assign(this.inputs[inputId], input);
     if (validate) {
       this.onEvent(inputId, 'onChange');
     }
-  }
+  };
 
   // grabs errors but adds in error messages as needed
-  getErrors = (inputId) => {
+  getErrors = inputId => {
     const errors = (this.getInput(inputId) || {}).error;
     return Object.keys(errors).reduce((output, errorKey) => {
       const error = errors[errorKey];
@@ -173,7 +168,11 @@ class AvStore {
         return output;
       }
       // check if input has error message defined
-      const inputErrorMessage = _get(this.allInputValidations, [inputId, errorKey, 'errorMessage']);
+      const inputErrorMessage = _get(this.allInputValidations, [
+        inputId,
+        errorKey,
+        'errorMessage',
+      ]);
       if (inputErrorMessage) {
         output[errorKey] = inputErrorMessage;
         return output;
@@ -181,19 +180,18 @@ class AvStore {
       // TODO: Get default error messages
       return output;
     }, {});
-  }
+  };
 
-  getDefaultValue = (inputId) => _get(this.values, inputId);
-  getInput = (inputId) => _get(this.inputs, inputId);
-  getValue = (inputId) => (this.getInput(inputId) || {}).value;
+  getDefaultValue = inputId => _get(this.values, inputId);
+  getInput = inputId => _get(this.inputs, inputId);
+  getValue = inputId => (this.getInput(inputId) || {}).value;
 
   getValues() {
     return Object.keys(this.inputs).reduce((output, inputId) => {
-      _set(output, inputId, this.getValue(inputId) );
+      _set(output, inputId, this.getValue(inputId));
       return output;
     }, {});
   }
-
 
   /*
     input event types:
@@ -212,9 +210,7 @@ class AvStore {
     }
   */
   onEvent(inputId, event) {
-    const runningValidators = [
-      this.validateOne(inputId, event),
-    ];
+    const runningValidators = [this.validateOne(inputId, event)];
     if (['onChange', 'onInput'].indexOf(event) >= 0 && this.watchers[inputId]) {
       this.watchers[inputId].forEach(watchingId => {
         runningValidators.push(this.validateOne(watchingId, event, inputId));
@@ -228,7 +224,11 @@ class AvStore {
     if (!inputId) {
       // if no input id, assume updating store validations, so each key should be an input id
       Object.keys(validations).reduce(validationId => {
-        this.updateInputValidations(validations[validationId], validationId, true);
+        this.updateInputValidations(
+          validations[validationId],
+          validationId,
+          true
+        );
       });
       return;
     }
@@ -236,37 +236,50 @@ class AvStore {
 
     if (this.subscribers[inputId]) {
       // update total validations definition for this input
-      Object.assign(this.allInputValidations[inputId], validations,
+      Object.assign(
+        this.allInputValidations[inputId],
+        validations,
         storeValidation ? this.inputValidations[inputId] : {}
       );
       // update the validation object for store/input validations
-      this[storeValidation ? 'validations' : 'inputValidations'][inputId] = validations;
+      this[storeValidation ? 'validations' : 'inputValidations'][
+        inputId
+      ] = validations;
 
       // find all inputs that this input watches
-      watching = Object.keys(this.allInputValidations[inputId]).reduce((output, validationKey) => {
-        const validationRule = _get(this.allInputValidations, [inputId, validationKey]);
-        if (validationRule.fields) {
-          validationRule.fields.forEach(key => {
-            if (key !== inputId && output.indexOf(key) < 0) {
-              output.push(key);
-            }
-          });
-        }
-        return output;
-      }, []);
+      watching = Object.keys(this.allInputValidations[inputId]).reduce(
+        (output, validationKey) => {
+          const validationRule = _get(this.allInputValidations, [
+            inputId,
+            validationKey,
+          ]);
+          if (validationRule.fields) {
+            validationRule.fields.forEach(key => {
+              if (key !== inputId && output.indexOf(key) < 0) {
+                output.push(key);
+              }
+            });
+          }
+          return output;
+        },
+        []
+      );
     } else if (this.inputValidations[inputId]) {
       // removing input id from validation
       delete this.inputValidations[inputId];
       this.allInputValidations[inputId] = _get(this.validations, inputId);
     }
 
-
     const oldWatching = _get(this.inputs, [inputId, 'watching'], []);
 
-
     oldWatching.forEach(watchingKey => {
-      if (Array.isArray(this.watchers[watchingKey]) && watching.indexOf(watchingKey) < 0) {
-        const newWatcher = this.watchers[watchingKey].filter(val => val !== inputId);
+      if (
+        Array.isArray(this.watchers[watchingKey]) &&
+        watching.indexOf(watchingKey) < 0
+      ) {
+        const newWatcher = this.watchers[watchingKey].filter(
+          val => val !== inputId
+        );
         if (newWatcher.length > 0) {
           this.watchers[watchingKey] = newWatcher;
         } else {
@@ -299,26 +312,37 @@ class AvStore {
       if (typeof validatorObj === 'boolean') {
         validatorObj = { validator: validatorKey };
       } else if (isString(validatorObj)) {
-        validatorObj = {validator: validatorObj};
+        validatorObj = { validator: validatorObj };
       }
 
       // by default each validator will run for this inputId
       let shouldRun = true;
       // if an onChange or onInput event is given, and an eventInput is provided, validating this inputId for validators that watch eventInput in fields
-      if (event && eventInput && eventInput !== inputId && ['onChange', 'onInput'].indexOf(event) >= 0) {
+      if (
+        event &&
+        eventInput &&
+        eventInput !== inputId &&
+        ['onChange', 'onInput'].indexOf(event) >= 0
+      ) {
         const fields = _get(validatorObj, 'fields', []);
         shouldRun = Array.isArray(fields) && fields.indexOf(eventInput) >= 0;
-      } else if (event) { // if not checking for an eventInput, check event against validator events
-        const events = _get(validatorObj, 'events', this.defaultValidationEvents);
+      } else if (event) {
+        // if not checking for an eventInput, check event against validator events
+        const events = _get(
+          validatorObj,
+          'events',
+          this.defaultValidationEvents
+        );
         shouldRun = Array.isArray(events) && events.indexOf(event) >= 0;
       }
 
       if (shouldRun) {
-        runningValidators.push(this.runValidation(inputId, validatorKey, validatorObj));
+        runningValidators.push(
+          this.runValidation(inputId, validatorKey, validatorObj)
+        );
       }
     });
-    return Promise.all(runningValidators)
-    .then(results => {
+    return Promise.all(runningValidators).then(results => {
       this.inputs[inputId].pending = false;
       if (results.some(val => !!val)) {
         this.notifySubscriber(inputId);
@@ -346,7 +370,7 @@ class AvStore {
     const valid = await validatorFn(value, this.getValue, options);
     this.inputs[inputId].error[errorKey] = valid;
     return valid === currentValid;
-  }
+  };
 
   getValidator(validator) {
     if (isFunction(validator)) {
@@ -358,7 +382,6 @@ class AvStore {
     // TODO: check the default validators too
     return this.validators[validator];
   }
-
 }
 
 export default AvStore;

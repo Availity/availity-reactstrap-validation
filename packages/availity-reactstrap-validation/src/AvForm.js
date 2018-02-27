@@ -1,24 +1,19 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Form } from 'reactstrap';
 
 import AvStore from './AvStore';
-import {
-  validationProp,
-} from './Props';
+import { validationProp } from './Props';
 
 export default class AvForm extends Component {
   static childContextTypes = {
     AvStore: PropTypes.instanceOf(AvStore),
-  }
+  };
 
   static propTypes = {
     // Style props
-    tag: PropTypes.oneOfType([
-      PropTypes.func,
-      PropTypes.string,
-    ]),
+    tag: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
     className: PropTypes.string,
     submittedClass: PropTypes.string,
     validClass: PropTypes.string,
@@ -29,7 +24,7 @@ export default class AvForm extends Component {
     model: PropTypes.object,
     errorMessages: PropTypes.object,
     validations: PropTypes.object,
-  }
+  };
 
   static defaultProps = {
     tag: Form,
@@ -40,12 +35,9 @@ export default class AvForm extends Component {
 
   constructor(props) {
     super(props);
-    const {
-      model: values,
-      validators,
-      errorMessages,
-      validations,
-    } = props;
+
+    const { model: values, validators, errorMessages, validations } = props;
+
     this.state.AvStore = new AvStore({
       values,
       validators,
@@ -79,19 +71,11 @@ export default class AvForm extends Component {
       classesArray.push(submittedClass);
     }
     if (validClass || invalidClass) {
-      classesArray.push(
-        (isValid ? validClass : invalidClass) || false
-      );
+      classesArray.push((isValid ? validClass : invalidClass) || false);
     }
     const classes = classNames(classesArray);
 
-    return (
-      <Tag noValidate
-        action="#"
-        {...attributes}
-        className={classes}
-      />
-    );
+    return <Tag noValidate action="#" {...attributes} className={classes} />;
 
     // if (Tag !== 'form' && Tag !== Form) {
     //   attributes.onKeyDown = this.handleNonFormSubmission;
