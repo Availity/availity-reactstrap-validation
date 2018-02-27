@@ -6,7 +6,7 @@ import isString from 'lodash/isString';
 class AvStore {
   // TODO: make this changeable?
   defaultValidationEvents = ['onChange', 'onInput', 'onBlur'];
-
+  valueChangedEvents = ['onChange', 'onInput'];
   id; // the id of this level, necessary if not root? or just not used
   /*
     inputId: value
@@ -138,7 +138,7 @@ class AvStore {
       const newValue = this.getDefaultValue(inputId);
       const currentValue = this.getValue(inputId);
       if (newValue !== currentValue) {
-        this.updateInput(inputId, newValue, true);
+        this.updateValue(inputId, newValue, true);
       }
     });
   };
@@ -211,7 +211,7 @@ class AvStore {
   */
   onEvent(inputId, event) {
     const runningValidators = [this.validateOne(inputId, event)];
-    if (['onChange', 'onInput'].indexOf(event) >= 0 && this.watchers[inputId]) {
+    if (this.valueChangedEvents.indexOf(event) >= 0 && this.watchers[inputId]) {
       this.watchers[inputId].forEach(watchingId => {
         runningValidators.push(this.validateOne(watchingId, event, inputId));
       });
@@ -322,7 +322,7 @@ class AvStore {
         event &&
         eventInput &&
         eventInput !== inputId &&
-        ['onChange', 'onInput'].indexOf(event) >= 0
+        this.valueChangedEvents.indexOf(event) >= 0
       ) {
         const fields = _get(validatorObj, 'fields', []);
         shouldRun = Array.isArray(fields) && fields.indexOf(eventInput) >= 0;
