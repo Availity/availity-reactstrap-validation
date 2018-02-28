@@ -22,11 +22,13 @@ class AvBaseInput extends Component {
   static defaultProps = {};
 
   state = {
-    touched: false,
-    dirty: false,
-    bad: false,
-    valid: true,
-    pending: false,
+    inputState: {
+      touched: false,
+      dirty: false,
+      bad: false,
+      valid: true,
+      pending: false,
+    },
   };
 
   componentWillMount() {
@@ -62,8 +64,8 @@ class AvBaseInput extends Component {
     this.unregisterInput();
   }
 
-  onStoreChange(state) {
-    this.setState(state);
+  onStoreChange(inputState) {
+    this.setState({ inputState });
   }
 
   getDefaultValue() {

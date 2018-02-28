@@ -113,7 +113,7 @@ class AvStore {
         Object.assign(this.inputs[name], state);
       }
       if (value) {
-        Object.assign(this.inputs[name], { value });
+        this.inputs[name].value = value;
       }
     }
 
@@ -143,16 +143,34 @@ class AvStore {
     });
   };
 
-  updateValue = (inputId, value, validate) => {
-    this.updateInput(inputId, { value }, validate);
-  };
+  updateTouched(inputId, value) {
+    this.inputs[inputId].touched = !!value;
+  }
+  updateDirty(inputId, value) {
+    this.inputs[inputId].dirty = !!value;
+  }
+  updateBad(inputId, value) {
+    this.inputs[inputId].bad = !!value;
+  }
 
-  updateInput = (inputId, input, validate) => {
-    Object.assign(this.inputs[inputId], input);
-    if (validate) {
-      this.onEvent(inputId, 'onChange');
+  updateValue(inputId, value) {
+    const valueChange = value !== this.inputs[inputId].value;
+    this.inputs[inputId].value = value;
+    if (valueChange) {
+      this.onEvent(inputId, this.valueChangedEvents[0]);
     }
-  };
+  }
+
+  updateInput(inputId, input) {
+    const valueChange =
+      input &&
+      input.hasOwnProperty('value') &&
+      input.value !== this.inputs[inputId].value;
+    Object.assign(this.inputs[inputId], input);
+    if (valueChange) {
+      this.onEvent(inputId, this.valueChangedEvents[0]);
+    }
+  }
 
   // grabs errors but adds in error messages as needed
   getErrors = inputId => {
