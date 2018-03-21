@@ -1,7 +1,16 @@
 import { AvBaseInput } from 'availity-reactstrap-validation';
 
 describe('BaseInput', function () {
+  let touched;
+  let dirty;
+  let bad;
+  let error;
+
   beforeEach(() => {
+    touched = false;
+    dirty = false;
+    bad = false;
+    error = false;
     this.inputState = 'danger';
     this.props = {
       name: 'fieldName',
@@ -17,17 +26,17 @@ describe('BaseInput', function () {
         inputs: {},
         getDefaultValue: sinon.stub(),
         getInputState: sinon.stub().returns(this.inputState),
-        hasError: {},
-        isDirty: {},
-        isTouched: {},
-        isBad: {},
+        hasError: () => error,
+        isDirty: () => dirty,
+        isTouched: () => touched,
+        isBad: () => bad,
         setDirty: sinon.spy(),
         setTouched: sinon.spy(),
         setBad: sinon.spy(),
         register: sinon.spy(),
         unregister: sinon.spy(),
         validate: sinon.spy(),
-        validationEvent: 'formCtrlValidationEvent',
+        getValidationEvent: () => 'formCtrlValidationEvent',
         parent: null,
       },
     };
@@ -361,17 +370,17 @@ describe('BaseInput', function () {
     });
 
     it('should not call setBadInput if it has not changed', () => {
-      this.context.FormCtrl.isBad[this.props.name] = true;
+      bad = true;
       this.component.onKeyUpHandler({ target: { validity: { badInput: true } } });
       expect(this.context.FormCtrl.setBad).to.not.have.been.called;
     });
 
     it('should call setBadInput if it has changed', () => {
-      this.context.FormCtrl.isBad[this.props.name] = true;
+      bad = true;
       this.component.onKeyUpHandler({ target: { validity: { badInput: false } } });
       expect(this.context.FormCtrl.setBad).to.have.been.calledWith(this.props.name, false);
 
-      this.context.FormCtrl.isBad[this.props.name] = false;
+      bad = false;
       this.component.onKeyUpHandler({ target: { validity: { badInput: true } } });
       expect(this.context.FormCtrl.setBad).to.have.been.calledWith(this.props.name, true);
     });
@@ -404,13 +413,13 @@ describe('BaseInput', function () {
     });
 
     it('should call setDirty if the control was not previously dirty', () => {
-      this.context.FormCtrl.isDirty[this.props.name] = false;
+      dirty = false;
       this.component.onInputHandler('something');
       expect(this.context.FormCtrl.setDirty).to.have.been.calledWith(this.props.name);
     });
 
     it('should not call setDirty if the control was previously dirty', () => {
-      this.context.FormCtrl.isDirty[this.props.name] = true;
+      dirty = true;
       this.component.onInputHandler('something');
       expect(this.context.FormCtrl.setDirty).to.not.have.been.called;
     });
@@ -436,13 +445,13 @@ describe('BaseInput', function () {
     });
 
     it('should call setTouched if the control was not previously touched', () => {
-      this.context.FormCtrl.isTouched[this.props.name] = false;
+      touched = false;
       this.component.onBlurHandler('something');
       expect(this.context.FormCtrl.setTouched).to.have.been.calledWith(this.props.name);
     });
 
     it('should not call setTouched if the control was previously touched', () => {
-      this.context.FormCtrl.isTouched[this.props.name] = true;
+      touched = true;
       this.component.onBlurHandler('something');
       expect(this.context.FormCtrl.setTouched).to.not.have.been.called;
     });
@@ -488,13 +497,13 @@ describe('BaseInput', function () {
     });
 
     it('should call setDirty if the control was not previously touched', () => {
-      this.context.FormCtrl.isDirty[this.props.name] = false;
+      dirty = false;
       this.component.onChangeHandler('something');
       expect(this.context.FormCtrl.setDirty).to.have.been.calledWith(this.props.name);
     });
 
     it('should not call setDirty if the control was previously touched', () => {
-      this.context.FormCtrl.isDirty[this.props.name] = true;
+      dirty = true;
       this.component.onChangeHandler('something');
       expect(this.context.FormCtrl.setDirty).to.not.have.been.called;
     });
@@ -573,9 +582,9 @@ describe('BaseInput', function () {
         this.props.validationEvent = 'noMatch';
       });
 
-      it('should not set the state value', () => {
+      it('should set the state value', () => {
         this.component.validateEvent('onChange');
-        expect(this.setStateSpy).to.not.have.been.called;
+        expect(this.setStateSpy).to.have.been.called;
       });
 
       it('should not try to validate', () => {
@@ -683,7 +692,7 @@ describe('BaseInput', function () {
 
     it('should return the validation event from the form control if not from props', () => {
       this.props.validationEvent = '';
-      expect(this.component.getValidationEvent()).to.eql([this.context.FormCtrl.validationEvent]);
+      expect(this.component.getValidationEvent()).to.eql([this.context.FormCtrl.getValidationEvent()]);
     });
   });
 

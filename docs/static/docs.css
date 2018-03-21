@@ -2,20 +2,28 @@
   max-width: 1200px;
 }
 
-.jumbotron, .jumbotron p:last-child, .navbar {
+@media (max-width: 575px) {
+  .navbar-toggleable > .container {
+      width: 100%;
+      padding-right: 15px;
+      padding-left: 15px;
+  }
+}
+
+.jumbotron-header, .jumbotron-header p:last-child, .navbar {
   margin-bottom: 0
 }
 
-.jumbotron .btn {
+.jumbotron-header .btn {
   margin-right: 1rem;
 }
 
-.jumbotron .btn + .btn {
+.jumbotron-header .btn + .btn {
   margin-right: 0;
 }
 
 @media (max-width: 543px) {
-  .jumbotron .btn {
+  .jumbotron-header .btn {
     display: block;
     margin: 0 0 1rem 0;
   }
@@ -71,7 +79,7 @@
 .social a:hover {
   color: #fff
 }
-.jumbotron {
+.jumbotron-header {
   padding-top: 2rem;
   padding-bottom: 2rem;
   background-color: #fff
@@ -79,9 +87,7 @@
 .jumbotron-heading {
   font-weight: 300
 }
-.container {
-  max-width: 40rem
-}
+
 footer {
   padding-top: 3rem;
   padding-bottom: 3rem
@@ -120,21 +126,6 @@ h1,h2,h3 {
   clear: both;
   content: " ";
   display: table;
-}
-
-.docs-example > div > .btn + .btn,
-.docs-example > .btn + .btn,
-.docs-example > div > .label + .label,
-.docs-example > div > .btn-group + .btn-group {
-  margin-left: 5px;
-}
-
-.docs-example .btn-group-vertical .btn + .btn {
-  margin-left: 0 !important;
-}
-
-.docs-example .btn-block+.btn-block {
-  margin-left: 0;
 }
 
 .docs-example .card {
@@ -179,7 +170,7 @@ pre, code {
   margin-bottom: 1rem;
 }
 
-.docs-example > .container .row > [class^="col-"] {
+.docs-example > .container .row > [class^="col"] {
   padding-top: .75rem;
   padding-bottom: .75rem;
   background-color: #E5EDF5;
@@ -187,127 +178,143 @@ pre, code {
   color: #5F5F5F;
 }
 
+.docs-example .form-control + .form-control {
+    margin-top: .5rem;
+}
 
-/* http://prismjs.com/download.html?themes=prism-okaidia&languages=markup+css+clike+javascript+bash+jsx */
+.docs-example .nav-tabs {
+  margin-bottom: 1rem;
+}
+
+.docs-example .progress {
+  margin-bottom: 1rem;
+}
+
+
+/* http://prismjs.com/download.html?themes=prism-okaidia&languages=markup+css+clike+javascript+bash+jsx&plugins=autolinker */
 /**
  * okaidia theme for JavaScript, CSS and HTML
  * Loosely based on Monokai textmate theme by http://www.monokai.nl/
  * @author ocodia
  */
 
-code[class*="language-"],
-pre[class*="language-"] {
-	color: #f8f8f2;
-	background: none;
-	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
-	text-align: left;
-	white-space: pre;
-	word-spacing: normal;
-	word-break: normal;
-	word-wrap: normal;
-	line-height: 1.5;
-
-	-moz-tab-size: 4;
-	-o-tab-size: 4;
-	tab-size: 4;
-
-	-webkit-hyphens: none;
-	-moz-hyphens: none;
-	-ms-hyphens: none;
-	hyphens: none;
-}
-
-/* Code blocks */
-pre[class*="language-"] {
-	padding: 1em;
-	margin: 1.5em 0;
-	overflow: auto;
-}
-
-:not(pre) > code[class*="language-"],
-pre[class*="language-"] {
-	background: #272822;
-}
-
-/* Inline code */
-:not(pre) > code[class*="language-"] {
-	padding: .1em;
-	border-radius: .3em;
-	white-space: normal;
-}
-
-.token.comment,
-.token.prolog,
-.token.doctype,
-.token.cdata {
-	color: slategray;
-}
-
-.token.punctuation {
-	color: #f8f8f2;
-}
-
-.namespace {
-	opacity: .7;
-}
-
-.token.property,
-.token.tag,
-.token.constant,
-.token.symbol,
-.token.deleted {
-	color: #f92672;
-}
-
-.token.boolean,
-.token.number {
-	color: #ae81ff;
-}
-
-.token.selector,
-.token.attr-name,
-.token.string,
-.token.char,
-.token.builtin,
-.token.inserted {
-	color: #a6e22e;
-}
-
-.token.operator,
-.token.entity,
-.token.url,
-.language-css .token.string,
-.style .token.string,
-.token.variable {
-	color: #f8f8f2;
-}
-
-.token.atrule,
-.token.attr-value,
-.token.function {
-	color: #e6db74;
-}
-
-.token.keyword {
-	color: #66d9ef;
-}
-
-.token.regex,
-.token.important {
-	color: #fd971f;
-}
-
-.token.important,
-.token.bold {
-	font-weight: bold;
-}
-.token.italic {
-	font-style: italic;
-}
-
-.token.entity {
-	cursor: help;
-}
+ code[class*="language-"],
+ pre[class*="language-"] {
+   color: #f8f8f2;
+   background: none;
+   text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+   text-align: left;
+   white-space: pre;
+   word-spacing: normal;
+   word-break: normal;
+   word-wrap: normal;
+   line-height: 1.5;
+ 
+   -moz-tab-size: 4;
+   -o-tab-size: 4;
+   tab-size: 4;
+ 
+   -webkit-hyphens: none;
+   -moz-hyphens: none;
+   -ms-hyphens: none;
+   hyphens: none;
+ }
+ 
+ /* Code blocks */
+ pre[class*="language-"] {
+   padding: 1em;
+   margin: 1.5em 0;
+   overflow: auto;
+ }
+ 
+ :not(pre) > code[class*="language-"],
+ pre[class*="language-"] {
+   background: #272822;
+ }
+ 
+ /* Inline code */
+ :not(pre) > code[class*="language-"] {
+   padding: .1em;
+   border-radius: .3em;
+   white-space: normal;
+ }
+ 
+ .token.comment,
+ .token.prolog,
+ .token.doctype,
+ .token.cdata {
+   color: slategray;
+ }
+ 
+ .token.punctuation {
+   color: #f8f8f2;
+ }
+ 
+ .namespace {
+   opacity: .7;
+ }
+ 
+ .token.property,
+ .token.tag,
+ .token.constant,
+ .token.symbol,
+ .token.deleted {
+   color: #f92672;
+ }
+ 
+ .token.boolean,
+ .token.number {
+   color: #ae81ff;
+ }
+ 
+ .token.selector,
+ .token.attr-name,
+ .token.string,
+ .token.char,
+ .token.builtin,
+ .token.inserted {
+   color: #a6e22e;
+ }
+ 
+ .token.operator,
+ .token.entity,
+ .token.url,
+ .language-css .token.string,
+ .style .token.string,
+ .token.variable {
+   color: #f8f8f2;
+ }
+ 
+ .token.atrule,
+ .token.attr-value,
+ .token.function {
+   color: #e6db74;
+ }
+ 
+ .token.keyword {
+   color: #66d9ef;
+ }
+ 
+ .token.regex,
+ .token.important {
+   color: #fd971f;
+ }
+ 
+ .token.important,
+ .token.bold {
+   font-weight: bold;
+ }
+ .token.italic {
+   font-style: italic;
+ }
+ 
+ .token.entity {
+   cursor: help;
+ }
+ 
+ .token a {
+   color: inherit;
+ }
 
 code .tag {
   font-size: inherit;

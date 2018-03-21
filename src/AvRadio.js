@@ -15,6 +15,14 @@ export default class AvRadio extends Component {
 
   static propTypes = radioPropTypes;
 
+  componentDidMount() {
+    this.context.FormCtrl && this.context.FormCtrl.register(this);
+  }
+
+  componentWillUnmount() {
+    this.context.FormCtrl && this.context.FormCtrl.unregister(this);
+  }
+
   onChangeHandler = (event, ...args) => {
     this.context.Group.update(event, this.props.value);
     if (this.props.onChange) {
@@ -25,29 +33,37 @@ export default class AvRadio extends Component {
   render() {
     const {
       className,
+      id,
       ...attributes} = this.props;
+
+    const groupProps = this.context.Group.getProps();
+
+    const touched = this.context.FormCtrl.isTouched(groupProps.name);
+    const hasError = this.context.FormCtrl.hasError(groupProps.name);
 
     const classes = classNames(
       className,
-      this.context.FormCtrl.isTouched[this.props.name] ? 'av-touched' : 'av-untouched',
-      this.context.FormCtrl.isDirty[this.props.name] ? 'av-dirty' : 'av-pristine',
-      this.context.FormCtrl.hasError[this.props.name] ? 'av-invalid' : 'av-valid'
+      touched ? 'is-touched' : 'is-untouched',
+      this.context.FormCtrl.isDirty(groupProps.name) ? 'is-dirty' : 'is-pristine',
+      this.context.FormCtrl.isBad(groupProps.name) ? 'is-bad-input' : null,
+      hasError ? 'av-invalid' : 'av-valid',
+      touched && hasError && 'is-invalid'
     );
 
     return (
-      <FormGroup check inline={this.context.Group.inline} disabled={this.props.disabled}>
-        <Label check>
-          <Input
-            name={this.context.Group.name}
-            type='radio'
-            {...attributes}
-            className={classes}
-            onChange={this.onChangeHandler}
-            checked={this.props.value === this.context.Group.value}
-            value={this.props.value && this.props.value.toString()}
-            required={this.context.Group.required}
-          /> {this.props.label}
-        </Label>
+      <FormGroup check inline={groupProps.inline} disabled={this.props.disabled}>
+        <Input
+          name={groupProps.name}
+          type='radio'
+          {...attributes}
+          id={id || `radio-${groupProps.name}-${this.props.value}`}
+          className={classes}
+          onChange={this.onChangeHandler}
+          checked={this.props.value === groupProps.value}
+          value={this.props.value && this.props.value.toString()}
+          required={groupProps.required}
+        />
+        <Label check for={id || `radio-${groupProps.name}-${this.props.value}`}>{this.props.label}</Label>
       </FormGroup>
     );
   }

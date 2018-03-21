@@ -9,26 +9,38 @@ let inputState;
 let component;
 
 describe('AvRadio', () => {
+  let touched;
+  let dirty;
+  let bad;
+  let error;
+
   beforeEach(() => {
+    touched = false;
+    dirty = false;
+    bad = false;
+    error = false;
     options = {
       context: {
         Group: {
-          name: 'test',
+          getProps: () => ({
+            name: 'test',
+          }),
         },
         FormCtrl: {
           inputs: {},
           getDefaultValue: ()=> {},
-          getInputState: ()=> {return {}},
-          hasError: {},
-          isDirty: {},
-          isTouched: {},
+          getInputState: ()=> ({}),
+          hasError: () => error,
+          isDirty: () => dirty,
+          isTouched: () => touched,
+          isBad: () => bad,
           setDirty: ()=> {},
           setTouched: ()=> {},
           setBad: ()=> {},
           register: ()=> {},
           unregister: ()=> {},
           validate: ()=> {},
-          validationEvent: ()=> {},
+          getValidationEvent: ()=> {},
           validation: {},
           parent: null,
         },
@@ -42,49 +54,50 @@ describe('AvRadio', () => {
     expect(wrapper.type()).to.not.be.undefined;
   });
 
-  it('should have "av-untouched" class when untouched', () => {
+  it('should have "is-untouched" class when untouched', () => {
     const wrapper = shallow(<AvRadio name="yo" />, options);
 
-    expect(wrapper.find(Input).hasClass('av-untouched')).to.be.true;
-    expect(wrapper.find(Input).hasClass('av-touched')).to.be.false;
+    expect(wrapper.find(Input).hasClass('is-untouched')).to.be.true;
+    expect(wrapper.find(Input).hasClass('is-touched')).to.be.false;
   });
 
-  it('should have "av-pristine" class when not dirty', () => {
+  it('should have "is-pristine" class when not dirty', () => {
     const wrapper = shallow(<AvRadio name="yo" />, options);
 
-    expect(wrapper.find(Input).hasClass('av-pristine')).to.be.true;
-    expect(wrapper.find(Input).hasClass('av-dirty')).to.be.false;
+    expect(wrapper.find(Input).hasClass('is-pristine')).to.be.true;
+    expect(wrapper.find(Input).hasClass('is-dirty')).to.be.false;
   });
 
-  it('should have "av-valid" class when not invalid', () => {
+  it('should have "av-valid" not "is-invalid" class when valid', () => {
     const wrapper = shallow(<AvRadio name="yo" />, options);
 
     expect(wrapper.find(Input).hasClass('av-valid')).to.be.true;
-    expect(wrapper.find(Input).hasClass('av-invalid')).to.be.false;
+    expect(wrapper.find(Input).hasClass('is-invalid')).to.be.false;
   });
 
-  it('should have "av-touched" class when touched', () => {
-    options.context.FormCtrl.isTouched.yo = true;
+  it('should have "is-touched" class when touched', () => {
+    touched = true;
     const wrapper = shallow(<AvRadio name="yo" />, options);
 
-    expect(wrapper.find(Input).hasClass('av-untouched')).to.be.false;
-    expect(wrapper.find(Input).hasClass('av-touched')).to.be.true;
+    expect(wrapper.find(Input).hasClass('is-untouched')).to.be.false;
+    expect(wrapper.find(Input).hasClass('is-touched')).to.be.true;
   });
 
-  it('should have "av-pristine" class when not dirty', () => {
-    options.context.FormCtrl.isDirty.yo = true;
+  it('should have "is-pristine" class when not dirty', () => {
+    dirty = true;
     const wrapper = shallow(<AvRadio name="yo" />, options);
 
-    expect(wrapper.find(Input).hasClass('av-pristine')).to.be.false;
-    expect(wrapper.find(Input).hasClass('av-dirty')).to.be.true;
+    expect(wrapper.find(Input).hasClass('is-pristine')).to.be.false;
+    expect(wrapper.find(Input).hasClass('is-dirty')).to.be.true;
   });
 
-  it('should have "av-valid" class when not invalid', () => {
-    options.context.FormCtrl.hasError.yo = true;
+  it('should have "is-invalid" not "av-valid" class when invalid and touched', () => {
+    error = true;
+    touched = true;
     const wrapper = shallow(<AvRadio name="yo" />, options);
 
     expect(wrapper.find(Input).hasClass('av-valid')).to.be.false;
-    expect(wrapper.find(Input).hasClass('av-invalid')).to.be.true;
+    expect(wrapper.find(Input).hasClass('is-invalid')).to.be.true;
   });
 
   it('should toString the value to add it to the DOM via Input', () => {
@@ -94,31 +107,38 @@ describe('AvRadio', () => {
 
   describe('on change handler', () => {
     beforeEach(() => {
+      touched = false;
+      dirty = false;
+      bad = false;
+      error = false;
       inputState = 'danger';
       props = {
         name: 'fieldName',
-        value: 'testValue'
+        value: 'testValue',
       };
       options = {
         context: {
           Group: {
-            name: 'test',
+            getProps: () => ({
+              name: 'test',
+            }),
             update: sinon.spy(),
           },
           FormCtrl: {
             inputs: {},
             getDefaultValue: sinon.spy(),
             getInputState: sinon.stub().returns(inputState),
-            hasError: {},
-            isDirty: {},
-            isTouched: {},
+            hasError: () => error,
+            isDirty: () => dirty,
+            isTouched: () => touched,
+            isBad: () => bad,
             setDirty: sinon.spy(),
             setTouched: sinon.spy(),
             setBad: sinon.spy(),
             register: sinon.spy(),
             unregister: sinon.spy(),
             validate: sinon.spy(),
-            validationEvent: 'formCtrlValidationEvent',
+            getValidationEvent: () => 'formCtrlValidationEvent',
             validation: {},
             parent: null,
           },

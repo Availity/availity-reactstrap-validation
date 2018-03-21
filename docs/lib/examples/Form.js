@@ -16,20 +16,28 @@ export default class FormExample extends React.Component {
         </AvGroup>
         {/* Radios */}
         <AvRadioGroup name="radioExample" label="Radio Buttons!" required errorMessage="Pick one!">
-          <AvRadio label="Bulbasaur" value="Bulbasaur" id="radioOption1" />
-          <AvRadio label="Squirtle" value="Squirtle" id="radioOption2" />
-          <AvRadio label="Charmander" value="Charmander" id="radioOption3" />
-          <AvRadio label="Pikachu" value="Pikachu" id="radioOption4" disabled />
+          <AvRadio label="Bulbasaur" value="Bulbasaur" />
+          <AvRadio label="Squirtle" value="Squirtle" />
+          <AvRadio label="Charmander" value="Charmander" />
+          <AvRadio label="Pikachu" value="Pikachu" disabled />
         </AvRadioGroup>
 
         <AvRadioGroup inline name="radioExample2" label="Radio Buttons! (inline)" required>
-          <AvRadio label="Bulbasaur" value="Bulbasaur" id="radioOption5" />
-          <AvRadio label="Squirtle" value="Squirtle" id="radioOption6" />
-          <AvRadio label="Charmander" value="Charmander" id="radioOption7" />
-          <AvRadio label="Pikachu" value="Pikachu" id="radioOption8" disabled />
+          <AvRadio label="Bulbasaur" value="Bulbasaur" />
+          <AvRadio label="Squirtle" value="Squirtle" />
+          <AvRadio label="Charmander" value="Charmander" />
+          <AvRadio label="Pikachu" value="Pikachu" disabled />
         </AvRadioGroup>
         {/* With select and AvField */}
         <AvField type="select" name="select" label="Option" helpMessage="Idk, this is an example. Deal with it!">
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+          <option>5</option>
+        </AvField>
+
+        <AvField type="select" name="select-multiple" label="Option" helpMessage="MULTIPLE!" multiple>
           <option>1</option>
           <option>2</option>
           <option>3</option>

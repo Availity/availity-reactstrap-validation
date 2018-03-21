@@ -28,14 +28,22 @@ export default class Example extends React.Component {
             <AvFeedback>This is an error!</AvFeedback>
           </AvGroup>
           {/* Radios */}
-          <AvRadioGroup inline name="radioExample2" label="Radio Buttons! (inline)" required>
-            <AvRadio label="Bulbasaur" value="Bulbasaur" id="radioOption5" />
-            <AvRadio label="Squirtle" value="Squirtle" id="radioOption6" />
-            <AvRadio label="Charmander" value="Charmander" id="radioOption7" />
-            <AvRadio label="Pikachu" value="Pikachu" id="radioOption8" disabled />
+          <AvRadioGroup inline name="radioExample4" label="Radio Buttons! (inline)" required>
+            <AvRadio label="Bulbasaur" value="Bulbasaur" />
+            <AvRadio label="Squirtle" value="Squirtle" />
+            <AvRadio label="Charmander" value="Charmander" />
+            <AvRadio label="Pikachu" value="Pikachu" disabled />
           </AvRadioGroup>
           {/* With select and AvField */}
           <AvField type="select" name="select" label="Option" helpMessage="Idk, this is an example. Deal with it!">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+          </AvField>
+
+          <AvField type="select" name="select-multiple" label="Option" helpMessage="MULTIPLE!" multiple required>
             <option>1</option>
             <option>2</option>
             <option>3</option>

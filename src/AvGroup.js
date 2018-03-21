@@ -30,7 +30,7 @@ export default class AvGroup extends Component {
     };
     return {
       Group: {
-        input: this.state.input,
+        getInput: () => this.state.input,
         getInputState: ::this.getInputState,
       },
       FormCtrl: this.FormCtrl,

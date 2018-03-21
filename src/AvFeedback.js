@@ -12,6 +12,6 @@ export default class AvFeedback extends Component {
 
   render() {
     const validation = this.context.Group.getInputState();
-    return validation.color ? <FormFeedback {...this.props} /> : null;
+    return <FormFeedback valid={!validation.error} {...this.props} />;
   }
 }

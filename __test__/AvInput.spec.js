@@ -6,17 +6,26 @@ import { Input } from 'reactstrap';
 let options;
 
 describe('AvInput', () => {
+  let touched;
+  let dirty;
+  let bad;
+  let error;
+
   beforeEach(() => {
+    touched = false;
+    dirty = false;
+    bad = false;
+    error = false;
     options = {
       context: {
         FormCtrl: {
           inputs: {},
           getDefaultValue: ()=> {},
           getInputState: ()=> {},
-          hasError: {},
-          isDirty: {},
-          isTouched: {},
-          isBad: {},
+          hasError: () => error,
+          isDirty: () => dirty,
+          isTouched: () => touched,
+          isBad: () => bad,
           setDirty: ()=> {},
           setTouched: ()=> {},
           setBad: ()=> {},
@@ -36,62 +45,63 @@ describe('AvInput', () => {
     expect(wrapper.type()).to.equal(Input);
   });
 
-  it('should have "av-untouched" class when untouched', () => {
+  it('should have "is-untouched" class when untouched', () => {
     const wrapper = shallow(<AvInput name="yo" />, options);
-
-    expect(wrapper.hasClass('av-untouched')).to.be.true;
-    expect(wrapper.hasClass('av-touched')).to.be.false;
+    console.log(wrapper.html())
+    expect(wrapper.hasClass('is-untouched')).to.be.true;
+    expect(wrapper.hasClass('is-touched')).to.be.false;
   });
 
-  it('should have "av-pristine" class when not dirty', () => {
+  it('should have "is-pristine" class when not dirty', () => {
     const wrapper = shallow(<AvInput name="yo" />, options);
 
-    expect(wrapper.hasClass('av-pristine')).to.be.true;
-    expect(wrapper.hasClass('av-dirty')).to.be.false;
+    expect(wrapper.hasClass('is-pristine')).to.be.true;
+    expect(wrapper.hasClass('is-dirty')).to.be.false;
   });
 
-  it('should have "av-valid" class when not invalid', () => {
+  it('should have "av-valid" not "is-invalid" class when valid', () => {
     const wrapper = shallow(<AvInput name="yo" />, options);
 
     expect(wrapper.hasClass('av-valid')).to.be.true;
-    expect(wrapper.hasClass('av-invalid')).to.be.false;
+    expect(wrapper.hasClass('is-invalid')).to.be.false;
   });
 
-  it('should not have "av-bad-input" class when the input is not "bad"', () => {
+  it('should not have "is-bad-input" class when the input is not "bad"', () => {
     const wrapper = shallow(<AvInput name="yo" />, options);
 
-    expect(wrapper.hasClass('av-bad-input')).to.be.false;
+    expect(wrapper.hasClass('is-bad-input')).to.be.false;
   });
 
-  it('should have "av-touched" class when touched', () => {
-    options.context.FormCtrl.isTouched.yo = true;
+  it('should have "is-touched" class when touched', () => {
+    touched = true;
     const wrapper = shallow(<AvInput name="yo" />, options);
 
-    expect(wrapper.hasClass('av-untouched')).to.be.false;
-    expect(wrapper.hasClass('av-touched')).to.be.true;
+    expect(wrapper.hasClass('is-untouched')).to.be.false;
+    expect(wrapper.hasClass('is-touched')).to.be.true;
   });
 
-  it('should have "av-pristine" class when not dirty', () => {
-    options.context.FormCtrl.isDirty.yo = true;
+  it('should have "is-pristine" class when not dirty', () => {
+    dirty = true;
     const wrapper = shallow(<AvInput name="yo" />, options);
 
-    expect(wrapper.hasClass('av-pristine')).to.be.false;
-    expect(wrapper.hasClass('av-dirty')).to.be.true;
+    expect(wrapper.hasClass('is-pristine')).to.be.false;
+    expect(wrapper.hasClass('is-dirty')).to.be.true;
   });
 
-  it('should have "av-valid" class when not invalid', () => {
-    options.context.FormCtrl.hasError.yo = true;
+  it('should have "is-invalid" not "av-valid" class when invalid and touched', () => {
+    error = true;
+    touched = true;
     const wrapper = shallow(<AvInput name="yo" />, options);
 
     expect(wrapper.hasClass('av-valid')).to.be.false;
-    expect(wrapper.hasClass('av-invalid')).to.be.true;
+    expect(wrapper.hasClass('is-invalid')).to.be.true;
   });
 
-  it('should not have "av-bad-input" class when the input is not "bad"', () => {
-    options.context.FormCtrl.isBad.yo = true;
+  it('should not have "is-bad-input" class when the input is not "bad"', () => {
+    bad = true;
     const wrapper = shallow(<AvInput name="yo" />, options);
 
-    expect(wrapper.hasClass('av-bad-input')).to.be.true;
+    expect(wrapper.hasClass('is-bad-input')).to.be.true;
   });
 
   it('should allow custom classes', () => {

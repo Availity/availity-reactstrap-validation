@@ -36,19 +36,19 @@ class Components extends React.Component {
   }
   render() {
     return (
-      <Container fluid className="content">
+      <Container className="content">
         <Row>
-          <Col md={{ size: 3, push: 9 }}>
-            <div className="docs-sidebar m-b-3">
+          <Col md={{ size: 3, order: 2 }}>
+            <div className="docs-sidebar mb-3">
               <h5>Components</h5>
-              <Nav>
+              <Nav className="flex-column">
                 {this.state.navItems.map((item, i) => {
                   return <ComponentLink key={i} item={item} />;
                 })}
               </Nav>
             </div>
           </Col>
-          <Col md={{ size: 9, pull: 3 }}>
+          <Col md={{ size: 9, order: 1}}>
             {this.props.children}
           </Col>
         </Row>

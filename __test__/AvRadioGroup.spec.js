@@ -6,23 +6,33 @@ import { FormGroup } from 'reactstrap';
 let options;
 
 describe('AvRadioGroup', () => {
+  let touched;
+  let dirty;
+  let bad;
+  let error;
+
   beforeEach(() => {
+    touched = false;
+    dirty = false;
+    bad = false;
+    error = false;
     options = {
       context: {
         FormCtrl: {
           inputs: {},
           getDefaultValue: ()=> {},
-          getInputState: ()=> {return {}},
-          hasError: {},
-          isDirty: {},
-          isTouched: {},
+          getInputState: ()=> ({}),
+          hasError: () => error,
+          isDirty: () => dirty,
+          isTouched: () => touched,
+          isBad: () => bad,
           setDirty: sinon.spy(),
           setTouched: sinon.spy(),
           setBad: sinon.spy(),
           register: sinon.spy(),
           unregister: sinon.spy(),
           validate: sinon.spy(),
-          validationEvent: ()=> {},
+          getValidationEvent: ()=> {},
           validation: {},
           parent: null,
         },
@@ -161,8 +171,9 @@ describe('AvRadioGroup', () => {
     const wrapper = shallow(<AvRadioGroup name="yo" onChange={spy} />, options);
     const component = wrapper.instance();
     const event = {};
-    component.getChildContext().Group.update(event, 'momo');
-    expect(spy).to.have.been.calledWith(event, 'momo');
+    component.getChildContext().Group.update(event, 'momo').then(() => {
+      expect(spy).to.have.been.calledWith(event, 'momo');
+    });
   });
 
   it('should render validation message when sent', () => {
@@ -173,22 +184,8 @@ describe('AvRadioGroup', () => {
     expect(wrapper.find(AvFeedback).prop('children')).to.equal('WHAT ARE YOU DOING?!');
   });
 
-  it('should not render validation message when false', () => {
-    options.context.FormCtrl.getInputState = () => {
-      return {'errorMessage': false};
-    };
-    const wrapper = shallow(<AvRadioGroup name="yo" />, options);
-    expect(wrapper.find(AvFeedback)).to.have.lengthOf(0);
-  });
-
   it('should show a legend if we defined a label', () => {
     const wrapper = shallow(<AvRadioGroup name="yo" label="test" />, options);
     expect(wrapper.contains(<legend>test</legend>)).to.be.true;
   });
-
-  it('should wrap the children in a FormGroup when inline', () => {
-    const wrapper = shallow(<AvRadioGroup name="yo" label="test" inline />, options);
-    expect(wrapper.childAt(1).type()).to.equal(FormGroup);
-  });
-
 });

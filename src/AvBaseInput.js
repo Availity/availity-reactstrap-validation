@@ -1,11 +1,25 @@
-import {Component} from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import isUndefined from 'lodash/isUndefined';
 import isEqual from 'lodash/isEqual';
 
-const htmlValidationAttrs = ['min', 'max', 'minLength', 'maxLength', 'pattern', 'required', 'step'];
+const htmlValidationAttrs = [
+  'min',
+  'max',
+  'minLength',
+  'maxLength',
+  'pattern',
+  'required',
+  'step',
+];
+
 const htmlValidationTypes = [
-  'email', 'date', 'datetime', 'number', 'tel', 'url',
+  'email',
+  'date',
+  'datetime',
+  'number',
+  'tel',
+  'url',
   /*'range', 'month', 'week', 'time'*/ // These do not currently have validation
 ];
 
@@ -13,12 +27,10 @@ export default class AvBaseInput extends Component {
   static propTypes = {
     name: PropTypes.string.isRequired,
     validationEvent: PropTypes.oneOfType([
-      PropTypes.oneOf([
-        '', 'onInput', 'onChange', 'onBlur', 'onFocus',
-      ]),
-      PropTypes.arrayOf(PropTypes.oneOf([
-        'onInput', 'onChange', 'onBlur', 'onFocus',
-      ])),
+      PropTypes.oneOf(['', 'onInput', 'onChange', 'onBlur', 'onFocus']),
+      PropTypes.arrayOf(
+        PropTypes.oneOf(['onInput', 'onChange', 'onBlur', 'onFocus'])
+      ),
     ]),
     validate: PropTypes.object,
     value: PropTypes.any,
@@ -51,7 +63,7 @@ export default class AvBaseInput extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { value: (this.props.multiple ? [] : '')};
+    this.state = { value: this.props.multiple ? [] : '' };
     this.validations = {};
     this.value = '';
     this.onKeyUpHandler = ::this.onKeyUpHandler;
@@ -64,7 +76,7 @@ export default class AvBaseInput extends Component {
 
   componentWillMount() {
     this.value = this.props.value || this.getDefaultValue();
-    this.setState({value: this.value});
+    this.setState({ value: this.value });
     this.updateValidations();
   }
 
@@ -76,11 +88,11 @@ export default class AvBaseInput extends Component {
         } else {
           this.value = nextProps.falseValue;
         }
-        this.setState({value: this.value});
+        this.setState({ value: this.value });
       }
     } else {
-      if (nextProps.multiple !== this.props.multiple){
-        this.value = (nextProps.multiple ? [] : '');
+      if (nextProps.multiple !== this.props.multiple) {
+        this.value = nextProps.multiple ? [] : '';
         this.setState({ value: this.value });
       }
       if (nextProps.value !== this.props.value) {
@@ -99,10 +111,19 @@ export default class AvBaseInput extends Component {
   }
 
   onKeyUpHandler(event) {
-    if (event && event.target && event.target.validity &&
-      event.target.validity.badInput !== this.context.FormCtrl.isBad[this.props.name] &&
-      (event.target.validity.badInput !== false || this.context.FormCtrl.isBad[this.props.name] !== undefined)) {
-      this.context.FormCtrl.setBad(this.props.name, event.target.validity.badInput);
+    if (
+      event &&
+      event.target &&
+      event.target.validity &&
+      event.target.validity.badInput !==
+        this.context.FormCtrl.isBad(this.props.name) &&
+      (event.target.validity.badInput !== false ||
+        this.context.FormCtrl.isBad(this.props.name) !== undefined)
+    ) {
+      this.context.FormCtrl.setBad(
+        this.props.name,
+        event.target.validity.badInput
+      );
       this.validate();
     }
     this.props.onKeyUp && this.props.onKeyUp(event);
@@ -111,13 +132,15 @@ export default class AvBaseInput extends Component {
   onInputHandler(_value) {
     this.value = this.getFieldValue(_value);
     this.validateEvent('onInput', _value);
-    !this.context.FormCtrl.isDirty[this.props.name] && this.context.FormCtrl.setDirty(this.props.name);
+    !this.context.FormCtrl.isDirty(this.props.name) &&
+      this.context.FormCtrl.setDirty(this.props.name);
   }
 
   onBlurHandler(_value) {
     this.value = this.getFieldValue(_value);
     this.validateEvent('onBlur', _value);
-    !this.context.FormCtrl.isTouched[this.props.name] && this.context.FormCtrl.setTouched(this.props.name);
+    !this.context.FormCtrl.isTouched(this.props.name) &&
+      this.context.FormCtrl.setTouched(this.props.name);
   }
 
   onFocusHandler(_value) {
@@ -128,7 +151,8 @@ export default class AvBaseInput extends Component {
   onChangeHandler(_value) {
     this.value = this.getFieldValue(_value);
     this.validateEvent('onChange', _value);
-    !this.context.FormCtrl.isDirty[this.props.name] && this.context.FormCtrl.setDirty(this.props.name);
+    !this.context.FormCtrl.isDirty(this.props.name) &&
+      this.context.FormCtrl.setDirty(this.props.name);
   }
 
   getDefaultValue() {
@@ -136,16 +160,20 @@ export default class AvBaseInput extends Component {
 
     if (this.props.type === 'checkbox') {
       if (!isUndefined(this.props.defaultChecked)) {
-        return this.props.defaultChecked ? this.props.trueValue : this.props.falseValue;
+        return this.props.defaultChecked
+          ? this.props.trueValue
+          : this.props.falseValue;
       }
       defaultValue = this.props.falseValue;
     }
 
-    if (this.props.type === 'select' && this.props.multiple){
+    if (this.props.type === 'select' && this.props.multiple) {
       defaultValue = [];
     }
 
-    let value = this.props.defaultValue || this.context.FormCtrl.getDefaultValue(this.props.name);
+    let value =
+      this.props.defaultValue ||
+      this.context.FormCtrl.getDefaultValue(this.props.name);
 
     if (this.props.type === 'checkbox' && value !== this.props.trueValue) {
       value = defaultValue;
@@ -154,11 +182,18 @@ export default class AvBaseInput extends Component {
     return isUndefined(value) ? defaultValue : value;
   }
 
-  getFieldValue(event){
+  getFieldValue(event) {
     if (this.props.type === 'checkbox') {
-      return event.target.checked ? this.props.trueValue : this.props.falseValue;
+      return event.target.checked
+        ? this.props.trueValue
+        : this.props.falseValue;
     }
-    if (this.props.type === 'select' && this.props.multiple){
+
+    if (this.props.type === 'select' && this.props.multiple) {
+      /* // Something about this does not work when transpiled
+      return [...event.target.options]
+        .filter(({ selected }) => selected)
+        .map(({ value }) => value); */
       const ret = [];
       const options = event.target.options;
       for (let i = 0; i < options.length; i++){
@@ -168,13 +203,15 @@ export default class AvBaseInput extends Component {
       }
       return ret;
     }
-    return event && event.target && !isUndefined(event.target.value) ? event.target.value : event;
+    return event && event.target && !isUndefined(event.target.value)
+      ? event.target.value
+      : event;
   }
 
   getValidationEvent() {
     const validationEvent = this.props.validationEvent
       ? this.props.validationEvent
-      : this.context.FormCtrl.validationEvent;
+      : this.context.FormCtrl.getValidationEvent();
     return Array.isArray(validationEvent) ? validationEvent : [validationEvent];
   }
 
@@ -183,7 +220,8 @@ export default class AvBaseInput extends Component {
     const htmlValAttrs = Object.keys(this.props.validate || {})
       .filter(val => htmlValidationAttrs.indexOf(val) > -1)
       .reduce((result, item) => {
-        result[item] = this.props.validate[item].value || this.props.validate[item];
+        result[item] =
+          this.props.validate[item].value || this.props.validate[item];
         return result;
       }, {});
 
@@ -217,14 +255,14 @@ export default class AvBaseInput extends Component {
     this.context.FormCtrl.setDirty(this.props.name, false);
     this.context.FormCtrl.setTouched(this.props.name, false);
     this.context.FormCtrl.setBad(this.props.name, false);
-    this.setState({value: this.value});
+    this.setState({ value: this.value });
     this.validate();
     this.props.onReset && this.props.onReset(this.value);
   }
 
   validateEvent(eventName, _event) {
+    this.setState({ value: this.value });
     if (this.getValidationEvent().indexOf(eventName) > -1) {
-      this.setState({value: this.value});
       this.validate();
     }
     this.props[eventName] && this.props[eventName](_event, this.value);
@@ -245,7 +283,9 @@ export default class AvBaseInput extends Component {
       .filter(val => htmlValidationAttrs.indexOf(val) > -1)
       .forEach(attr => {
         if (props[attr]) {
-          this.validations[attr] = this.validations[attr] || {value: props[attr]};
+          this.validations[attr] = this.validations[attr] || {
+            value: props[attr],
+          };
         } else {
           delete this.validations[attr];
         }

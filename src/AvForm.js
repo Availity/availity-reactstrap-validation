@@ -84,9 +84,11 @@ export default class AvForm extends InputContainer {
 
     const values = this.getValues();
 
-    const {isValid, errors} = await this.validateAll(values);
+    const {isValid, errors} = await this.validateAll(values, false);
 
     this.setTouched(Object.keys(this._inputs));
+
+    this.updateInputs();
 
     this.props.onSubmit(e, errors, values);
     if (isValid) {
@@ -111,20 +113,19 @@ export default class AvForm extends InputContainer {
   getChildContext() {
     return {
       FormCtrl: {
-        inputs: this._inputs,
         getDefaultValue: ::this.getDefaultValue,
         getInputState: ::this.getInputState,
-        hasError: this.state.invalidInputs,
-        isDirty: this.state.dirtyInputs,
-        isTouched: this.state.touchedInputs,
-        isBad: this.state.badInputs,
+        hasError: ::this.hasError,
+        isDirty: ::this.isDirty,
+        isTouched: ::this.isTouched,
+        isBad: ::this.isBad,
         setDirty: ::this.setDirty,
         setTouched: ::this.setTouched,
         setBad: ::this.setBad,
         register: ::this.registerInput,
         unregister: ::this.unregisterInput,
         validate: ::this.validateInput,
-        validationEvent: this.props.validationEvent,
+        getValidationEvent: () => this.props.validationEvent,
         parent: this.context.FormCtrl || null,
       },
     };
@@ -202,12 +203,16 @@ export default class AvForm extends InputContainer {
   }
 
   reset() {
-    Object.keys(this._inputs).forEach(inputName => this._inputs[inputName].reset());
+    Object.keys(this._inputs).forEach(inputName => this._inputs[inputName] && this._inputs[inputName].reset());
+  }
+
+  updateInputs() {
+    // this is just until a more intelligent way to determine which inputs need updated is implemented in v3
+    Object.keys(this._inputs).forEach(inputName => this._inputs[inputName] && this._inputs[inputName].forceUpdate());
   }
 
   async validateInput(name) {
     await this.validateOne(name, this.getValues());
-    this.forceUpdate();
   }
 
   getInputState(inputName) {
@@ -312,7 +317,7 @@ export default class AvForm extends InputContainer {
     this.setState({badInputs});
   }
 
-  async validateOne(inputName, context) {
+  async validateOne(inputName, context, update) {
     const input = this._inputs[inputName];
 
     if (Array.isArray(input)) {
@@ -343,17 +348,18 @@ export default class AvForm extends InputContainer {
 
     this.setError(inputName, !isValid, error);
 
+    if (update) this.updateInputs();
     return isValid;
   }
 
-  async validateAll(context) {
+  async validateAll(context, update = true) {
     const errors = [];
     let isValid = true;
 
     for (const inputName in this._inputs) {
       /* istanbul ignore else  */
       if (this._inputs.hasOwnProperty(inputName)) {
-        const valid = await this.validateOne(inputName, context);
+        const valid = await this.validateOne(inputName, context, update);
         if (!valid) {
           isValid = false;
           errors.push(inputName);
