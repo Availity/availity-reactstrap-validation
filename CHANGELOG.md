@@ -1,3 +1,13 @@
+<a name="2.0.0-beta.3"></a>
+# [2.0.0-beta.3](https://github.com/Availity/availity-reactstrap-validation/compare/v2.0.0-beta.2...v2.0.0-beta.3) (2018-03-22)
+
+
+### Bug Fixes
+
+* **AvForm:** trigger updates for middle components ([3b76981](https://github.com/Availity/availity-reactstrap-validation/commit/3b76981))
+
+
+
 <a name="2.0.0-beta.2"></a>
 # [2.0.0-beta.2](https://github.com/Availity/availity-reactstrap-validation/compare/v2.0.0-beta.1...v2.0.0-beta.2) (2018-03-22)
 
