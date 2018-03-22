@@ -33,6 +33,24 @@ export default class AvField extends Component {
     FormCtrl: PropTypes.object.isRequired,
   };
 
+  static childContextTypes = {
+    FormCtrl: PropTypes.object.isRequired,
+  };
+
+  getChildContext() {
+    this.FormCtrl = {...this.context.FormCtrl};
+    const registerValidator = this.FormCtrl.register;
+    this.FormCtrl.register = (input, updater = input && input.forceUpdate) => {
+      registerValidator(input, () => {
+        this.forceUpdate();
+        if (updater) updater();
+      });
+    };
+    return {
+      FormCtrl: this.FormCtrl,
+    };
+  }
+
   render() {
     let row = false;
     const col = {};

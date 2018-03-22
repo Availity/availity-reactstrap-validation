@@ -26,7 +26,7 @@ export default class AvGroup extends Component {
     const registerValidator = this.FormCtrl.register;
     this.FormCtrl.register = (input) => {
       this.setState({input});
-      registerValidator(input);
+      registerValidator(input, this.update.bind(this, input));
     };
     return {
       Group: {
@@ -39,6 +39,11 @@ export default class AvGroup extends Component {
 
   getInputState() {
     return this.context.FormCtrl.getInputState(this.state.input.props.name);
+  }
+
+  update(input){
+    if (input && input.forceUpdate) input.forceUpdate();
+    this.forceUpdate();
   }
 
   render() {

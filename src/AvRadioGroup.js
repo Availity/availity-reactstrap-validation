@@ -109,6 +109,11 @@ export default class AvRadioGroup extends Component {
     this.updateInputs();
   }
 
+  update() {
+    this.forceUpdate();
+    this.updateInputs();
+  }
+
   _inputs = [];
 
   value = '';
@@ -128,7 +133,7 @@ export default class AvRadioGroup extends Component {
         }
       });
 
-    this.context.FormCtrl.register(this);
+    this.context.FormCtrl.register(this, ::this.update);
     this.validate();
   }
 
@@ -188,7 +193,7 @@ export default class AvRadioGroup extends Component {
     );
 
     return (
-      <FormGroup tag="fieldset" {...attributes} color={validation.color}>
+      <FormGroup tag="fieldset" {...attributes}>
         {legend}
         <div className={classes}>{children}</div>
         <AvFeedback>{validation.errorMessage}</AvFeedback>
