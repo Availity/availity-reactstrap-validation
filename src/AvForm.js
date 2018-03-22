@@ -140,8 +140,8 @@ export default class AvForm extends InputContainer {
     this._validators = {};
   }
 
-  registerInput(input) {
-    super.registerInput(input);
+  registerInput(input, updater) {
+    super.registerInput(input, updater);
 
     if (typeof input.validations === 'object') {
       this._validators[input.props.name] = this.compileValidationRules(input, input.validations);
