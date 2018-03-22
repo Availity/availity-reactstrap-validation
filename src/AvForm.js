@@ -115,6 +115,9 @@ export default class AvForm extends InputContainer {
       FormCtrl: {
         getDefaultValue: ::this.getDefaultValue,
         getInputState: ::this.getInputState,
+        getInput: name => this._inputs[name],
+        getInputValue: ::this.getValue,
+        getValues: ::this.getValues,
         hasError: ::this.hasError,
         isDirty: ::this.isDirty,
         isTouched: ::this.isTouched,
@@ -447,6 +450,8 @@ export default class AvForm extends InputContainer {
 
   getValue(inputName) {
     const input = this._inputs[inputName];
+
+    if (!input) return undefined;
 
     if (Array.isArray(input)) {
       throw new Error(`Multiple inputs cannot use the same name: "${inputName}"`);
