@@ -1,3 +1,13 @@
+<a name="2.0.0-beta.1"></a>
+# [2.0.0-beta.1](https://github.com/Availity/availity-reactstrap-validation/compare/v2.0.0-beta...v2.0.0-beta.1) (2018-03-22)
+
+
+### Bug Fixes
+
+* **context:** expose more functions on context ([d18c677](https://github.com/Availity/availity-reactstrap-validation/commit/d18c677))
+
+
+
 <a name="2.0.0-beta"></a>
 # [2.0.0-beta](https://github.com/Availity/availity-reactstrap-validation/compare/v2.0.0-alpha.2...v2.0.0-beta) (2018-03-21)
 
