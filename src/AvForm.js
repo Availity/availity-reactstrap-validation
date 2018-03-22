@@ -6,6 +6,7 @@ import { Form } from 'reactstrap';
 import classNames from 'classnames';
 import _get from 'lodash/get';
 import _set from 'lodash/set';
+import _throttle from 'lodash/throttle';
 import isString from 'lodash/isString';
 
 const getInputErrorMessage = (input, ruleName) => {
@@ -210,8 +211,15 @@ export default class AvForm extends InputContainer {
   }
 
   updateInputs() {
+    if (this.throttledUpdateInputs) {
+      this.throttledUpdateInputs();
+      return;
+    }
     // this is just until a more intelligent way to determine which inputs need updated is implemented in v3
-    Object.keys(this._updaters).forEach(inputName => this._updaters[inputName] && this._inputs[inputName] && this._updaters[inputName].call(this._inputs[inputName]));
+    this.throttledUpdateInputs = _throttle(()=> {
+      Object.keys(this._updaters).forEach(inputName => this._updaters[inputName] && this._inputs[inputName] && this._updaters[inputName].call(this._inputs[inputName]));
+    }, 250);
+    this.updateInputs();
   }
 
   async validateInput(name) {
@@ -320,7 +328,7 @@ export default class AvForm extends InputContainer {
     this.setState({badInputs});
   }
 
-  async validateOne(inputName, context, update) {
+  async validateOne(inputName, context, update = true) {
     const input = this._inputs[inputName];
 
     if (Array.isArray(input)) {
