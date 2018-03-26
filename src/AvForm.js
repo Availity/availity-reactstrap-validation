@@ -10,7 +10,7 @@ import _throttle from 'lodash/throttle';
 import isString from 'lodash/isString';
 
 const getInputErrorMessage = (input, ruleName) => {
-  const errorMessage = input.props.errorMessage;
+  const errorMessage = input && input.props && input.props.errorMessage;
 
   if (typeof errorMessage === 'object') {
     return errorMessage[ruleName];
@@ -87,7 +87,7 @@ export default class AvForm extends InputContainer {
 
     const {isValid, errors} = await this.validateAll(values, false);
 
-    this.setTouched(Object.keys(this._inputs));
+    this.setTouched(Object.keys(this._inputs), true, false);
 
     this.updateInputs();
 
@@ -258,74 +258,101 @@ export default class AvForm extends InputContainer {
     return inputName ? !!this.state.badInputs[inputName] : Object.keys(this.state.badInputs).length > 0;
   }
 
-  setError(inputName, error = true, errText = error) {
+  setError(inputName, error = true, errText = error, update = true) {
     if (error && !isString(errText) && typeof errText !== 'boolean') {
       errText = errText + '';
     }
-
+    let changed = false;
     const currentError = this.hasError(inputName);
-    if (currentError === errText) return;
-
     let invalidInputs = this.state.invalidInputs;
+
+    if (currentError === errText && error === !!currentError) return;
     if (error) {
       invalidInputs[inputName] = errText || true;
+      changed = true;
     } else {
       delete invalidInputs[inputName];
+      changed = true;
     }
+
+    if (!changed) return;
 
     invalidInputs = {...this.state.invalidInputs};
-    this.setState({invalidInputs});
+    this.setState({invalidInputs}, () => {
+      if (update) this.updateInputs();
+    });
   }
 
-  setDirty(inputs, dirty = true) {
+  setDirty(inputs, dirty = true, update = true) {
     let dirtyInputs = this.state.dirtyInputs;
+    let changed = false;
     if (!Array.isArray(inputs)) {
       inputs = [inputs];
     }
     inputs.forEach(inputName => {
-      if (dirty) {
+      if (dirty && !dirtyInputs[inputName]) {
         dirtyInputs[inputName] = true;
-      } else {
+        changed = true;
+      } else if (!dirty && dirtyInputs[inputName]) {
         delete dirtyInputs[inputName];
+        changed = true;
       }
     });
+
+    if (!changed) return;
 
     dirtyInputs = {...this.state.dirtyInputs};
-    this.setState({dirtyInputs});
+    this.setState({dirtyInputs}, () => {
+      if (update) this.updateInputs();
+    });
   }
 
-  setTouched(inputs, touched = true) {
+  setTouched(inputs, touched = true, update = true) {
     let touchedInputs = this.state.touchedInputs;
+    let changed = false;
     if (!Array.isArray(inputs)) {
       inputs = [inputs];
     }
     inputs.forEach(inputName => {
-      if (touched) {
+      if (touched && !touchedInputs[inputName]) {
         touchedInputs[inputName] = true;
-      } else {
+        changed = true;
+      } else if (!touched && touchedInputs[inputName]) {
         delete touchedInputs[inputName];
+        changed = true;
       }
     });
+
+    if (!changed) return;
 
     touchedInputs = {...this.state.touchedInputs};
-    this.setState({touchedInputs});
+    this.setState({touchedInputs}, () => {
+      if (update) this.updateInputs();
+    });
   }
 
-  setBad(inputs, isBad = true) {
+  setBad(inputs, isBad = true, update = true) {
     let badInputs = this.state.badInputs;
+    let changed = false;
     if (!Array.isArray(inputs)) {
       inputs = [inputs];
     }
     inputs.forEach(inputName => {
-      if (isBad) {
+      if (isBad && !badInputs[inputName]) {
         badInputs[inputName] = true;
-      } else {
+        changed = true;
+      } else if (!isBad && badInputs[inputName]) {
         delete badInputs[inputName];
+        changed = true;
       }
     });
 
+    if (!changed) return;
+
     badInputs = {...this.state.badInputs};
-    this.setState({badInputs});
+    this.setState({badInputs}, () => {
+      if (update) this.updateInputs();
+    });
   }
 
   async validateOne(inputName, context, update = true) {
@@ -357,9 +384,8 @@ export default class AvForm extends InputContainer {
       }
     }
 
-    this.setError(inputName, !isValid, error);
+    this.setError(inputName, !isValid, error, update);
 
-    if (update) this.updateInputs();
     return isValid;
   }
 

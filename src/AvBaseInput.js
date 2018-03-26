@@ -81,6 +81,9 @@ export default class AvBaseInput extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    if (nextProps.name !== this.props.name) {
+      this.context.FormCtrl.unregister(this);
+    }
     if (nextProps.type === 'checkbox') {
       if (nextProps.checked !== this.props.checked) {
         if (nextProps.checked) {

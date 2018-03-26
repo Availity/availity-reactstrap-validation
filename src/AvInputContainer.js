@@ -16,10 +16,24 @@ export default class InputContainer extends Component {
     this._inputs = {};
   }
 
+  getOldInputName(input) {
+    for (const key in this._inputs) {
+      if (this._inputs[key] === input) {
+        return key;
+      }
+    }
+  }
+
   registerInput(input, updater = input && input.forceUpdate) {
     const {name} = validComponent(input, updater);
-    this._updaters[name] = updater;
-    this._inputs[name] = input;
+    const oldName = this.getOldInputName(input);
+    if (oldName !== name) {
+      if (oldName) {
+        this.unregisterInput({name: oldName});
+      }
+      this._updaters[name] = updater;
+      this._inputs[name] = input;
+    }
   }
 
   unregisterInput(input) {

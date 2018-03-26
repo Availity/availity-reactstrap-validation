@@ -33,10 +33,12 @@ export default class AvRadioGroup extends Component {
   };
 
   getChildContext() {
-    this.FormCtrl = { ...this.context.FormCtrl };
-    this.FormCtrl.register = ::this.registerInput;
-    this.FormCtrl.unregister = ::this.unregisterInput;
-    this.FormCtrl.validate = noop;
+    if (!this.FormCtrl) {
+      this.FormCtrl = { ...this.context.FormCtrl };
+      this.FormCtrl.register = ::this.registerInput;
+      this.FormCtrl.unregister = ::this.unregisterInput;
+      this.FormCtrl.validate = noop;
+    }
 
     const updateGroup = async (e, value) => {
       this.setState({ value });
@@ -72,6 +74,9 @@ export default class AvRadioGroup extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    if (nextProps.name !== this.props.name) {
+      this.context.FormCtrl.unregister(this);
+    }
     if (nextProps.value !== this.props.value) {
       this.value = nextProps.value;
       this.setState({value: nextProps.value});
