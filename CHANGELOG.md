@@ -1,3 +1,13 @@
+<a name="2.0.0"></a>
+# [2.0.0](https://github.com/Availity/availity-reactstrap-validation/compare/v2.0.0-beta.4...v2.0.0) (2018-03-26)
+
+
+### Bug Fixes
+
+* **AvRadioGroup:** fix issue with custom error message ([a76c8f7](https://github.com/Availity/availity-reactstrap-validation/commit/a76c8f7))
+
+
+
 <a name="2.0.0-beta.3"></a>
 # [2.0.0-beta.3](https://github.com/Availity/availity-reactstrap-validation/compare/v2.0.0-beta.2...v2.0.0-beta.3) (2018-03-22)
 
