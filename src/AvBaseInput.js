@@ -2,6 +2,7 @@ import { Component } from 'react';
 import PropTypes from 'prop-types';
 import isUndefined from 'lodash/isUndefined';
 import isEqual from 'lodash/isEqual';
+import get from 'lodash/get';
 
 const htmlValidationAttrs = [
   'min',
@@ -114,16 +115,11 @@ export default class AvBaseInput extends Component {
   }
 
   onKeyUpHandler(event) {
-    if (
-      event &&
-      event.target &&
-      event.target.validity &&
-      event.target.validity.badInput !==
-        this.context.FormCtrl.isBad(this.props.name)
-    ) {
+    const badInput = get(event, 'target.validity.badInput', false);
+    if (badInput !== this.context.FormCtrl.isBad(this.props.name)) {
       this.context.FormCtrl.setBad(
         this.props.name,
-        event.target.validity.badInput
+        badInput
       );
       this.validate();
     }

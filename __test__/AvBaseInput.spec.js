@@ -363,10 +363,17 @@ describe('BaseInput', function () {
 
     it('should not throw when event.target is undefined', () => {
       expect(this.component.onKeyUpHandler.bind(this.component, {})).to.not.throw();
+      expect(this.context.FormCtrl.setBad).to.not.have.been.called;
     });
 
     it('should not throw when event.target.validity is undefined', () => {
       expect(this.component.onKeyUpHandler.bind(this.component, { target: {} })).to.not.throw();
+      expect(this.context.FormCtrl.setBad).to.not.have.been.called;
+    });
+
+    it('should not set badInput to true event.target.validity.badInput is undefined', () => {
+      expect(this.component.onKeyUpHandler.bind(this.component, { target: { validity: {} } })).to.not.throw();
+      expect(this.context.FormCtrl.setBad).to.not.have.been.called;
     });
 
     it('should not call setBadInput if it has not changed', () => {
@@ -376,6 +383,10 @@ describe('BaseInput', function () {
     });
 
     it('should call setBadInput if it has changed', () => {
+      bad = true;
+      this.component.onKeyUpHandler({ target: { validity: {} } });
+      expect(this.context.FormCtrl.setBad).to.have.been.calledWith(this.props.name, false);
+
       bad = true;
       this.component.onKeyUpHandler({ target: { validity: { badInput: false } } });
       expect(this.context.FormCtrl.setBad).to.have.been.calledWith(this.props.name, false);
