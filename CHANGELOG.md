@@ -1,3 +1,13 @@
+<a name="2.0.1"></a>
+## [2.0.1](https://github.com/Availity/availity-reactstrap-validation/compare/v2.0.0...v2.0.1) (2018-03-30)
+
+
+### Bug Fixes
+
+* **AvBaseInput:** fix badInput check not working in IE ([bcdfb32](https://github.com/Availity/availity-reactstrap-validation/commit/bcdfb32))
+
+
+
 <a name="2.0.0"></a>
 # [2.0.0](https://github.com/Availity/availity-reactstrap-validation/compare/v2.0.0-beta.4...v2.0.0) (2018-03-26)
 
