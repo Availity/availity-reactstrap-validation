@@ -3,6 +3,8 @@ import React from 'react';
 import { PrismCode } from 'react-prism';
 import Helmet from 'react-helmet';
 
+import ValidationCustomMessageExample from '../examples/ValidationCustomMessage.js';
+const ValidationCustomMessageExampleSource = require('!!raw!../examples/ValidationCustomMessage.js');
 import ValidationDateExample from '../examples/ValidationDate';
 const ValidationDateExampleSource = require('!!raw!../examples/ValidationDate.js');
 import ValidationDateRangeExample from '../examples/ValidationDateRange';
@@ -43,6 +45,16 @@ export default class FormPage extends React.Component {
         <Helmet title="Validators" />
         <h3>Validations</h3>
         <hr />
+        <h4>Custom error messages</h4>
+        <div className="docs-example">
+          <ValidationCustomMessageExample />
+        </div>
+        <pre>
+          <PrismCode className="language-jsx">
+            {ValidationCustomMessageExampleSource}
+          </PrismCode>
+        </pre>
+
         <h4>Date</h4>
         <div className="docs-example">
           <ValidationDateExample />
