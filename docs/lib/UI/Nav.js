@@ -48,7 +48,7 @@ export default class UINav extends Component {
               </NavItem>
               <NavItem>
                 <NavLink href="https://github.com/availity/availity-reactstrap-validation">
-                  Github
+                  GitHub
                 </NavLink>
               </NavItem>
             </Nav>
