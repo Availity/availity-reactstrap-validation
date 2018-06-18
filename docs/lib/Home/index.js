@@ -21,7 +21,7 @@ export default () => {
                 Easy to use form validation for <a href="https://github.com/reactstrap/reactstrap">reactstrap</a>
               </p>
               <p>
-                <Button outline color="danger" href="https://github.com/availity/availity-reactstrap-validation">View on Github</Button>
+                <Button outline color="danger" href="https://github.com/availity/availity-reactstrap-validation">View on GitHub</Button>
                 <Button color="danger" tag={Link} to="/components/">View Components</Button>
               </p>
             </Col>
