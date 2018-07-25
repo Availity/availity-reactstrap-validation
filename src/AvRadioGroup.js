@@ -197,12 +197,14 @@ export default class AvRadioGroup extends Component {
       touched && hasError && 'is-invalid'
     );
 
+    attributes.className = classNames(attributes.className, 'mb-3');
+
     return (
-      <FormGroup tag="fieldset" {...attributes}>
+      <fieldset {...attributes}>
         {legend}
         <div className={classes}>{children}</div>
         <AvFeedback>{validation.errorMessage}</AvFeedback>
-      </FormGroup>
+      </fieldset>
     );
   }
 }

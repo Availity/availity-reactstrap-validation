@@ -171,6 +171,7 @@ export default class AvForm extends InputContainer {
       validateAll: omit7,
       validationEvent: omit8,
       className,
+      children,
       ...attributes
     } = this.props;
 
@@ -184,13 +185,18 @@ export default class AvForm extends InputContainer {
       attributes.onKeyDown = this.handleNonFormSubmission;
     }
 
+    let contents = children;
+    if (typeof children === 'function') {
+      contents = children({...this.getChildContext().FormCtrl, ...this.state, validateAll: this.validateAll, })
+    }
+
     return (
       <Tag noValidate
         action="#"
         {...attributes}
         className={classes}
         onSubmit={this.handleSubmit}
-      />
+      >{children}</Tag>
     );
   }
 
