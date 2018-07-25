@@ -187,7 +187,7 @@ export default class AvRadioGroup extends Component {
     const hasError = this.context.FormCtrl.hasError(this.props.name);
 
     const classes = classNames(
-      'form-control border-0 p-0',
+      'form-control border-0 p-0 h-auto',
       touched ? 'is-touched' : 'is-untouched',
       this.context.FormCtrl.isDirty(this.props.name)
         ? 'is-dirty'
@@ -197,14 +197,12 @@ export default class AvRadioGroup extends Component {
       touched && hasError && 'is-invalid'
     );
 
-    attributes.className = classNames(attributes.className, 'mb-3');
-
     return (
-      <fieldset {...attributes}>
+      <FormGroup tag="fieldset" {...attributes}>
         {legend}
         <div className={classes}>{children}</div>
         <AvFeedback>{validation.errorMessage}</AvFeedback>
-      </fieldset>
+      </FormGroup>
     );
   }
 }
