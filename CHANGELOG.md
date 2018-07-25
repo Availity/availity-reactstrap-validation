@@ -1,3 +1,13 @@
+<a name="2.0.4"></a>
+## [2.0.4](https://github.com/Availity/availity-reactstrap-validation/compare/v2.0.3...v2.0.4) (2018-07-25)
+
+
+### Bug Fixes
+
+* **AvRadioGroup:** set h-auto on form-control ([b16c40f](https://github.com/Availity/availity-reactstrap-validation/commit/b16c40f))
+
+
+
 <a name="2.0.3"></a>
 ## [2.0.3](https://github.com/Availity/availity-reactstrap-validation/compare/v2.0.2...v2.0.3) (2018-07-25)
 
