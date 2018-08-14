@@ -1,3 +1,13 @@
+<a name="2.0.5"></a>
+## [2.0.5](https://github.com/Availity/availity-reactstrap-validation/compare/v2.0.4...v2.0.5) (2018-08-14)
+
+
+### Bug Fixes
+
+* **AvForm:** ensure error has changed before triggering setState ([106ad8e](https://github.com/Availity/availity-reactstrap-validation/commit/106ad8e))
+
+
+
 <a name="2.0.4"></a>
 ## [2.0.4](https://github.com/Availity/availity-reactstrap-validation/compare/v2.0.3...v2.0.4) (2018-07-25)
 
