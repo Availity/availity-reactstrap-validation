@@ -26,6 +26,8 @@ describe('AvRadioGroup', () => {
           isDirty: () => dirty,
           isTouched: () => touched,
           isBad: () => bad,
+          isDisabled: () => false,
+          isReadOnly: () => false,
           setDirty: sinon.spy(),
           setTouched: sinon.spy(),
           setBad: sinon.spy(),

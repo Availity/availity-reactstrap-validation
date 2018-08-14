@@ -55,6 +55,8 @@ export default class AvForm extends InputContainer {
       PropTypes.string,
       PropTypes.node,
     ]),
+    disabled: PropTypes.bool,
+    readOnly: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -81,6 +83,10 @@ export default class AvForm extends InputContainer {
   handleSubmit = async (e) => {
     if (e && typeof e.preventDefault === 'function') {
       e.preventDefault();
+    }
+
+    if (this.props.disabled) {
+      return;
     }
 
     const values = this.getValues();
@@ -114,21 +120,23 @@ export default class AvForm extends InputContainer {
   getChildContext() {
     return {
       FormCtrl: {
-        getDefaultValue: ::this.getDefaultValue,
-        getInputState: ::this.getInputState,
+        getDefaultValue: this.getDefaultValue.bind(this),
+        getInputState: this.getInputState.bind(this),
         getInput: name => this._inputs[name],
-        getInputValue: ::this.getValue,
-        getValues: ::this.getValues,
-        hasError: ::this.hasError,
-        isDirty: ::this.isDirty,
-        isTouched: ::this.isTouched,
-        isBad: ::this.isBad,
-        setDirty: ::this.setDirty,
-        setTouched: ::this.setTouched,
-        setBad: ::this.setBad,
-        register: ::this.registerInput,
-        unregister: ::this.unregisterInput,
-        validate: ::this.validateInput,
+        getInputValue: this.getValue.bind(this),
+        getValues: this.getValues.bind(this),
+        hasError: this.hasError.bind(this),
+        isDirty: this.isDirty.bind(this),
+        isTouched: this.isTouched.bind(this),
+        isBad: this.isBad.bind(this),
+        isDisabled: () => this.props.disabled,
+        isReadOnly: () => this.props.readOnly,
+        setDirty: this.setDirty.bind(this),
+        setTouched: this.setTouched.bind(this),
+        setBad: this.setBad.bind(this),
+        register: this.registerInput.bind(this),
+        unregister: this.unregisterInput.bind(this),
+        validate: this.validateInput.bind(this),
         getValidationEvent: () => this.props.validationEvent,
         parent: this.context.FormCtrl || null,
       },
@@ -170,6 +178,8 @@ export default class AvForm extends InputContainer {
       validateOne: omit6,
       validateAll: omit7,
       validationEvent: omit8,
+      disabled: omit9,
+      readOnly: omit10,
       className,
       ...attributes
     } = this.props;
@@ -266,7 +276,7 @@ export default class AvForm extends InputContainer {
     const currentError = this.hasError(inputName);
     let invalidInputs = this.state.invalidInputs;
 
-    if (currentError === errText && error === !!currentError) return;
+    if ((invalidInputs[inputName] === undefined && !error || invalidInputs[inputName] === (errText || true)) && error === currentError) return;
     if (error) {
       invalidInputs[inputName] = errText || true;
       changed = true;

@@ -51,7 +51,7 @@ export default class AvRadio extends Component {
     );
 
     return (
-      <FormGroup check inline={groupProps.inline} disabled={this.props.disabled}>
+      <FormGroup check inline={groupProps.inline} disabled={this.props.disabled || this.context.FormCtrl.isDisabled()}>
         <Input
           name={groupProps.name}
           type='radio'

@@ -229,6 +229,8 @@ export default class AvBaseInput extends Component {
       onFocus: this.onFocusHandler,
       onChange: this.onChangeHandler,
       value: this.value,
+      disabled: this.context.FormCtrl.isDisabled(),
+      readOnly: this.context.FormCtrl.isReadOnly(),
       ...htmlValAttrs,
     };
 

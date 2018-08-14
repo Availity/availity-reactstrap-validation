@@ -635,12 +635,12 @@ describe('AvForm', function () {
 
     describe('is bad', () => {
       describe('with a name argument', () => {
-        it('should be false if the input is not in the list',() => {
+        it('should be false if the input is not in the list', () => {
           const inputName = 'myInput';
           expect(this.instance.isBad(inputName)).to.be.false;
         });
 
-        it('should be true when the input is bad',() => {
+        it('should be true when the input is bad', () => {
           const inputName = 'myInput';
           this.instance.state.badInputs[inputName] = true;
           expect(this.instance.isBad(inputName)).to.be.true;
@@ -648,11 +648,11 @@ describe('AvForm', function () {
       });
 
       describe('without a name argument', () => {
-        it('should return false when none of the inputs are bad',() => {
+        it('should return false when none of the inputs are bad', () => {
           expect(this.instance.isBad()).to.be.false;
         });
 
-        it('should return true when any of the inputs are bad',() => {
+        it('should return true when any of the inputs are bad', () => {
           this.instance.state.badInputs.name2 = true;
           expect(this.instance.isBad()).to.be.true;
         });
@@ -668,33 +668,33 @@ describe('AvForm', function () {
       });
 
       describe('when the error is new', () => {
-        it('should set the error in state',() => {
+        it('should set the error in state', () => {
           const inputName = 'myInput';
           const spy = sinon.spy(this.instance, 'setState');
           this.instance.setError(inputName, true);
           expect(spy).to.have.been.calledWithMatch({invalidInputs: {[inputName]: true}});
         });
 
-        it('should set the error to true when no error text is provided',() => {
+        it('should set the error to true when no error text is provided', () => {
           const inputName = 'myInput';
           this.instance.setError(inputName, true);
           expect(this.instance.state.invalidInputs[inputName]).to.be.true;
         });
 
-        it('should set the error to true when a falsey text is provided',() => {
+        it('should set the error to true when a falsey text is provided', () => {
           const inputName = 'myInput';
           this.instance.setError(inputName, true, '');
           expect(this.instance.state.invalidInputs[inputName]).to.be.true;
         });
 
-        it('should set the error to the error text when error text is provided',() => {
+        it('should set the error to the error text when error text is provided', () => {
           const inputName = 'myInput';
           const errorText = 'my error text';
           this.instance.setError(inputName, true, errorText);
           expect(this.instance.state.invalidInputs[inputName]).to.equal(errorText);
         });
 
-        it('should set the error to the error text when error text is provided and not a string',() => {
+        it('should set the error to the error text when error text is provided and not a string', () => {
           const inputName = 'myInput';
           const errorText = 'my error text';
           const myError = new Error(errorText);
@@ -704,15 +704,16 @@ describe('AvForm', function () {
       });
 
       describe('when the error already exits', () => {
-        it('should not set the error in state',() => {
+        it('should not set the error in state', () => {
           const inputName = 'myInput';
           sinon.stub(this.instance, 'hasError').returns(true);
           const spy = sinon.spy(this.instance, 'setState');
+          this.instance.state.invalidInputs = {[inputName]: true};
           this.instance.setError(inputName, true);
           expect(spy).to.not.have.been.called;
         });
 
-        it('should update the state when the message has changed',() => {
+        it('should update the state when the message has changed', () => {
           const inputName = 'myInput';
           sinon.stub(this.instance, 'hasError').returns(true);
           const spy = sinon.spy(this.instance, 'setState');
@@ -723,7 +724,7 @@ describe('AvForm', function () {
       });
 
       describe('when the error is removed', () => {
-        it('should update the state to remove the input from invalid inputs',() => {
+        it('should update the state to remove the input from invalid inputs', () => {
           const inputName = 'myInput';
           sinon.stub(this.instance, 'hasError').returns(true);
           const spy = sinon.spy(this.instance, 'setState');
@@ -731,7 +732,7 @@ describe('AvForm', function () {
           expect(spy).to.have.been.calledWithMatch({invalidInputs: {}});
         });
 
-        it('should not update the state when the input is not currently invalid',() => {
+        it('should not update the state when the input is not currently invalid', () => {
           const inputName = 'myInput';
           sinon.stub(this.instance, 'hasError').returns(false);
           const spy = sinon.spy(this.instance, 'setState');
