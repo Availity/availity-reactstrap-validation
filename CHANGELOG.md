@@ -1,3 +1,13 @@
+<a name="2.0.6"></a>
+## [2.0.6](https://github.com/Availity/availity-reactstrap-validation/compare/v2.0.5...v2.0.6) (2018-08-15)
+
+
+### Bug Fixes
+
+* **AvBaseInput:** fix form level disabled and readonly ([0b60900](https://github.com/Availity/availity-reactstrap-validation/commit/0b60900))
+
+
+
 <a name="2.0.5"></a>
 ## [2.0.5](https://github.com/Availity/availity-reactstrap-validation/compare/v2.0.4...v2.0.5) (2018-08-14)
 
