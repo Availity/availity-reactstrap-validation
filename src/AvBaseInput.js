@@ -43,6 +43,8 @@ export default class AvBaseInput extends Component {
     state: PropTypes.bool,
     type: PropTypes.string,
     multiple: PropTypes.bool,
+    disabled: PropTypes.bool,
+    readOnly: PropTypes.bool,
     onKeyUp: PropTypes.func,
     onInput: PropTypes.func,
     onFocus: PropTypes.func,
@@ -67,12 +69,12 @@ export default class AvBaseInput extends Component {
     this.state = { value: this.props.multiple ? [] : '' };
     this.validations = {};
     this.value = '';
-    this.onKeyUpHandler = ::this.onKeyUpHandler;
-    this.onInputHandler = ::this.onInputHandler;
-    this.onBlurHandler = ::this.onBlurHandler;
-    this.onFocusHandler = ::this.onFocusHandler;
-    this.onChangeHandler = ::this.onChangeHandler;
-    this.validate = ::this.validate;
+    this.onKeyUpHandler = this.onKeyUpHandler.bind(this);
+    this.onInputHandler = this.onInputHandler.bind(this);
+    this.onBlurHandler = this.onBlurHandler.bind(this);
+    this.onFocusHandler = this.onFocusHandler.bind(this);
+    this.onChangeHandler = this.onChangeHandler.bind(this);
+    this.validate = this.validate.bind(this);
   }
 
   componentWillMount() {
@@ -229,10 +231,16 @@ export default class AvBaseInput extends Component {
       onFocus: this.onFocusHandler,
       onChange: this.onChangeHandler,
       value: this.value,
-      disabled: this.context.FormCtrl.isDisabled(),
-      readOnly: this.context.FormCtrl.isReadOnly(),
       ...htmlValAttrs,
     };
+
+    if (this.props.disabled === undefined && this.context.FormCtrl.isDisabled() !== undefined) {
+      newProps.disabled = this.context.FormCtrl.isDisabled();
+    }
+
+    if (this.props.readOnly === undefined && this.context.FormCtrl.isReadOnly() !== undefined) {
+      newProps.readOnly = this.context.FormCtrl.isReadOnly();
+    }
 
     if (this.props.type === 'checkbox') {
       newProps.checked = this.value === this.props.trueValue;

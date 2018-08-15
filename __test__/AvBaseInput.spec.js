@@ -1,16 +1,20 @@
 import { AvBaseInput } from 'availity-reactstrap-validation';
 
-describe('BaseInput', function () {
+describe('BaseInput', function() {
   let touched;
   let dirty;
   let bad;
   let error;
+  let disabled;
+  let readOnly;
 
   beforeEach(() => {
     touched = false;
     dirty = false;
     bad = false;
     error = false;
+    disabled = undefined;
+    readOnly = undefined;
     this.inputState = 'danger';
     this.props = {
       name: 'fieldName',
@@ -30,8 +34,8 @@ describe('BaseInput', function () {
         isDirty: () => dirty,
         isTouched: () => touched,
         isBad: () => bad,
-        isDisabled: () => false,
-        isReadOnly: () => false,
+        isDisabled: () => disabled,
+        isReadOnly: () => readOnly,
         setDirty: sinon.spy(),
         setTouched: sinon.spy(),
         setBad: sinon.spy(),
@@ -269,7 +273,7 @@ describe('BaseInput', function () {
           this.component.props.required = false;
           this.component.updateValidations();
           expect(this.component.validations).to.not.have.property('required');
-        })
+        });
       });
     });
   });
@@ -735,6 +739,76 @@ describe('BaseInput', function () {
         this.component.value = value;
         const result = this.component.getValidatorProps();
         expect(result).to.include({ value });
+      });
+
+      it('should have disabled if AvForm disabled is set', () => {
+        const undefinedResult = this.component.getValidatorProps();
+        expect(undefinedResult).to.not.have.key('disabled');
+        disabled = true;
+        const trueResult = this.component.getValidatorProps();
+        expect(trueResult).to.include({ disabled });
+        disabled = false;
+        const falseResult = this.component.getValidatorProps();
+        expect(falseResult).to.include({ disabled });
+      });
+
+      it('should not have disabled if input disabled is set (false)', () => {
+        this.props.disabled = false;
+        const undefinedResult = this.component.getValidatorProps();
+        expect(undefinedResult).to.not.have.key('disabled');
+        disabled = true;
+        const trueResult = this.component.getValidatorProps();
+        expect(trueResult).to.not.have.key('disabled');
+        disabled = false;
+        const falseResult = this.component.getValidatorProps();
+        expect(falseResult).to.not.have.key('disabled');
+      });
+
+      it('should not have disabled if input disabled is set (true)', () => {
+        this.props.disabled = true;
+        const undefinedResult = this.component.getValidatorProps();
+        expect(undefinedResult).to.not.have.key('disabled');
+        disabled = true;
+        const trueResult = this.component.getValidatorProps();
+        expect(trueResult).to.not.have.key('disabled');
+        disabled = false;
+        const falseResult = this.component.getValidatorProps();
+        expect(falseResult).to.not.have.key('disabled');
+      });
+
+      it('should have readOnly if AvForm readOnly is set', () => {
+        const undefinedResult = this.component.getValidatorProps();
+        expect(undefinedResult).to.not.have.key('readOnly');
+        readOnly = true;
+        const trueResult = this.component.getValidatorProps();
+        expect(trueResult).to.include({ readOnly });
+        readOnly = false;
+        const falseResult = this.component.getValidatorProps();
+        expect(falseResult).to.include({ readOnly });
+      });
+
+      it('should not have readOnly if input readOnly is set (false)', () => {
+        this.props.readOnly = false;
+        const undefinedResult = this.component.getValidatorProps();
+        expect(undefinedResult).to.not.have.key('readOnly');
+        readOnly = true;
+        const trueResult = this.component.getValidatorProps();
+        expect(trueResult).to.not.have.key('readOnly');
+        readOnly = false;
+        const falseResult = this.component.getValidatorProps();
+        expect(falseResult).to.not.have.key('readOnly');
+      });
+
+      it('should not have readOnly if input readOnly is set (true)', () => {
+        this.props.readOnly = true;
+        const undefinedResult = this.component.getValidatorProps();
+        expect(undefinedResult).to.not.have.key('readOnly');
+        readOnly = true;
+        const trueResult = this.component.getValidatorProps();
+        expect(trueResult).to.not.have.key('readOnly');
+        readOnly = false;
+        const falseResult = this.component.getValidatorProps();
+        expect(falseResult).to.not.have.key('readOnly');
       });
 
       describe('when a checkbox', () => {
