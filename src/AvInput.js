@@ -31,6 +31,7 @@ export default class AvInput extends AvBaseInput {
       valueFormatter: omit8,
       className,
       tag: Tag,
+      getRef,
       ...attributes
     } = this.props;
 
@@ -50,6 +51,7 @@ export default class AvInput extends AvBaseInput {
 
     return (
       <Tag {...attributes}
+        ref={getRef}
         {...this.getValidatorProps()}
         className={classes}
         value={value}
