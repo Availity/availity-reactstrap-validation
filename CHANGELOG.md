@@ -1,3 +1,13 @@
+<a name="2.0.7"></a>
+## [2.0.7](https://github.com/Availity/availity-reactstrap-validation/compare/v2.0.6...v2.0.7) (2018-09-07)
+
+
+### Bug Fixes
+
+* **AvInput:** get ref for custom tags ([1f32c14](https://github.com/Availity/availity-reactstrap-validation/commit/1f32c14))
+
+
+
 <a name="2.0.6"></a>
 ## [2.0.6](https://github.com/Availity/availity-reactstrap-validation/compare/v2.0.5...v2.0.6) (2018-08-15)
 
