@@ -185,6 +185,7 @@ export default class AvForm extends InputContainer {
       validationEvent: omit8,
       disabled: omit9,
       readOnly: omit10,
+      beforeSubmitValidation: omit11,
       className,
       ...attributes
     } = this.props;
