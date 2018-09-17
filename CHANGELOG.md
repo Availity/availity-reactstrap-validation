@@ -1,3 +1,13 @@
+<a name="2.1.0"></a>
+# [2.1.0](https://github.com/Availity/availity-reactstrap-validation/compare/v2.0.7...v2.1.0) (2018-09-17)
+
+
+### Features
+
+* **beforeSubmitValidation:** add beforeSubmitValidation handler ([74fd4ca](https://github.com/Availity/availity-reactstrap-validation/commit/74fd4ca))
+
+
+
 <a name="2.0.7"></a>
 ## [2.0.7](https://github.com/Availity/availity-reactstrap-validation/compare/v2.0.6...v2.0.7) (2018-09-07)
 
