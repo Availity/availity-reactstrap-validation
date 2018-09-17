@@ -36,6 +36,7 @@ export default class AvForm extends InputContainer {
     model: PropTypes.object,
     method: PropTypes.oneOf(['get', 'post']),
     onSubmit: PropTypes.func,
+    beforeSubmitValidation: PropTypes.func,
     validate: PropTypes.oneOfType([
       PropTypes.func,
       PropTypes.array,
@@ -81,6 +82,10 @@ export default class AvForm extends InputContainer {
   validations = {};
 
   handleSubmit = async (e) => {
+    if (this.props.beforeSubmitValidation) {
+      this.props.beforeSubmitValidation(e);
+    }
+
     if (e && typeof e.preventDefault === 'function') {
       e.preventDefault();
     }
