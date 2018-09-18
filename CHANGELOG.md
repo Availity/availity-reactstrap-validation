@@ -1,3 +1,14 @@
+<a name="2.1.2"></a>
+## [2.1.2](https://github.com/Availity/availity-reactstrap-validation/compare/v2.1.0...v2.1.2) (2018-09-18)
+
+
+### Bug Fixes
+
+* **AvForm:** don't pass beforeSubmitValidation down ([6e491c8](https://github.com/Availity/availity-reactstrap-validation/commit/6e491c8))
+* **AvInputContainer:** fix input name change ([82a5e47](https://github.com/Availity/availity-reactstrap-validation/commit/82a5e47))
+
+
+
 <a name="2.1.1"></a>
 ## [2.1.1](https://github.com/Availity/availity-reactstrap-validation/compare/v2.1.0...v2.1.1) (2018-09-17)
 
