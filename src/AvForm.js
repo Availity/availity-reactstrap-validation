@@ -233,7 +233,7 @@ export default class AvForm extends InputContainer {
     }
     // this is just until a more intelligent way to determine which inputs need updated is implemented in v3
     this.throttledUpdateInputs = _throttle(()=> {
-      Object.keys(this._updaters).forEach(inputName => this._updaters[inputName] && this._inputs[inputName] && this._updaters[inputName].call(this._inputs[inputName]));
+      Object.keys(this._updaters).forEach(inputName => this._updaters[inputName] && this._inputs[inputName] && this._updaters[inputName].call(this._inputs[inputName], {}));
     }, 250);
     this.updateInputs();
   }

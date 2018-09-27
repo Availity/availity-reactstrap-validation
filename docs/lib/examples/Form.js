@@ -1,6 +1,6 @@
 import React from 'react';
 import { AvForm, AvField, AvGroup, AvInput, AvFeedback, AvRadioGroup, AvRadio } from 'availity-reactstrap-validation';
-import { Button,  Label, FormGroup  } from 'reactstrap';
+import { Button, Label, FormGroup, CustomInput } from 'reactstrap';
 
 export default class FormExample extends React.Component {
   render() {
@@ -28,6 +28,20 @@ export default class FormExample extends React.Component {
           <AvRadio label="Charmander" value="Charmander" />
           <AvRadio label="Pikachu" value="Pikachu" disabled />
         </AvRadioGroup>
+
+        <AvRadioGroup name="radioCustomInputExample" label="Custom Radio Buttons!" required>
+          <AvRadio customInput label="Bulbasaur" value="Bulbasaur" />
+          <AvRadio customInput label="Squirtle" value="Squirtle" />
+          <AvRadio customInput label="Charmander" value="Charmander" />
+          <AvRadio customInput label="Pikachu" value="Pikachu" disabled />
+        </AvRadioGroup>
+
+        <AvRadioGroup inline name="radioCustomInputExample2" label="Custom Radio Buttons! (inline)" required>
+          <AvRadio customInput label="Bulbasaur" value="Bulbasaur" />
+          <AvRadio customInput label="Squirtle" value="Squirtle" />
+          <AvRadio customInput label="Charmander" value="Charmander" />
+          <AvRadio customInput label="Pikachu" value="Pikachu" disabled />
+        </AvRadioGroup>
         {/* With select and AvField */}
         <AvField type="select" name="select" label="Option" helpMessage="Idk, this is an example. Deal with it!">
           <option>1</option>
@@ -44,6 +58,21 @@ export default class FormExample extends React.Component {
           <option>4</option>
           <option>5</option>
         </AvField>
+
+        <FormGroup>
+          <AvGroup check>
+            <AvInput type="checkbox" name="checkbox" />
+            <Label check for="checkbox"> Check it out</Label>
+          </AvGroup>
+
+          
+          <AvField type="checkbox" name="avFieldCheckbox" label="Check out this AvField checkbox" required />
+
+          <AvInput tag={CustomInput} type="checkbox" name="customCheckbox" label="Check out this custom input checkbox" required />
+
+          <AvField tag={CustomInput} type="checkbox" name="customCheckbox1" label="Check out this custom input checkbox from AvField" required />
+        </FormGroup>
+        
         <FormGroup>
           <Button>Submit</Button>
         </FormGroup>

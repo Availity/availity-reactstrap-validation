@@ -219,7 +219,7 @@ describe('AvForm', function () {
     it('should pass the values to validateAll', () =>{
       const wrapper = shallow(<AvForm />);
       const instance = wrapper.instance();
-      instance._inputs.input = {getValue: () => 'value', forceUpdate: () => {}};
+      instance._inputs.input = {getValue: () => 'value', setState: () => {}};
       const spy = sinon.spy(instance, 'validateAll');
       wrapper.simulate('submit');
       expect(spy).to.have.been.calledWithMatch({input: 'value'});
@@ -229,7 +229,7 @@ describe('AvForm', function () {
       const wrapper = shallow(<AvForm />);
       const spy = sinon.spy(wrapper.instance(), 'setTouched');
       const instance = wrapper.instance();
-      instance._inputs.input = {getValue: () => 'value', forceUpdate: () => {}};
+      instance._inputs.input = {getValue: () => 'value', setState: () => {}};
       return instance.handleSubmit().then(() => {
         expect(spy).to.have.been.calledWithMatch(Object.keys(instance._inputs));
       });
@@ -240,8 +240,8 @@ describe('AvForm', function () {
       const wrapper = shallow(<AvForm onSubmit={spy} />);
       const instance = wrapper.instance();
       const event = {type: 'submit'};
-      instance._inputs.input = {getValue: () => 'value', forceUpdate: () => {}};
-      instance._inputs.invalidInput = {getValue: () => '', forceUpdate: () => {}};
+      instance._inputs.input = {getValue: () => 'value', setState: () => {}};
+      instance._inputs.invalidInput = {getValue: () => '', setState: () => {}};
       const errors = ['invalidInput'];
       instance.validateAll = sinon.stub().returns({isValid: false, errors});
       return instance.handleSubmit(event).then(() => {
@@ -255,7 +255,7 @@ describe('AvForm', function () {
       const wrapper = shallow(<AvForm onValidSubmit={spy} onInvalidSubmit={invalidSpy} />);
       const instance = wrapper.instance();
       const event = {type: 'submit'};
-      instance._inputs.input = {getValue: () => 'value', forceUpdate: () => {}};
+      instance._inputs.input = {getValue: () => 'value', setState: () => {}};
 
       return instance.handleSubmit(event).then(() => {
         expect(spy).to.have.been.calledWithMatch(event, { input: 'value' });
@@ -269,8 +269,8 @@ describe('AvForm', function () {
       const wrapper = shallow(<AvForm onValidSubmit={spy} onInvalidSubmit={invalidSpy} />);
       const instance = wrapper.instance();
       const event = {type: 'submit'};
-      instance._inputs.input = {getValue: () => 'value', forceUpdate: () => {}};
-      instance._inputs.invalidInput = {getValue: () => '', forceUpdate: () => {}};
+      instance._inputs.input = {getValue: () => 'value', setState: () => {}};
+      instance._inputs.invalidInput = {getValue: () => '', setState: () => {}};
       const errors = ['invalidInput'];
       instance.validateAll = sinon.stub().returns({isValid: false, errors});
 

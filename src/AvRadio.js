@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import {Input, FormGroup, Label} from 'reactstrap';
+import {Input, FormGroup, Label, CustomInput} from 'reactstrap';
 import AvInput from './AvInput';
 
-const radioPropTypes = Object.assign({}, AvInput.propTypes);
+const radioPropTypes = Object.assign({}, AvInput.propTypes, {customInput: PropTypes.bool});
 delete radioPropTypes.name;
 
 export default class AvRadio extends Component {
@@ -34,6 +34,7 @@ export default class AvRadio extends Component {
     const {
       className,
       id,
+      customInput,
       ...attributes} = this.props;
 
     const groupProps = this.context.Group.getProps();
@@ -49,6 +50,24 @@ export default class AvRadio extends Component {
       hasError ? 'av-invalid' : 'av-valid',
       touched && hasError && 'is-invalid'
     );
+
+    if (customInput) {
+      return (
+        <CustomInput name={groupProps.name}
+          type='radio'
+          {...attributes}
+          inline={groupProps.inline}
+          disabled={this.props.disabled || this.context.FormCtrl.isDisabled()}
+          id={id || `radio-${groupProps.name}-${this.props.value}`}
+          className={classes}
+          onChange={this.onChangeHandler}
+          checked={this.props.value === groupProps.value}
+          value={this.props.value && this.props.value.toString()}
+          required={groupProps.required}
+          label={this.props.label}
+        />
+      );
+    }
 
     return (
       <FormGroup check inline={groupProps.inline} disabled={this.props.disabled || this.context.FormCtrl.isDisabled()}>

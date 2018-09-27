@@ -42,8 +42,8 @@ export default class AvGroup extends Component {
   }
 
   update(input){
-    if (input && input.forceUpdate) input.forceUpdate();
-    this.forceUpdate();
+    if (input && input.setState) input.setState.call(input, {});
+    this.setState({});
   }
 
   render() {

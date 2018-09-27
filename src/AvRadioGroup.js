@@ -35,8 +35,8 @@ export default class AvRadioGroup extends Component {
   getChildContext() {
     if (!this.FormCtrl) {
       this.FormCtrl = { ...this.context.FormCtrl };
-      this.FormCtrl.register = ::this.registerInput;
-      this.FormCtrl.unregister = ::this.unregisterInput;
+      this.FormCtrl.register = this.registerInput.bind(this);
+      this.FormCtrl.unregister = this.unregisterInput.bind(this);
       this.FormCtrl.validate = noop;
     }
 
@@ -61,7 +61,7 @@ export default class AvRadioGroup extends Component {
         }),
         update: updateGroup,
         getValue: () => this.value,
-        getInputState: ::this.getInputState,
+        getInputState: this.getInputState.bind(this),
       },
       FormCtrl: this.FormCtrl,
     };
@@ -115,7 +115,7 @@ export default class AvRadioGroup extends Component {
   }
 
   update() {
-    this.forceUpdate();
+    this.setState({});
     this.updateInputs();
   }
 
@@ -138,12 +138,13 @@ export default class AvRadioGroup extends Component {
         }
       });
 
-    this.context.FormCtrl.register(this, ::this.update);
+    this.context.FormCtrl.register(this, this.update.bind(this));
     this.validate();
   }
 
   updateInputs() {
-    this._inputs.forEach(input => input.forceUpdate());
+    this._inputs.forEach(input => input.setState.call(input, {}));
+    this.setState({});
   }
 
   reset() {
@@ -197,8 +198,13 @@ export default class AvRadioGroup extends Component {
       touched && hasError && 'is-invalid'
     );
 
+    const groupClass = classNames(
+      attributes.className,
+      touched && hasError && 'was-validated'
+    );
+
     return (
-      <FormGroup tag="fieldset" {...attributes}>
+      <FormGroup tag="fieldset" {...attributes} className={groupClass}>
         {legend}
         <div className={classes}>{children}</div>
         <AvFeedback>{validation.errorMessage}</AvFeedback>
