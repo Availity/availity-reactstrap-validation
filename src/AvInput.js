@@ -32,6 +32,7 @@ export default class AvInput extends AvBaseInput {
       className,
       tag: Tag,
       getRef,
+      id = this.props.name,
       ...attributes
     } = this.props;
 
@@ -44,7 +45,8 @@ export default class AvInput extends AvBaseInput {
       this.context.FormCtrl.isDirty(this.props.name) ? 'is-dirty' : 'is-pristine',
       this.context.FormCtrl.isBad(this.props.name) ? 'is-bad-input' : null,
       hasError ? 'av-invalid' : 'av-valid',
-      touched && hasError && 'is-invalid'
+      touched && hasError && 'is-invalid',
+      attributes.type === 'checkbox' && touched && hasError && 'was-validated'
     );
 
     const value = this.getViewValue();
@@ -55,6 +57,7 @@ export default class AvInput extends AvBaseInput {
         {...this.getValidatorProps()}
         className={classes}
         value={value}
+        id={id}
       />
     );
   }

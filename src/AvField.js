@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import AvInput from './AvInput';
 import AvGroup from './AvGroup';
 import AvFeedback from './AvFeedback';
-import {Col, FormText, Label} from 'reactstrap';
+import {Col, FormText, Label, CustomInput} from 'reactstrap';
 
 const colSizes = ['xs', 'sm', 'md', 'lg', 'xl'];
 
@@ -40,10 +40,10 @@ export default class AvField extends Component {
   getChildContext() {
     this.FormCtrl = {...this.context.FormCtrl};
     const registerValidator = this.FormCtrl.register;
-    this.FormCtrl.register = (input, updater = input && input.forceUpdate) => {
+    this.FormCtrl.register = (input, updater = input && input.setState && input.setState.bind(input)) => {
       registerValidator(input, () => {
-        this.forceUpdate();
-        if (updater) updater();
+        this.setState({});
+        if (updater) updater({});
       });
     };
     return {
@@ -98,9 +98,16 @@ export default class AvField extends Component {
 
     const feedback = validation.errorMessage ? (<AvFeedback>{validation.errorMessage}</AvFeedback>) : null;
     const help = helpMessage ? (<FormText>{helpMessage}</FormText>) : null;
+    const inputRow = row ? <Col {...col}>{input}{feedback}{help}</Col> : input;
+    const check = attributes.type === 'checkbox';
+
+    if ((check || attributes.type === 'radio') && attributes.tag === CustomInput) {
+      return <AvGroup className="mb-0"><AvInput {...this.props}>{feedback}{help}</AvInput></AvGroup>
+    }
 
     return (
-      <AvGroup disabled={disabled} row={row} {...groupAttrs}>
+      <AvGroup check={check} disabled={disabled} row={row} {...groupAttrs}>
+        {check && inputRow}
         {label && <Label
           for={id}
           className={labelClass}
@@ -111,7 +118,7 @@ export default class AvField extends Component {
         >
           {label}
         </Label>}
-        {row ? <Col {...col}>{input}{feedback}{help}</Col> : input}
+        {!check && inputRow}
         {!row && feedback}
         {!row && help}
       </AvGroup>

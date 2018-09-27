@@ -43,9 +43,9 @@ export default class Example extends React.Component {
             <Col xs="12" sm="8">
               {/* With AvGroup AvInput and AvFeedback to build your own */}
               <AvGroup>
-                <Label for="example">Street</Label>
+                <Label for="street">Street</Label>
                 {/* dot notation for the name to access deep values. The shape is also the same in the submit callbacks */}
-                <AvInput name="location.street" id="example" required />
+                <AvInput name="location.street" id="street" required />
                 {/* this only shows when there is an error, use reactstrap's FormFeedback if you want is to always be displayed */}
                 <AvFeedback>This is an error!</AvFeedback>
               </AvGroup>
@@ -73,9 +73,8 @@ export default class Example extends React.Component {
             </Col>
           </Row>
           <AvGroup check>
-            <Label check for="checkItOut">
-              <AvInput type="checkbox" name="checkItOut" /> Check it out!
-            </Label>
+            <AvInput type="checkbox" name="checkItOut" />
+            <Label check for="checkItOut">Check it out!</Label>
           </AvGroup>
           <FormGroup>
             <Button>Submit</Button>

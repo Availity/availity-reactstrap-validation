@@ -24,7 +24,7 @@ export default class InputContainer extends Component {
     }
   }
 
-  registerInput(input, updater = input && input.forceUpdate) {
+  registerInput(input, updater = input && input.setState && input.setState.bind(input)) {
     const {name} = validComponent(input, updater);
     const oldName = this.getOldInputName(input);
     if (oldName !== name) {
