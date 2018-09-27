@@ -1,3 +1,13 @@
+<a name="2.2.0"></a>
+# [2.2.0](https://github.com/Availity/availity-reactstrap-validation/compare/v2.1.2...v2.2.0) (2018-09-27)
+
+
+### Features
+
+* **CustomInput:** add support for custom checkboxes and radios ([19cd51f](https://github.com/Availity/availity-reactstrap-validation/commit/19cd51f))
+
+
+
 <a name="2.1.2"></a>
 ## [2.1.2](https://github.com/Availity/availity-reactstrap-validation/compare/v2.1.0...v2.1.2) (2018-09-18)
 
