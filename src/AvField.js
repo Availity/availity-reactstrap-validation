@@ -102,7 +102,7 @@ export default class AvField extends Component {
     const check = attributes.type === 'checkbox';
 
     if ((check || attributes.type === 'radio') && attributes.tag === CustomInput) {
-      return <AvGroup className="mb-0"><AvInput {...this.props}>{feedback}{help}</AvInput></AvGroup>
+      return <AvGroup className="mb-0"><AvInput {...this.props}>{feedback}{help}</AvInput></AvGroup>;
     }
 
     return (
