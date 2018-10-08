@@ -56,7 +56,7 @@ export default class AvRadioGroup extends Component {
         getProps: () => ({
           name: this.props.name,
           inline: this.props.inline,
-          required: this.props.required,
+          required: this.props.required || !!(this.validations.required && this.validation.required.value),
           value: this.value,
         }),
         update: updateGroup,
