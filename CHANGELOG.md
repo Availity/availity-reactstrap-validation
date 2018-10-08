@@ -1,3 +1,13 @@
+<a name="2.2.3"></a>
+## [2.2.3](https://github.com/Availity/availity-reactstrap-validation/compare/v2.2.2...v2.2.3) (2018-10-08)
+
+
+### Bug Fixes
+
+* **AvRadioGroup:** validation -> validations ([4af0568](https://github.com/Availity/availity-reactstrap-validation/commit/4af0568))
+
+
+
 <a name="2.2.2"></a>
 ## [2.2.2](https://github.com/Availity/availity-reactstrap-validation/compare/v2.2.1...v2.2.2) (2018-10-08)
 
