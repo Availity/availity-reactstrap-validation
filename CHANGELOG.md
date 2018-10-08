@@ -1,3 +1,13 @@
+<a name="2.2.2"></a>
+## [2.2.2](https://github.com/Availity/availity-reactstrap-validation/compare/v2.2.1...v2.2.2) (2018-10-08)
+
+
+### Bug Fixes
+
+* **AvRadioGroup:** check validation for required value ([e5336d6](https://github.com/Availity/availity-reactstrap-validation/commit/e5336d6))
+
+
+
 <a name="2.2.0"></a>
 # [2.2.0](https://github.com/Availity/availity-reactstrap-validation/compare/v2.1.2...v2.2.0) (2018-09-27)
 
