@@ -112,6 +112,12 @@ export default class AvBaseInput extends Component {
     }
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.name !== this.props.name) {
+      this.context.FormCtrl.register(this);
+    }
+  }
+
   componentWillUnmount() {
     this.context.FormCtrl.unregister(this);
   }
