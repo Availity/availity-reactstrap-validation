@@ -1,3 +1,13 @@
+<a name="2.2.4"></a>
+## [2.2.4](https://github.com/Availity/availity-reactstrap-validation/compare/v2.2.3...v2.2.4) (2018-10-09)
+
+
+### Bug Fixes
+
+* **AvBaseInput:** register after update when name changes ([8b0bc1f](https://github.com/Availity/availity-reactstrap-validation/commit/8b0bc1f))
+
+
+
 <a name="2.2.3"></a>
 ## [2.2.3](https://github.com/Availity/availity-reactstrap-validation/compare/v2.2.2...v2.2.3) (2018-10-08)
 
