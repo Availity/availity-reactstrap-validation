@@ -462,7 +462,11 @@ export default class AvForm extends InputContainer {
                 return reject(new Error(`Invalid input validation rule: "${rule}"`));
               }
 
-              ruleResult = AvValidator[rule](val, context, ruleProp[rule], input, callback);
+              if (ruleProp[rule].enabled === false) {
+                ruleResult = true;
+              } else {
+                ruleResult = AvValidator[rule](val, context, ruleProp[rule], input, callback);
+              }
             }
 
             if (ruleResult && typeof ruleResult.then === 'function'){
