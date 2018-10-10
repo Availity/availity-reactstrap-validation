@@ -1,3 +1,13 @@
+<a name="2.3.0"></a>
+# [2.3.0](https://github.com/Availity/availity-reactstrap-validation/compare/v2.2.4...v2.3.0) (2018-10-10)
+
+
+### Features
+
+* **validations:** add enabled property to validation ([#97](https://github.com/Availity/availity-reactstrap-validation/issues/97)) ([d636c0f](https://github.com/Availity/availity-reactstrap-validation/commit/d636c0f))
+
+
+
 <a name="2.2.4"></a>
 ## [2.2.4](https://github.com/Availity/availity-reactstrap-validation/compare/v2.2.3...v2.2.4) (2018-10-09)
 
