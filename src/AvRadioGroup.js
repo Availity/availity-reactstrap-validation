@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
+import isUndefined from 'lodash/isUndefined';
 import { FormGroup } from 'reactstrap';
 import classNames from 'classnames';
 import AvFeedback from './AvFeedback';
@@ -56,7 +57,9 @@ export default class AvRadioGroup extends Component {
         getProps: () => ({
           name: this.props.name,
           inline: this.props.inline,
-          required: this.props.required || !!(this.validations.required && this.validations.required.value),
+          required:
+            this.props.required ||
+            !!(this.validations.required && this.validations.required.value),
           value: this.value,
         }),
         update: updateGroup,
@@ -79,7 +82,7 @@ export default class AvRadioGroup extends Component {
     }
     if (nextProps.value !== this.props.value) {
       this.value = nextProps.value;
-      this.setState({value: nextProps.value});
+      this.setState({ value: nextProps.value });
     }
     if (!isEqual(nextProps, this.props)) {
       this.updateValidations(nextProps);
@@ -101,10 +104,12 @@ export default class AvRadioGroup extends Component {
   getDefaultValue() {
     const key = 'defaultValue';
 
-    const value =
-      this.props[key] ||
-      this.context.FormCtrl.getDefaultValue(this.props.name) ||
-      '';
+    let value = '';
+    if (!isUndefined(this.props[key])) {
+      value = this.props[key];
+    } else if (!isUndefined(this.context.FormCtrl.getDefaultValue(this.props.name))) {
+      value = this.context.FormCtrl.getDefaultValue(this.props.name);
+    }
 
     return { key, value };
   }
