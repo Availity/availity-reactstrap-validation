@@ -1,3 +1,13 @@
+<a name="2.3.1"></a>
+## [2.3.1](https://github.com/Availity/availity-reactstrap-validation/compare/v2.3.0...v2.3.1) (2018-10-16)
+
+
+### Bug Fixes
+
+* **AvRadio:** apply readOnly and disabled from AvForm ([3d50b13](https://github.com/Availity/availity-reactstrap-validation/commit/3d50b13))
+
+
+
 <a name="2.3.0"></a>
 # [2.3.0](https://github.com/Availity/availity-reactstrap-validation/compare/v2.2.4...v2.3.0) (2018-10-10)
 
