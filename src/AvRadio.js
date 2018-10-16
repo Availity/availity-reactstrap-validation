@@ -51,13 +51,20 @@ export default class AvRadio extends Component {
       touched && hasError && 'is-invalid'
     );
 
+    if (this.props.disabled === undefined && this.context.FormCtrl.isDisabled() !== undefined) {
+      attributes.disabled = this.context.FormCtrl.isDisabled();
+    }
+
+    if (this.props.readOnly === undefined && this.context.FormCtrl.isReadOnly() !== undefined) {
+      attributes.disabled = attributes.disabled || this.context.FormCtrl.isReadOnly();
+    }
+
     if (customInput) {
       return (
         <CustomInput name={groupProps.name}
           type='radio'
           {...attributes}
           inline={groupProps.inline}
-          disabled={this.props.disabled || this.context.FormCtrl.isDisabled()}
           id={id || `radio-${groupProps.name}-${this.props.value}`}
           className={classes}
           onChange={this.onChangeHandler}
@@ -70,7 +77,7 @@ export default class AvRadio extends Component {
     }
 
     return (
-      <FormGroup check inline={groupProps.inline} disabled={this.props.disabled || this.context.FormCtrl.isDisabled()}>
+      <FormGroup check inline={groupProps.inline} disabled={attributes.disabled || attributes.readOnly}>
         <Input
           name={groupProps.name}
           type='radio'
