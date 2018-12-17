@@ -19,10 +19,14 @@ import ValidationMaxExample from '../examples/ValidationMax';
 const ValidationMaxExampleSource = require('!!raw!../examples/ValidationMax.js');
 import ValidationMaxLengthExample from '../examples/ValidationMaxLength';
 const ValidationMaxLengthExampleSource = require('!!raw!../examples/ValidationMaxLength.js');
+import ValidationMaxCheckedExample from '../examples/ValidationMaxChecked';
+const ValidationMaxCheckedExampleSource = require('!!raw!../examples/ValidationMaxChecked.js');
 import ValidationMinExample from '../examples/ValidationMin';
 const ValidationMinExampleSource = require('!!raw!../examples/ValidationMin.js');
 import ValidationMinLengthExample from '../examples/ValidationMinLength';
 const ValidationMinLengthExampleSource = require('!!raw!../examples/ValidationMinLength.js');
+import ValidationMinCheckedExample from '../examples/ValidationMinChecked';
+const ValidationMinCheckedExampleSource = require('!!raw!../examples/ValidationMinChecked.js');
 import ValidationNpiExample from '../examples/ValidationNpi';
 const ValidationNpiExampleSource = require('!!raw!../examples/ValidationNpi.js');
 import ValidationNumberExample from '../examples/ValidationNumber';
@@ -125,6 +129,16 @@ export default class FormPage extends React.Component {
           </PrismCode>
         </pre>
 
+        <h4>MaxChecked</h4>
+        <div className="docs-example">
+          <ValidationMaxCheckedExample />
+        </div>
+        <pre>
+          <PrismCode className="language-jsx">
+            {ValidationMaxCheckedExampleSource}
+          </PrismCode>
+        </pre>
+
         <h4>Min</h4>
         <div className="docs-example">
           <ValidationMinExample />
@@ -142,6 +156,16 @@ export default class FormPage extends React.Component {
         <pre>
           <PrismCode className="language-jsx">
             {ValidationMinLengthExampleSource}
+          </PrismCode>
+        </pre>
+
+        <h4>MinChecked</h4>
+        <div className="docs-example">
+          <ValidationMinCheckedExample />
+        </div>
+        <pre>
+          <PrismCode className="language-jsx">
+            {ValidationMinCheckedExampleSource}
           </PrismCode>
         </pre>
 

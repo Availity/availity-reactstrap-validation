@@ -1,3 +1,5 @@
+import AvCheckbox from './AvCheckbox';
+import AvCheckboxGroup from './AvCheckboxGroup';
 import AvFeedback from './AvFeedback';
 import AvField from './AvField';
 import AvForm from './AvForm';
@@ -10,6 +12,8 @@ import AvInputContainer from './AvInputContainer';
 import AvValidator from './AvValidator';
 
 export {
+  AvCheckbox,
+  AvCheckboxGroup,
   AvFeedback,
   AvField,
   AvForm,

@@ -1,6 +1,6 @@
 import React from 'react';
-import { AvForm, AvField, AvGroup, AvInput, AvFeedback, AvRadioGroup, AvRadio } from 'availity-reactstrap-validation';
-import { Button, Row, Col, Label, FormGroup  } from 'reactstrap';
+import { AvForm, AvField, AvGroup, AvInput, AvFeedback, AvRadioGroup, AvRadio, AvCheckboxGroup, AvCheckbox } from 'availity-reactstrap-validation';
+import { Button, Row, Col, Label, FormGroup } from 'reactstrap';
 
 export default class Example extends React.Component {
   constructor(props) {
@@ -17,6 +17,11 @@ export default class Example extends React.Component {
   render() {
     const defaultValues = {
       locationType: 'work',
+      locationQualities: [
+        'beautiful',
+        'awesome',
+        'wonderful',
+      ],
       name: 'Availity',
       location: {
         street: '10752 Deerwood Park Blvd',
@@ -37,6 +42,12 @@ export default class Example extends React.Component {
             <AvRadio label="Business" value="work" />
             <AvRadio label="Awesome" value="awesome" />
           </AvRadioGroup>
+          {/* Checkboxes */}
+          <AvCheckboxGroup inline name="locationQualities" label="Location Qualities" required>
+            <AvCheckbox label="Beautiful" value="beautiful" />
+            <AvCheckbox label="Awesome" value="awesome" />
+            <AvCheckbox label="Wonderful" value="wonderful" />
+          </AvCheckboxGroup>
           {/* With AvField */}
           <AvField name="name" label="Name" required />
           <Row>
