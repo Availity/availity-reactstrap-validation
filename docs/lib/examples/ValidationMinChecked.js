@@ -6,7 +6,7 @@ export default class Example extends React.Component {
   render() {
     return (
       <AvForm>
-        <AvCheckboxGroup inline name="minCheckedCheckboxList" label="Select At Least Two Checkboxes" validate={{minChecked: {value: 2}}}>
+        <AvCheckboxGroup inline name="minCheckedCheckboxList" label="Select At Least Two Checkboxes" validate={{min: {value: 2}}}>
           <AvCheckbox label="Bulbasaur" value="Bulbasaur" />
           <AvCheckbox label="Squirtle" value="Squirtle" />
           <AvCheckbox label="Charmander" value="Charmander" />

@@ -7,6 +7,11 @@ describe('Min Validation', () => {
     expect(fn('')).to.be.true;
   });
 
+  it('should accept input array as an alias for minChecked', () => {
+    expect(fn(undefined, undefined, {value: 1}, {value: ['a', 'b']})).to.be.true;
+    expect(fn(undefined, undefined, {value: 2}, {value: ['a']})).to.be.false;
+  });
+
   it('should return true if the value is greater than the constraint', () => {
     expect(fn(10, undefined, {value: 5})).to.be.true;
   });
