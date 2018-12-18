@@ -41,18 +41,18 @@ export default class AvCheckbox extends Component {
       customInput,
       ...attributes} = this.props;
 
-    const listProps = this.context.Group.getProps();
+    const groupProps = this.context.Group.getProps();
 
-    const touched = this.context.FormCtrl.isTouched(listProps.name);
-    const hasError = this.context.FormCtrl.hasError(listProps.name);
+    const touched = this.context.FormCtrl.isTouched(groupProps.name);
+    const hasError = this.context.FormCtrl.hasError(groupProps.name);
 
     const classes = classNames(
       className,
       touched ? 'is-touched' : 'is-untouched',
-      this.context.FormCtrl.isDirty(listProps.name) ? 'is-dirty' : 'is-pristine',
-      this.context.FormCtrl.isBad(listProps.name) ? 'is-bad-input' : null,
+      this.context.FormCtrl.isDirty(groupProps.name) ? 'is-dirty' : 'is-pristine',
+      this.context.FormCtrl.isBad(groupProps.name) ? 'is-bad-input' : null,
       hasError ? 'av-invalid' : 'av-valid',
-      touched && hasError && 'is-invalid'
+      touched && hasError && 'is-invalid',
     );
 
     if (this.props.disabled === undefined && this.context.FormCtrl.isDisabled() !== undefined) {
@@ -66,31 +66,35 @@ export default class AvCheckbox extends Component {
     if (customInput) {
       return (
         <CustomInput
+          name={groupProps.name}
           type='checkbox'
           {...attributes}
-          inline={listProps.inline}
-          id={id || `checkbox-${listProps.name}-${this.props.value}`}
+          inline={groupProps.inline}
+          id={id || `checkbox-${groupProps.name}-${this.props.value}`}
           className={classes}
           onChange={this.onChangeHandler}
           value={this.props.value && this.props.value.toString()}
-          defaultChecked={this.isDefaultChecked(listProps.value)}
+          defaultChecked={this.isDefaultChecked(groupProps.value)}
+          required={groupProps.required}
           label={this.props.label}
         />
       );
     }
 
     return (
-      <FormGroup check inline={listProps.inline} disabled={attributes.disabled || attributes.readOnly}>
+      <FormGroup check inline={groupProps.inline} disabled={attributes.disabled || attributes.readOnly}>
         <Input
+          name={groupProps.name}
           type='checkbox'
           {...attributes}
-          id={id || `checkbox-${listProps.name}-${this.props.value}`}
+          id={id || `checkbox-${groupProps.name}-${this.props.value}`}
           className={classes}
           onChange={this.onChangeHandler}
           value={this.props.value && this.props.value.toString()}
-          defaultChecked={this.isDefaultChecked(listProps.value)}
+          defaultChecked={this.isDefaultChecked(groupProps.value)}
+          required={groupProps.required}
         />
-        <Label check for={id || `checkbox-${listProps.name}-${this.props.value}`}>{this.props.label}</Label>
+        <Label check for={id || `checkbox-${groupProps.name}-${this.props.value}`}>{this.props.label}</Label>
       </FormGroup>
     );
   }

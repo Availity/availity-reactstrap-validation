@@ -77,7 +77,7 @@ export default class AvCheckboxGroup extends Component {
   }
 
   componentWillMount() {
-    this.value = this.props.value || this.getDefaultValue().value || [];
+    this.value = this.props.value || this.getDefaultValue().value;
     this.setState({ value: this.value });
     this.updateValidations();
   }
@@ -110,7 +110,7 @@ export default class AvCheckboxGroup extends Component {
   getDefaultValue() {
     const key = 'defaultValue';
 
-    let value = '';
+    let value = [];
     if (!isUndefined(this.props[key])) {
       value = this.props[key];
     } else if (!isUndefined(this.context.FormCtrl.getDefaultValue(this.props.name))) {
@@ -126,7 +126,7 @@ export default class AvCheckboxGroup extends Component {
   }
 
   update() {
-    this.setState([]);
+    this.setState({});
     this.updateInputs();
   }
 
@@ -160,10 +160,10 @@ export default class AvCheckboxGroup extends Component {
 
   reset() {
     this.value = this.getDefaultValue().value;
-    this.setState({ value: this.value });
     this.context.FormCtrl.setDirty(this.props.name, false);
     this.context.FormCtrl.setTouched(this.props.name, false);
     this.context.FormCtrl.setBad(this.props.name, false);
+    this.setState({ value: this.value });
     this.validate();
     this.props.onReset && this.props.onReset(this.value);
   }

@@ -122,7 +122,7 @@ describe('AvCheckboxGroup', () => {
   it('should give default fallback when no one set up their stuff', () => {
     const wrapper = shallow(<AvCheckboxGroup name="yo" />, options);
     const component = wrapper.instance();
-    expect(component.getDefaultValue()).to.eql({key: 'defaultValue', value: ''});
+    expect(component.getDefaultValue()).to.eql({key: 'defaultValue', value: []});
   });
 
   it('should reset properly', () => {
