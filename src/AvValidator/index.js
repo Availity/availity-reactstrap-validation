@@ -4,8 +4,10 @@ import email from './email';
 import match from './match';
 import max from './max';
 import maxlength from './maxlength';
+import maxchecked from './maxchecked';
 import min from './min';
 import minlength from './minlength';
+import minchecked from './minchecked';
 import number from './number';
 import npi from './npi';
 import pattern from './pattern';
@@ -23,9 +25,11 @@ export default {
   max,
   maxlength,
   maxLength: maxlength,
+  maxChecked: maxchecked,
   min,
   minlength,
   minLength: minlength,
+  minChecked: minchecked,
   number,
   npi,
   pattern,

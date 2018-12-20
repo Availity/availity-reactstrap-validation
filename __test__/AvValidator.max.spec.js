@@ -7,6 +7,11 @@ describe('Max Validation', () => {
     expect(fn('')).to.be.true;
   });
 
+  it('should accept input array as an alias for maxChecked', () => {
+    expect(fn(undefined, undefined, {value: 1}, {value: ['a', 'b']})).to.be.false;
+    expect(fn(undefined, undefined, {value: 2}, {value: ['a']})).to.be.true;
+  });
+
   it('should return true if the value is less than the constraint', () => {
     expect(fn(1, undefined, {value: 5})).to.be.true;
   });

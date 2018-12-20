@@ -1,5 +1,5 @@
 import React from 'react';
-import { AvForm, AvField, AvGroup, AvInput, AvFeedback, AvRadioGroup, AvRadio } from 'availity-reactstrap-validation';
+import { AvForm, AvField, AvGroup, AvInput, AvFeedback, AvRadioGroup, AvRadio, AvCheckboxGroup, AvCheckbox } from 'availity-reactstrap-validation';
 import { Button, Label, FormGroup, CustomInput } from 'reactstrap';
 
 export default class FormExample extends React.Component {
@@ -42,6 +42,36 @@ export default class FormExample extends React.Component {
           <AvRadio customInput label="Charmander" value="Charmander" />
           <AvRadio customInput label="Pikachu" value="Pikachu" disabled />
         </AvRadioGroup>
+
+        {/* checkboxes */}
+        <AvCheckboxGroup name="checkboxExample" label="Checkboxes!" required>
+          <AvCheckbox label="Bulbasaur" value="Bulbasaur" />
+          <AvCheckbox label="Squirtle" value="Squirtle" />
+          <AvCheckbox label="Charmander" value="Charmander" />
+          <AvCheckbox label="Pikachu" value="Pikachu" disabled />
+        </AvCheckboxGroup>
+
+        <AvCheckboxGroup inline name="checkboxExample2" label="Checkboxes! (inline)" required>
+          <AvCheckbox label="Bulbasaur" value="Bulbasaur" />
+          <AvCheckbox label="Squirtle" value="Squirtle" />
+          <AvCheckbox label="Charmander" value="Charmander" />
+          <AvCheckbox label="Pikachu" value="Pikachu" disabled />
+        </AvCheckboxGroup>
+
+        <AvCheckboxGroup name="checkboxCustomInputExample" label="Custom Checkboxes!" required>
+          <AvCheckbox customInput label="Bulbasaur" value="Bulbasaur" />
+          <AvCheckbox customInput label="Squirtle" value="Squirtle" />
+          <AvCheckbox customInput label="Charmander" value="Charmander" />
+          <AvCheckbox customInput label="Pikachu" value="Pikachu" disabled />
+        </AvCheckboxGroup>
+
+        <AvCheckboxGroup inline name="checkboxCustomInputExample2" label="Custom Checkboxes! (inline)" required>
+          <AvCheckbox customInput label="Bulbasaur" value="Bulbasaur" />
+          <AvCheckbox customInput label="Squirtle" value="Squirtle" />
+          <AvCheckbox customInput label="Charmander" value="Charmander" />
+          <AvCheckbox customInput label="Pikachu" value="Pikachu" disabled />
+        </AvCheckboxGroup>
+
         {/* With select and AvField */}
         <AvField type="select" name="select" label="Option" helpMessage="Idk, this is an example. Deal with it!">
           <option>1</option>
@@ -65,14 +95,13 @@ export default class FormExample extends React.Component {
             <Label check for="checkbox"> Check it out</Label>
           </AvGroup>
 
-          
           <AvField type="checkbox" name="avFieldCheckbox" label="Check out this AvField checkbox" required />
 
           <AvInput tag={CustomInput} type="checkbox" name="customCheckbox" label="Check out this custom input checkbox" required />
 
           <AvField tag={CustomInput} type="checkbox" name="customCheckbox1" label="Check out this custom input checkbox from AvField" required />
         </FormGroup>
-        
+
         <FormGroup>
           <Button>Submit</Button>
         </FormGroup>

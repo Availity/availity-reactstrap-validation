@@ -1,5 +1,5 @@
 import React from 'react';
-import { AvForm, AvField, AvGroup, AvInput, AvFeedback, AvRadioGroup, AvRadio } from 'availity-reactstrap-validation';
+import { AvForm, AvField, AvGroup, AvInput, AvFeedback, AvRadioGroup, AvRadio, AvCheckboxGroup, AvCheckbox } from 'availity-reactstrap-validation';
 import { Button, Label, FormGroup } from 'reactstrap';
 
 export default class Example extends React.Component {
@@ -34,6 +34,13 @@ export default class Example extends React.Component {
             <AvRadio label="Charmander" value="Charmander" />
             <AvRadio label="Pikachu" value="Pikachu" disabled />
           </AvRadioGroup>
+          {/* Checkboxes */}
+          <AvCheckboxGroup inline name="checkboxExample4" label="Checkboxes! (inline)" required>
+            <AvCheckbox label="Bulbasaur" value="Bulbasaur" />
+            <AvCheckbox label="Squirtle" value="Squirtle" />
+            <AvCheckbox label="Charmander" value="Charmander" />
+            <AvCheckbox label="Pikachu" value="Pikachu" disabled />
+          </AvCheckboxGroup>
           {/* With select and AvField */}
           <AvField type="select" name="select" label="Option" helpMessage="Idk, this is an example. Deal with it!">
             <option>1</option>

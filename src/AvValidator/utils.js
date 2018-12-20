@@ -7,6 +7,10 @@ export function isEmpty(value) {
   return isUndefined(value) || value === null || (isString(value) && value.trim() === '') || value === false || (Array.isArray(value) && value.length === 0 );
 }
 
+export function isDecimal(value) {
+  return value % 1 !== 0;
+}
+
 export const inputType = {date: false, number: false, time: false, month: false, week: false};
 
 export const inputTypeOverride = (key, value) => {
