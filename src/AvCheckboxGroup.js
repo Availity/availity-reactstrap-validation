@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {findDOMNode} from 'react-dom';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
 import isUndefined from 'lodash/isUndefined';
@@ -154,7 +155,11 @@ export default class AvCheckboxGroup extends Component {
   }
 
   updateInputs() {
-    this._inputs.forEach(input => input.setState.call(input, {}));
+    this._inputs.forEach(input => (
+      findDOMNode(input).firstChild.setCustomValidity('Invalid.')) &&
+      input.setState.call(input, {})
+    );
+
     this.setState({});
   }
 
