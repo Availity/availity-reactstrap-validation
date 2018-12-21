@@ -138,5 +138,10 @@
     "sourceMap": false,
     "instrument": false,
     "report-dir": "./__test__/coverage"
+  },
+  "prettier": {
+    "printWidth": 120,
+    "singleQuote": true,
+    "trailingComma": "none"
   }
 }
