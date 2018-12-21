@@ -30,7 +30,7 @@ export default class AvInput extends AvBaseInput {
       valueParser: omit7,
       valueFormatter: omit8,
       className,
-      tag: Tag,
+      tag,
       getRef,
       id = this.props.name,
       ...attributes
@@ -38,6 +38,15 @@ export default class AvInput extends AvBaseInput {
 
     const touched = this.context.FormCtrl.isTouched(this.props.name);
     const hasError = this.context.FormCtrl.hasError(this.props.name);
+    let Tag = tag;
+
+    if (Array.isArray(tag)) {
+      [Tag, ...tags] = tag;
+      attributes.tag = tags
+      if(attributes.tag.length <= 1) {
+        attributes.tag = attributes.tag[0];
+      }
+    }
 
     const classes = classNames(
       className,
