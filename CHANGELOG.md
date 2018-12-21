@@ -1,3 +1,19 @@
+<a name="2.4.0"></a>
+# [2.4.0](https://github.com/Availity/availity-reactstrap-validation/compare/v2.3.3...v2.4.0) (2018-12-21)
+
+
+### Bug Fixes
+
+* **AvCheckbox:** get required attribute from group ([908de00](https://github.com/Availity/availity-reactstrap-validation/commit/908de00))
+* **AvCheckboxGroup:** set custom validity on inputs ([9547adc](https://github.com/Availity/availity-reactstrap-validation/commit/9547adc))
+
+
+### Features
+
+* **AvCheckboxGroup:** add support for checkbox groups ([f9b1870](https://github.com/Availity/availity-reactstrap-validation/commit/f9b1870))
+
+
+
 <a name="2.3.3"></a>
 ## [2.3.3](https://github.com/Availity/availity-reactstrap-validation/compare/v2.3.2...v2.3.3) (2018-10-18)
 
