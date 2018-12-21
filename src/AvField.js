@@ -101,7 +101,11 @@ export default class AvField extends Component {
     const inputRow = row ? <Col {...col}>{input}{feedback}{help}</Col> : input;
     const check = attributes.type === 'checkbox';
 
-    if ((check || attributes.type === 'radio') && attributes.tag === CustomInput) {
+    if (
+      (check || attributes.type === "radio") &&
+      (attributes.tag === CustomInput ||
+        (Array.isArray(attributes.tag) && attributes.tag[0] === CustomInput))
+    ) {
       return <AvGroup className="mb-0"><AvInput {...this.props}>{feedback}{help}</AvInput></AvGroup>;
     }
 
