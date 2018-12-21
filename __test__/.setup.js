@@ -1,11 +1,12 @@
-var jsdom = require('jsdom').jsdom;
-var chai = require('chai');
-var sinon = require('sinon');
-var sinonChai = require('sinon-chai');
-var chaiAsPromised = require('chai-as-promised');
-var chaiEnzyme = require('chai-enzyme');
+var jsdom = require("jsdom");
+const { JSDOM } = jsdom;
+var chai = require("chai");
+var sinon = require("sinon");
+var sinonChai = require("sinon-chai");
+var chaiAsPromised = require("chai-as-promised");
+var chaiEnzyme = require("chai-enzyme");
 
-var exposedProperties = ['window', 'navigator', 'document'];
+var exposedProperties = ["window", "navigator", "document"];
 
 chai.use(sinonChai);
 chai.use(chaiAsPromised);
@@ -19,17 +20,18 @@ global.assert = chai.assert;
 global.expect = chai.expect;
 global.sinon = sinon;
 
-global.document = jsdom('');
+const { document } = new JSDOM("", {
+  url: "http://localhost/"
+}).window;
+global.document = document;
 global.window = document.defaultView;
-Object.keys(document.defaultView).forEach((property) => {
-  if (typeof global[property] === 'undefined') {
+Object.keys(document.defaultView).forEach(property => {
+  if (typeof global[property] === "undefined") {
     exposedProperties.push(property);
     global[property] = document.defaultView[property];
   }
 });
 
 global.navigator = {
-  userAgent: 'node.js'
+  userAgent: "node.js"
 };
-
-

@@ -100,7 +100,7 @@
     "eslint-plugin-react": "^6.10.3",
     "extract-text-webpack-plugin": "^1.0.1",
     "history": "^2.0.0",
-    "jsdom": "^9.4.2",
+    "jsdom": "^13.1.0",
     "json-loader": "^0.5.4",
     "lodash.debounce": "^4.0.8",
     "mocha": "^3.0.2",
