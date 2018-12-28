@@ -1,3 +1,13 @@
+<a name="2.5.0"></a>
+# [2.5.0](https://github.com/Availity/availity-reactstrap-validation/compare/v2.4.0...v2.5.0) (2018-12-28)
+
+
+### Features
+
+* **AvInput:** support multiple tags ([#110](https://github.com/Availity/availity-reactstrap-validation/issues/110)) ([e86a2ad](https://github.com/Availity/availity-reactstrap-validation/commit/e86a2ad))
+
+
+
 <a name="2.4.0"></a>
 # [2.4.0](https://github.com/Availity/availity-reactstrap-validation/compare/v2.3.3...v2.4.0) (2018-12-21)
 
