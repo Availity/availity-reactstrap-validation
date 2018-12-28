@@ -50,7 +50,7 @@ npm test
 Run tests & coverage report:
 
 ```sh
-npm test:coverage
+npm run test:coverage
 ```
 
 Watch tests:
