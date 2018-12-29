@@ -41,6 +41,7 @@ export default class AvInput extends AvBaseInput {
     let Tag = tag;
 
     if (Array.isArray(tag)) {
+      let tags;
       [Tag, ...tags] = tag;
       attributes.tag = tags
       if(attributes.tag.length <= 1) {
