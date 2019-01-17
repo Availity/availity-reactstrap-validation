@@ -102,7 +102,7 @@ export default class AvField extends Component {
     const check = attributes.type === 'checkbox';
 
     if (
-      (check || attributes.type === "radio") &&
+      (check || attributes.type === "radio" || attributes.type === "switch") &&
       (attributes.tag === CustomInput ||
         (Array.isArray(attributes.tag) && attributes.tag[0] === CustomInput))
     ) {
