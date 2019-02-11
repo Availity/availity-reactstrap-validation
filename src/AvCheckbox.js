@@ -31,7 +31,7 @@ export default class AvCheckbox extends Component {
   };
 
   isDefaultChecked(valueArr) {
-    return Array.isArray(valueArr) && valueArr.length > 0 && valueArr.filter(item => item === this.props.value);
+    return Array.isArray(valueArr) && valueArr.length > 0 && valueArr.filter(item => item === this.props.value).length > 0;
   }
 
   render() {
