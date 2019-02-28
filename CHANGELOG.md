@@ -1,3 +1,18 @@
+<a name="2.5.1"></a>
+## [2.5.1](https://github.com/Availity/availity-reactstrap-validation/compare/2.5.0...2.5.1) (2019-02-28)
+
+
+### Bug Fixes
+
+* **AvInput:** define tags ([ea10a72](https://github.com/Availity/availity-reactstrap-validation/commit/ea10a72))
+
+
+### Features
+
+* **Switch:** make AvField support type=switch ([4bca2fe](https://github.com/Availity/availity-reactstrap-validation/commit/4bca2fe))
+
+
+
 <a name="2.5.0"></a>
 # [2.5.0](https://github.com/Availity/availity-reactstrap-validation/compare/v2.4.0...v2.5.0) (2018-12-28)
 
