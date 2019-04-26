@@ -1,3 +1,19 @@
+<a name="2.5.2"></a>
+## [2.5.2](https://github.com/Availity/availity-reactstrap-validation/compare/2.5.0...2.5.2) (2019-04-26)
+
+
+### Bug Fixes
+
+* checkbox default value was not being accepted properly ([8e4227c](https://github.com/Availity/availity-reactstrap-validation/commit/8e4227c))
+* **AvInput:** define tags ([ea10a72](https://github.com/Availity/availity-reactstrap-validation/commit/ea10a72))
+
+
+### Features
+
+* **Switch:** make AvField support type=switch ([4bca2fe](https://github.com/Availity/availity-reactstrap-validation/commit/4bca2fe))
+
+
+
 <a name="2.5.1"></a>
 ## [2.5.1](https://github.com/Availity/availity-reactstrap-validation/compare/2.5.0...2.5.1) (2019-02-28)
 
