@@ -1,3 +1,18 @@
+<a name="2.5.3"></a>
+## [2.5.3](https://github.com/Availity/availity-reactstrap-validation/compare/2.5.2...2.5.3) (2019-05-16)
+
+
+### Code Refactoring
+
+* replaced moment with dayjs ([f5a9ffa](https://github.com/Availity/availity-reactstrap-validation/commit/f5a9ffa))
+
+
+### BREAKING CHANGES
+
+* moment has been replaced
+
+
+
 <a name="2.5.2"></a>
 ## [2.5.2](https://github.com/Availity/availity-reactstrap-validation/compare/2.5.0...2.5.2) (2019-04-26)
 
