@@ -56,7 +56,7 @@ export default class AvCheckboxGroup extends Component {
         this.context.FormCtrl.setTouched(this.props.name);
       !this.context.FormCtrl.isDirty(this.props.name) &&
         this.context.FormCtrl.setDirty(this.props.name);
-      this.props.onChange && this.props.onChange(e, value);
+      this.props.onChange && this.props.onChange(e, this.value);
     };
 
     return {
