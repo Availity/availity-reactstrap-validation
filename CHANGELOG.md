@@ -1,3 +1,13 @@
+<a name="2.5.4"></a>
+## [2.5.4](https://github.com/Availity/availity-reactstrap-validation/compare/2.5.3...2.5.4) (2019-06-10)
+
+
+### Bug Fixes
+
+* fixed onChange callback error with checkbox group ([7197dcd](https://github.com/Availity/availity-reactstrap-validation/commit/7197dcd))
+
+
+
 <a name="2.5.3"></a>
 ## [2.5.3](https://github.com/Availity/availity-reactstrap-validation/compare/2.5.2...2.5.3) (2019-05-16)
 
