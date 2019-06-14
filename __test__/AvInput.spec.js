@@ -49,7 +49,7 @@ describe('AvInput', () => {
 
   it('should have "is-untouched" class when untouched', () => {
     const wrapper = shallow(<AvInput name="yo" />, options);
-
+    console.log(wrapper.html())
     expect(wrapper.hasClass('is-untouched')).to.be.true;
     expect(wrapper.hasClass('is-touched')).to.be.false;
   });

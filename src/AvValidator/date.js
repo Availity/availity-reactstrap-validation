@@ -1,20 +1,10 @@
-import dayjs from 'dayjs';
-import customParseFormat from 'dayjs/plugin/customParseFormat'
+import moment from 'moment';
 import { isEmpty, isoDateFormat } from './utils';
 
-dayjs.extend(customParseFormat);
-
-const defaultFormat = 'MM/DD/YYYY';
-
-export default function validate(value, context, {format = defaultFormat, errorMessage = `Format needs to be ${format}`} = {}) {
+export default function validate(value, context, {format = 'MM/DD/YYYY', errorMessage = `Format needs to be ${format}`} = {}) {
   if (isEmpty(value)) return true;
 
-  let date = dayjs(value, format);
-
-  if(format === defaultFormat && !date.isValid()) {
-    date = dayjs(value,isoDateFormat);
-  }
-
+  const date = moment(value, [isoDateFormat, format], true);
 
   return date.isValid() || errorMessage;
 }
