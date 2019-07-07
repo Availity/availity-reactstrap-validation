@@ -34,15 +34,21 @@ describe('Step Validation', () => {
     expect(fn(11.5, undefined, {value: 5.3})).to.be.false;
     expect(fn(10.5, undefined, {value: 6.7})).to.be.false;
     expect(fn(10.5, undefined, {value: 2.1})).to.be.true;
+    expect(fn(0.00000002, undefined, {value: 0.00000001})).to.be.true;
+    expect(fn(0.000000011, undefined, {value: 0.00000001})).to.be.false;
 
     expect(fn('10.2', undefined, {value: 5.1})).to.be.true;
     expect(fn('11.5', undefined, {value: 5.55})).to.be.false;
     expect(fn('10.55', undefined, {value: 6.2})).to.be.false;
     expect(fn('10.5', undefined, {value: 2.1})).to.be.true;
+    expect(fn('0.00000002', undefined, {value: 0.00000001})).to.be.true;
+    expect(fn('0.000000011', undefined, {value: 0.00000001})).to.be.false;
 
     expect(fn(10.2, undefined, {value: '5.1'})).to.be.true;
     expect(fn(11.5, undefined, {value: '5.4'})).to.be.false;
     expect(fn(10.5, undefined, {value: '6.7'})).to.be.false;
     expect(fn(10.5, undefined, {value: '2.1'})).to.be.true;
+    expect(fn(0.00000002, undefined, {value: '0.00000001'})).to.be.true;
+    expect(fn(0.000000011, undefined, {value: '0.00000001'})).to.be.false;
   });
 });
