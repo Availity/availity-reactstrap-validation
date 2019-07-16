@@ -1,3 +1,13 @@
+<a name="2.6.0"></a>
+# [2.6.0](https://github.com/Availity/availity-reactstrap-validation/compare/2.5.4...2.6.0) (2019-07-16)
+
+
+### Bug Fixes
+
+* fix step validator for exponent ([a5911d9](https://github.com/Availity/availity-reactstrap-validation/commit/a5911d9))
+
+
+
 <a name="2.5.4"></a>
 ## [2.5.4](https://github.com/Availity/availity-reactstrap-validation/compare/2.5.3...2.5.4) (2019-06-10)
 
