@@ -19,6 +19,8 @@ const getInputErrorMessage = (input, ruleName) => {
 };
 
 export default class AvForm extends InputContainer {
+  _isMounted = false;
+
   static childContextTypes = {
     FormCtrl: PropTypes.object.isRequired,
   };
@@ -109,7 +111,7 @@ export default class AvForm extends InputContainer {
       this.props.onInvalidSubmit(e, errors, values);
     }
 
-    !this.state.submitted && this.setState({submitted: true});
+    !this.state.submitted && this._isMounted && this.setState({submitted: true});
   };
 
   handleNonFormSubmission = (event) => {
@@ -148,7 +150,12 @@ export default class AvForm extends InputContainer {
     };
   }
 
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
+
   componentWillMount() {
+    this._isMounted = true;
     super.componentWillMount();
 
     this._validators = {};
