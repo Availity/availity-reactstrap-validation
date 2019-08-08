@@ -35,7 +35,7 @@ export default class Example extends React.Component {
             <AvRadio label="Pikachu" value="Pikachu" disabled />
           </AvRadioGroup>
           {/* Checkboxes */}
-          <AvCheckboxGroup inline name="checkboxExample5" label="Radio Buttons! (inline)" required>
+          <AvCheckboxGroup inline name="checkboxExample5" label="Checkboxes! (inline)" required>
             <AvCheckbox label="Bulbasaur" value="Bulbasaur" />
             <AvCheckbox label="Squirtle" value="Squirtle" />
             <AvCheckbox label="Charmander" value="Charmander" />
