@@ -1,5 +1,5 @@
 import React from 'react';
-import { AvForm, AvField, AvGroup, AvInput, AvFeedback, AvRadioGroup, AvRadio, AvCheckboxGroup, AvCheckbox } from 'availity-reactstrap-validation';
+import { AvForm, AvField, AvGroup, AvInput, AvFeedback, AvRadioGroup, AvRadio, AvCheckboxGroup, AvCheckbox } from '@availity/reactstrap-validation';
 import { Button, Label, FormGroup, CustomInput } from 'reactstrap';
 
 export default class FormExample extends React.Component {

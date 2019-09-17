@@ -1,0 +1,67 @@
+
+version: 2.1
+orbs:
+  codecov: codecov/codecov@1.0.5
+jobs:
+  build:
+    docker:
+      - image: circleci/node:10
+    steps:
+      - checkout
+      - restore_cache: # special step to restore the dependency cache
+          key: dependency-cache-{{ checksum "yarn.lock" }}
+      - run:
+          name: Setup Dependencies
+          command: yarn install
+      - save_cache: # special step to save the dependency cache
+          key: dependency-cache-{{ checksum "yarn.lock" }}
+          paths:
+            - ./node_modules
+      - run:
+          name: Lint
+          command: |
+            npm run lint
+      - run: # Test
+          name: Run Test
+          command: |
+            npm run test:ci
+      - run: # Coverage
+          name: Coverage
+          command: npm run codecov:ci
+  deploy:
+    docker:
+      - image: circleci/node:10
+    steps:
+      - checkout
+      - restore_cache: # special step to restore the dependency cache
+          key: dependency-cache-{{ checksum "yarn.lock" }}
+      - run:
+          name: Setup Dependencies
+          command: yarn install
+      - save_cache: # special step to save the dependency cache
+          key: dependency-cache-{{ checksum "yarn.lock" }}
+          paths:
+            - ./node_modules
+      - run:
+          name: Authenticate
+          command: |
+            echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
+            git config --global user.email $GITHUB_EMAIL
+            git config --global user.name $GITHUB_USER
+      - run:
+          command: |
+            npm run release:ci
+            npm run deploy:ci
+workflows:
+  version: 2
+  build_test_deploy:
+    jobs:
+      - build:
+          context: availity-deploy
+      - deploy:
+          context: availity-deploy
+          requires:
+            - build
+          filters:
+            branches:
+              only: master

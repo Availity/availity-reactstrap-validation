@@ -1,6 +1,7 @@
 /__test__/coverage
 node_modules
-/dist
+**/dist
 /build
 /lib
 /.tmp
+.cache
