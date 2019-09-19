@@ -19,6 +19,7 @@
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-proto-to-assign": "^6.26.0",
     "codecov": "^3.5.0",
+    "eslint-config-availity": "^4.0.10",
     "gh-pages": "^2.1.1",
     "husky": "^3.0.1",
     "jest": "^24.9.0",
@@ -54,10 +55,12 @@
       "<rootDir>.*(node_modules)(?!.*@availity.*).*$"
     ],
     "coveragePathIgnorePatterns": [
-      "packages/reactstrap-validation/__old_test__"
+      "packages/reactstrap-validation-old/__test__",
+      "packages/docs"
     ],
     "testPathIgnorePatterns": [
-      "packages/reactstrap-validation/__old_test__"
+      "packages/reactstrap-validation-old/__test__",
+      "packages/docs"
     ],
     "setupFilesAfterEnv": [
       "@testing-library/jest-dom/extend-expect"

@@ -1,0 +1,64 @@
+{
+  "name": "@availity/reactstrap-validation-old",
+  "version": "2.6.0",
+  "private":true,
+  "author": "Evan Sharp <evan.sharp@availity.com>",
+  "description": "Form validation helpers for reactstrap",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "source": "src/index.js",
+  "engines": {
+    "node": ">= 5.0.0",
+    "npm": "^3.0.0"
+  },
+  "scripts": {
+    "start": "microbundle watch --jsx React.createElement",
+    "build": "microbundle build --jsx React.createElement"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Availity/availity-reactstrap-validation.git"
+  },
+  "files": [
+    "LICENSE",
+    "README.md",
+    "CHANGELOG.md",
+    "lib",
+    "dist"
+  ],
+  "keywords": [
+    "forms",
+    "validation",
+    "bootstrap",
+    "react",
+    "component",
+    "components",
+    "react-component",
+    "availity",
+    "ui"
+  ],
+  "contributors": [
+    "Evan Sharp <evan.sharp@availity.com>"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Availity/availity-reactstrap-validation/issues"
+  },
+  "homepage": "https://github.com/Availity/availity-reactstrap-validation",
+  "dependencies": {
+    "classnames": "^2.2.6",
+    "dayjs": "^1.8.13",
+    "lodash": "^4.17.10",
+    "prop-types": "^15.6.2"
+  },
+  "peerDependencies": {
+    "react": "^0.14.9 || ^15.3.0 || ^16.0.0",
+    "react-dom": "^0.14.9 || ^15.3.0 || ^16.0.0",
+    "reactstrap": ">= 5.0.0-alpha.4"
+  },
+  "devDependencies": {
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
+    "reactstrap": "^8.0.0"
+  }
+}

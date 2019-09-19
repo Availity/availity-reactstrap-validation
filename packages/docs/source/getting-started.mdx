@@ -12,11 +12,15 @@ npm install --save @availity/reactstrap-validation
 ```
 
 ## Usage
+
 ES6 - import the components you need
 
-import Example from './examples/Example';
+import { AvInput } from '@availity/reactstrap-validation';
+import { Container } from 'reactstrap';
 
-<Example />
+<Container>
+  <AvInput type="text" name="hello"  label="Hello" />
+</Container>
 
 ```jsx
 import React, { useState } from 'react';
