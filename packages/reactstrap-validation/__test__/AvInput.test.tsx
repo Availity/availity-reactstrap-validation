@@ -4,6 +4,6 @@ import { AvInput } from '../src';
 
 describe('AvInput', () => {
     test("renders",() => {
-        render(<AvInput />)
+        render(<AvInput label="hello" />);
     })
 })

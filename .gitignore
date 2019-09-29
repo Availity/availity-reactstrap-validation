@@ -5,3 +5,9 @@ node_modules
 /lib
 /.tmp
 .cache
+public
+
+.rts2_cache_es
+.rts2_cache_esm
+.rts2_cache_cjs
+.rts2_cache_umd

@@ -4,15 +4,17 @@
     "author": "Evan Sharp <evan.sharp@availity.com>",
     "description": "Form validation helpers for reactstrap",
     "main": "dist/index.js",
-    "module": "dist/index.mjs",
-    "source": "src/index.js",
+    "umd:main": "dist/formik.umd.production.js",
+    "module": "dist/formik.esm.js",
+    "typings": "dist/packages/reactstrap-validation/src/index.d.ts",
     "engines": {
       "node": ">= 5.0.0",
       "npm": "^3.0.0"
     },
     "scripts": {
-      "start": "microbundle watch --jsx React.createElement",
-      "build": "microbundle build --jsx React.createElement"
+      "start": "tsdx watch",
+      "prepublish": "yarn build",
+      "build": "tsdx build --format=cjs,esm,um"
     },
     "repository": {
       "type": "git",
@@ -22,7 +24,6 @@
       "LICENSE",
       "README.md",
       "CHANGELOG.md",
-      "lib",
       "dist"
     ],
     "keywords": [

@@ -11,7 +11,7 @@
     "clean": "gatsby clean"
   },
   "dependencies": {
-    "@availity/gatsby-theme-docs": "^1.4.0",
+    "@availity/gatsby-theme-docs": "^2.0.1",
     "@availity/reactstrap-validation": "^2.6.0",
     "gatsby": "^2.13.83",
     "react": "^16.9.0",

@@ -1,0 +1,36 @@
+{
+    "compilerOptions": {
+      "target": "es5",
+      "module": "esnext",
+      "lib": ["dom", "esnext"],
+      "importHelpers": true,
+      "declaration": true,
+      "sourceMap": true,
+      "rootDir": "./",
+      "strict": true,
+      "pretty": true,
+      "noImplicitAny": true,
+      "strictNullChecks": true,
+      "strictFunctionTypes": true,
+      "strictPropertyInitialization": true,
+      "noImplicitThis": true,
+      "alwaysStrict": true,
+      "stripInternal": true,
+      "noUnusedLocals": true,
+      "noUnusedParameters": true,
+      "noImplicitReturns": true,
+      "noFallthroughCasesInSwitch": true,
+      "emitDecoratorMetadata": false,
+      "experimentalDecorators": false,
+      "moduleResolution": "node",
+      "jsx": "react",
+      "baseUrl": "./",
+      "paths": {
+        "@availity/reactstrap-validation": ["packages/reactstrap-validation/src/"]
+      },
+      "esModuleInterop": true,
+      "allowSyntheticDefaultImports": true,
+    },
+    "include": ["packages/reactstrap-validation/src"],
+    "exclude": ["node_modules", "dist"]
+  }

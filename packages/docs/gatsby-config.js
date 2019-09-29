@@ -10,12 +10,12 @@ module.exports = {
         root: __dirname,
         subtitle: 'Reactstrap Validation',
         description: 'Form Validation Library built using Reactstrap',
-        githubRepo: 'availity/availity-reactstrap-validation',
+        gitRepo: 'availity/availity-reactstrap-validation',
         contentDir: 'packages/docs/source',
         sidebarCategories: {
           null: ['index', 'getting-started'],
-        }
-      }
-    }
-  ]
+        },
+      },
+    },
+  ],
 };
