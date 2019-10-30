@@ -154,9 +154,9 @@ export default class AvForm extends InputContainer {
     this._isMounted = false;
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this._isMounted = true;
-    super.componentWillMount();
+    super.UNSAFE_componentWillMount();
 
     this._validators = {};
   }
