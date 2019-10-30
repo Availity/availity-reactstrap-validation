@@ -11,7 +11,7 @@ describe('BaseInput', function() {
 
   describe('component will mount', () => {
     it('should get the default value', () => {
-      this.component.componentWillMount();
+      this.component.UNSAFE_componentWillMount();
       expect(this.component._inputs).to.eql({});
     });
   });

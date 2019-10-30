@@ -74,41 +74,41 @@ describe('BaseInput', function() {
   describe('component will mount', () => {
     it('should get the default value', () => {
       const spy = sinon.spy(this.component, 'getDefaultValue');
-      this.component.componentWillMount();
+      this.component.UNSAFE_componentWillMount();
       expect(spy).to.have.been.calledOnce;
     });
 
     it('should set the value to the default value', () => {
       const defaultValue = 'some value';
       this.component.props.defaultValue = defaultValue;
-      this.component.componentWillMount();
+      this.component.UNSAFE_componentWillMount();
       expect(this.component.value).to.equal(defaultValue);
     });
 
     it('should set the state value to the default value', () => {
       const defaultValue = 'some value';
       this.component.props.defaultValue = defaultValue;
-      this.component.componentWillMount();
+      this.component.UNSAFE_componentWillMount();
       expect(this.setStateSpy).to.have.been.calledWithMatch({ value: defaultValue });
     });
 
     it('should set the value to the value prop if provided', () => {
       const defaultValue = 'some value';
       this.component.props.value = defaultValue;
-      this.component.componentWillMount();
+      this.component.UNSAFE_componentWillMount();
       expect(this.component.value).to.equal(defaultValue);
     });
 
     it('should set the state value to the value prop if provided', () => {
       const defaultValue = 'some value';
       this.component.props.value = defaultValue;
-      this.component.componentWillMount();
+      this.component.UNSAFE_componentWillMount();
       expect(this.setStateSpy).to.have.been.calledWithMatch({ value: defaultValue });
     });
 
     it('should trigger validation', () => {
       const spy = sinon.spy(this.component, 'validate');
-      this.component.componentWillMount();
+      this.component.UNSAFE_componentWillMount();
       expect(spy).to.have.been.calledOnce;
     });
   });
@@ -117,7 +117,7 @@ describe('BaseInput', function() {
     it('should do nothing if the value has not changed', () => {
       this.props.value = 123;
       const spy = sinon.spy(this.component, 'validate');
-      this.component.componentWillReceiveProps(this.props);
+      this.component.UNSAFE_componentWillReceiveProps(this.props);
       expect(this.setStateSpy).to.not.have.been.called;
       expect(spy).to.not.have.been.called;
     });
@@ -125,33 +125,33 @@ describe('BaseInput', function() {
     describe('when the value changed', () => {
       it('should set the value to the new value', () => {
         const newValue = 2342;
-        this.component.componentWillReceiveProps({ value: newValue });
+        this.component.UNSAFE_componentWillReceiveProps({ value: newValue });
         expect(this.component.value).to.equal(newValue);
       });
 
       it('should set the state value to the default value', () => {
         const newValue = 2342;
-        this.component.componentWillReceiveProps({ value: newValue });
+        this.component.UNSAFE_componentWillReceiveProps({ value: newValue });
         expect(this.setStateSpy).to.have.been.calledWithMatch({ value: newValue });
       });
 
       it('should trigger validation', () => {
         const newValue = 2342;
         const spy = sinon.spy(this.component, 'validate');
-        this.component.componentWillReceiveProps({ value: newValue });
+        this.component.UNSAFE_componentWillReceiveProps({ value: newValue });
         expect(spy).to.have.been.calledOnce;
       });
 
       it('should reset the value if multiple has changed from false to true', () => {
         this.props.multiple = false;
-        this.component.componentWillReceiveProps({multiple: true});
+        this.component.UNSAFE_componentWillReceiveProps({multiple: true});
         expect(this.component.value).to.be.empty;
         expect(this.component.state.value).to.be.empty;
       });
 
       it('should reset the value if multiple has changed from true to false', () => {
         this.props.multiple = true;
-        this.component.componentWillReceiveProps({multiple: false});
+        this.component.UNSAFE_componentWillReceiveProps({multiple: false});
         expect(this.component.value).to.equal('');
       });
     });
@@ -160,7 +160,7 @@ describe('BaseInput', function() {
       describe('when the checked prop changes', () => {
         it('should set the value to the trueValue when the next props checked prop is true', () => {
           this.props.checked = false;
-          this.component.componentWillReceiveProps({
+          this.component.UNSAFE_componentWillReceiveProps({
             type: 'checkbox',
             checked: true,
             trueValue: true,
@@ -171,7 +171,7 @@ describe('BaseInput', function() {
 
         it('should set the value to the falseValue when the next props checked prop is false', () => {
           this.props.checked = true;
-          this.component.componentWillReceiveProps({
+          this.component.UNSAFE_componentWillReceiveProps({
             type: 'checkbox',
             checked: false,
             trueValue: true,
@@ -182,7 +182,7 @@ describe('BaseInput', function() {
 
         it('should set the state to the new value', () => {
           this.props.checked = false;
-          this.component.componentWillReceiveProps({
+          this.component.UNSAFE_componentWillReceiveProps({
             type: 'checkbox',
             checked: true,
             trueValue: true,
@@ -195,7 +195,7 @@ describe('BaseInput', function() {
       describe('when the checked prop changes', () => {
         it('should not set the state', () => {
           this.props.checked = true;
-          this.component.componentWillReceiveProps({
+          this.component.UNSAFE_componentWillReceiveProps({
             type: 'checkbox',
             checked: true,
             trueValue: true,
