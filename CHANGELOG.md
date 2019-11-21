@@ -1,3 +1,13 @@
+<a name="2.6.1"></a>
+## [2.6.1](https://github.com/Availity/availity-reactstrap-validation/compare/2.6.0...2.6.1) (2019-11-21)
+
+
+### Bug Fixes
+
+* correct Checkbox element ([b5b50bb](https://github.com/Availity/availity-reactstrap-validation/commit/b5b50bb))
+
+
+
 <a name="2.6.0"></a>
 # [2.6.0](https://github.com/Availity/availity-reactstrap-validation/compare/2.5.4...2.6.0) (2019-07-16)
 
