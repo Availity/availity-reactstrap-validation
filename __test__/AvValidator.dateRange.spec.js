@@ -1,9 +1,6 @@
-import dayjs from 'dayjs';
-import customParseFormat from 'dayjs/plugin/customParseFormat'
+import moment from 'moment';
 import {AvValidator} from 'availity-reactstrap-validation';
 import {inputTypeOverride} from 'availity-reactstrap-validation/AvValidator/utils';
-
-dayjs.extend(customParseFormat);
 
 const fn = AvValidator.dateRange;
 const input = {props: {type: 'text'}};
@@ -14,9 +11,9 @@ let date2;
 
 describe('Date Range Validation', () => {
   beforeEach(() => {
-    date0 = dayjs(new Date());
-    date1 = dayjs(new Date());
-    date2 = dayjs(new Date());
+    date0 = moment(new Date());
+    date1 = moment(new Date());
+    date2 = moment(new Date());
   });
 
   it('should not require a value', () => {
@@ -107,25 +104,19 @@ describe('Date Range Validation', () => {
     });
 
     it('should return an error message when date is not within range of the current date', () => {
-      const dateOne = dayjs().add(-1,'day');
-      const dateTwo = dayjs().add(-5,'day');
-
       expect(fn(date0.format('YYYY-MM-DD'), context, {
         format: 'YYYY-MM-DD',
-        start: {value: dateOne.format('YYYY-MM-DD')},
-        end: {value: dateTwo.format('YYYY-MM-DD')}
-      }, input)).to.equal(`Date must be between ${dateOne.format('MM/DD/YYYY')} and ${dateTwo.format('MM/DD/YYYY')}`);
+        start: {value: date1.add(-5, 'day').format('YYYY-MM-DD')},
+        end: {value: date2.add(-1, 'day').format('YYYY-MM-DD')}
+      }, input)).to.equal(`Date must be between ${date1.format('MM/DD/YYYY')} and ${date2.format('MM/DD/YYYY')}`);
     });
 
     it('should allow the start and end formats to be different than the user format', () => {
-      const dateOne = dayjs().add(-1,'day');
-      const dateTwo = dayjs().add(-5,'day');
-
       expect(fn(date0.format('YYYY-MM-DD'), context, {
         format: 'YYYY-MM-DD',
-        start: {value: dateOne.format('DD-MM-YYYY'), format: 'DD-MM-YYYY'},
-        end: {value: dateTwo.format('YYYY/MM/DD'), format: 'YYYY/MM/DD'}
-      }, input)).to.equal(`Date must be between ${dateOne.format('MM/DD/YYYY')} and ${dateTwo.format('MM/DD/YYYY')}`);
+        start: {value: date1.add(-5, 'day').format('DD-MM-YYYY'), format: 'DD-MM-YYYY'},
+        end: {value: date2.add(-1, 'day').format('YYYY/MM/DD'), format: 'YYYY/MM/DD'}
+      }, input)).to.equal(`Date must be between ${date1.format('MM/DD/YYYY')} and ${date2.format('MM/DD/YYYY')}`);
     });
   });
 
