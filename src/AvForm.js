@@ -301,7 +301,7 @@ export default class AvForm extends InputContainer {
     if (!changed) return;
 
     invalidInputs = {...this.state.invalidInputs};
-    this.setState({invalidInputs}, () => {
+    this._isMounted && this.setState({invalidInputs}, () => {
       if (update) this.updateInputs();
     });
   }
@@ -325,7 +325,7 @@ export default class AvForm extends InputContainer {
     if (!changed) return;
 
     dirtyInputs = {...this.state.dirtyInputs};
-    this.setState({dirtyInputs}, () => {
+    this._isMounted && this.setState({dirtyInputs}, () => {
       if (update) this.updateInputs();
     });
   }
@@ -349,7 +349,7 @@ export default class AvForm extends InputContainer {
     if (!changed) return;
 
     touchedInputs = {...this.state.touchedInputs};
-    this.setState({touchedInputs}, () => {
+    this._isMounted && this.setState({touchedInputs}, () => {
       if (update) this.updateInputs();
     });
   }
@@ -373,7 +373,7 @@ export default class AvForm extends InputContainer {
     if (!changed) return;
 
     badInputs = {...this.state.badInputs};
-    this.setState({badInputs}, () => {
+    this._isMounted && this.setState({badInputs}, () => {
       if (update) this.updateInputs();
     });
   }
