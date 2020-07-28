@@ -6,8 +6,6 @@ var env = process.env.WEBPACK_BUILD || 'development';
 var CleanWebpackPlugin = require('clean-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var webpackDevConfig = require('./webpack.base.config')('development');
-var webpackProdConfig = require('./webpack.base.config')('production');
 
 var paths = [
   '/',
@@ -18,7 +16,7 @@ var paths = [
   '/404.html',
 ];
 
-var basepath = env === 'production' ? process.env.BASEPATH || '/availity-reactstrap-validation/' : '/';
+var basePath = (env === 'production') ? (process.env.BASEPATH || '/availity-reactstrap-validation/') : '/';
 
 var config = [{
   devtool: 'source-map',
@@ -36,7 +34,7 @@ var config = [{
   },
   output: {
     filename: 'bundle.js',
-    publicPath: basepath,
+    publicPath: basePath,
     path: './build',
     libraryTarget: 'umd',
   },
@@ -48,24 +46,20 @@ var config = [{
     }),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurenceOrderPlugin(),
-    new StaticSiteGeneratorPlugin('main', paths, {basename: basepath}),
+    new StaticSiteGeneratorPlugin('main', paths, {basename: basePath}),
     new webpack.NoErrorsPlugin(),
     new ExtractTextPlugin('/assets/style.css'),
   ],
   module: {
     loaders: [
       {
-        test: /\.(json)$/,
-        loaders: [
-          'json-loader?cacheDirectory',
-        ],
+        test: /\.json$/,
+        loaders: ['json-loader?cacheDirectory'],
       },
       {
-        test: /\.(js|jsx)$/,
+        test: /\.jsx?$/,
         exclude: /node_modules/,
-        loaders: [
-          'babel-loader?cacheDirectory',
-        ],
+        loaders: ['babel-loader?cacheDirectory'],
       },
       {
         test: /\.css$/,
@@ -76,25 +70,25 @@ var config = [{
   resolve: {
     extensions: ['', '.js', '.jsx', '.json'],
     alias: {
-      'bootstrap-css': path.join(__dirname,'node_modules/bootstrap/dist/css/bootstrap.css'),
+      'bootstrap-css': path.join(__dirname, 'node_modules/bootstrap/dist/css/bootstrap.css'),
       'availity-reactstrap-validation': path.resolve('./src'),
     },
   },
 }];
 
 if (env === 'development') {
-  config.push(webpackDevConfig);
-  config.push(webpackProdConfig);
+  var webpackConfig = require('./webpack.base.config');
+
+  config.push(webpackConfig('development'));
+  config.push(webpackConfig('production'));
 } else {
-  config[0].plugins.push(new webpack.optimize.UglifyJsPlugin(
-    {
+  config[0].plugins.push(
+    new webpack.optimize.UglifyJsPlugin({
       minimize: true,
-      compress: {
-        warnings: false,
-      },
+      compress: { warnings: false },
       mangle: true,
-    }
-  ));
+    })
+  );
 }
 
 module.exports = config;

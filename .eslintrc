@@ -1,8 +1,10 @@
 {
-  "extends" : "eslint-config-availity/react",
+  "extends": "eslint-config-availity/react",
   "rules": {
-    "semi" : [2, "always"],
-    "no-unused-vars": ["error", { "varsIgnorePattern": "^(unused|omit)" }],
+    "semi": [2, "always"],
+    "no-unused-vars": ["error", {
+      "varsIgnorePattern": "^(unused|omit)"
+    }],
     "comma-dangle": [2, "always-multiline"]
   },
   "parserOptions": {

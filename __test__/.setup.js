@@ -13,16 +13,14 @@ chai.use(chaiAsPromised);
 chai.use(chaiEnzyme());
 
 chai.config.includeStack = true;
-global.expect = chai.expect;
+
 global.AssertionError = chai.AssertionError;
 global.Assertion = chai.Assertion;
 global.assert = chai.assert;
 global.expect = chai.expect;
 global.sinon = sinon;
 
-const { document } = new JSDOM('', {
-  url: 'http://localhost/'
-}).window;
+const { document } = new JSDOM('', { url: 'http://localhost/' }).window;
 global.document = document;
 global.window = document.defaultView;
 Object.keys(document.defaultView).forEach(property => {

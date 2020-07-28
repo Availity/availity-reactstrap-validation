@@ -6,7 +6,7 @@ var webpackConfig = {
   context: path.join(__dirname, './src'),
   devtool: '#cheap-module-source-map',
   entry: {
-    'availity-reactstrap-validation': ['./index.js']
+    'availity-reactstrap-validation': ['./index.js'],
   },
   node: {
     fs: 'empty',
@@ -17,17 +17,13 @@ var webpackConfig = {
   module: {
     loaders: [
       {
-        test: /\.(json)$/,
-        loaders: [
-          'json-loader?cacheDirectory',
-        ],
+        test: /\.json$/,
+        loaders: ['json-loader?cacheDirectory'],
       },
       {
-        test: /\.(js|jsx)$/,
+        test: /\.jsx?$/,
         exclude: /node_modules/,
-        loaders: [
-          'babel-loader?cacheDirectory',
-        ],
+        loaders: ['babel-loader?cacheDirectory'],
       },
     ],
   },

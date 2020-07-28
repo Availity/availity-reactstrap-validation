@@ -4,30 +4,7 @@ var webpack = require('webpack');
 var libraryName = 'AvailityReactstrapValidation';
 
 module.exports = function(env) {
-  var outputFile;
-  var plugins = [
-    new webpack.NoErrorsPlugin(),
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(env),
-    }),
-    new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.OccurenceOrderPlugin(),
-  ];
-
-  if (env === 'production') {
-    plugins.push(new webpack.optimize.UglifyJsPlugin(
-      {
-        minimize: true,
-        compress: {
-          warnings: false,
-        },
-        mangle: true,
-      }
-    ));
-    outputFile = libraryName.toLowerCase() + '.min.js';
-  } else {
-    outputFile = libraryName.toLowerCase() + '.js';
-  }
+  var outputFile = libraryName.toLowerCase() + (env === 'production' ? '.min.js' : '.js');
 
   var config = {
     devtool: 'source-map',
@@ -68,31 +45,39 @@ module.exports = function(env) {
     module: {
       loaders: [
         {
-          test: /\.(json)$/,
-          loaders: [
-            'json-loader?cacheDirectory',
-          ],
+          test: /\.json$/,
+          loaders: ['json-loader?cacheDirectory'],
         },
         {
-          test: /\.(js|jsx)$/,
+          test: /\.jsx?$/,
           exclude: /node_modules/,
-          loaders: [
-            'babel-loader?cacheDirectory',
-          ],
+          loaders: ['babel-loader?cacheDirectory'],
         },
       ],
     },
     resolve: {
-      alias: {
-        'avility-reactstrap-validation': 'src/index',
-      },
       extensions: ['', '.js', '.jsx', '.json'],
-      root: [
-        path.resolve('./src'),
-      ],
+      root: [path.resolve('./src')],
     },
-    plugins: plugins,
+    plugins: [
+      new webpack.NoErrorsPlugin(),
+      new webpack.DefinePlugin({
+        'process.env.NODE_ENV': JSON.stringify(env),
+      }),
+      new webpack.optimize.DedupePlugin(),
+      new webpack.optimize.OccurenceOrderPlugin(),
+    ],
   };
+
+  if (env === 'production') {
+    config.plugins.push(
+      new webpack.optimize.UglifyJsPlugin({
+        minimize: true,
+        compress: { warnings: false },
+        mangle: true,
+      })
+    );
+  }
 
   return config;
 };

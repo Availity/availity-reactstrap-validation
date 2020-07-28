@@ -1,5 +1,5 @@
 {
-  "extends" : "eslint-config-availity/react",
+  "extends": "eslint-config-availity/react",
   "env": {
     "mocha": true,
     "node": true
@@ -9,7 +9,7 @@
     "expect": true
   },
   "rules": {
-    "semi" : [2, "always"],
+    "semi": [2, "always"],
     "comma-dangle": [2, "always-multiline"]
   },
   "parserOptions": {
