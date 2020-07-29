@@ -3,7 +3,7 @@ import {shallow} from 'enzyme';
 import {AvForm, AvValidator} from 'availity-reactstrap-validation';
 import {Form} from 'reactstrap';
 
-describe('AvForm', () => {
+describe('AvForm', function() {
   it('should render a "Form" by default', () => {
     const wrapper = shallow(<AvForm />);
     expect(wrapper.type()).to.equal(Form);
@@ -103,8 +103,8 @@ describe('AvForm', () => {
     });
 
     it('should not handle the event if the callback returns false', () => {
-      const cb = () => false;
-      const wrapper = shallow(<AvForm tag="div" onKeyDown={cb} />);
+      const fn = () => false;
+      const wrapper = shallow(<AvForm tag="div" onKeyDown={fn} />);
       const event = {
         type: 'keydown',
         which: 13,
