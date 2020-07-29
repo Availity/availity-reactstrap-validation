@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { AvRadio } from 'availity-reactstrap-validation';
-import { Input, Label, FormGroup } from 'reactstrap';
+import { Input } from 'reactstrap';
 
 let options;
 let props;

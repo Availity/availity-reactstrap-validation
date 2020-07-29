@@ -5,7 +5,7 @@ import { FormGroup } from 'reactstrap';
 
 describe('AvGroup', function() {
   beforeEach(() => {
-    this.inputState = {color:'danger'};
+    this.inputState = {color: 'danger'};
     this.props = {
       name: 'fieldName',
     };
@@ -46,7 +46,7 @@ describe('AvGroup', function() {
   it('should intercept an input registration', () => {
     const wrapper = mount(<AvGroup style={{textAlign: 'center'}}>Yo!</AvGroup>, this.options);
     expect(wrapper.node.FormCtrl.register).to.not.equal(this.registerSpy);
-    const input  = {props: this.props};
+    const input = {props: this.props};
     wrapper.node.FormCtrl.register(input);
     expect(wrapper.state('input')).to.equal(input);
     expect(this.registerSpy).to.have.been.calledWith(input);

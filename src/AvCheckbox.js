@@ -32,7 +32,7 @@ export default class AvCheckbox extends Component {
   };
 
   isDefaultChecked(valueArr) {
-    return Array.isArray(valueArr) && valueArr.length > 0 && find(valueArr,item => item === this.props.value);
+    return Array.isArray(valueArr) && valueArr.length > 0 && find(valueArr, item => item === this.props.value);
   }
 
   render() {
@@ -40,7 +40,8 @@ export default class AvCheckbox extends Component {
       className,
       id,
       customInput,
-      ...attributes} = this.props;
+      ...attributes
+    } = this.props;
 
     const groupProps = this.context.Group.getProps();
 

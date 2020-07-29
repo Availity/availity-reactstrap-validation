@@ -1,3 +1,4 @@
+/* eslint comma-dangle: [2, "only-multiline"] */
 import moment from 'moment';
 import {AvValidator} from 'availity-reactstrap-validation';
 import {inputTypeOverride} from 'availity-reactstrap-validation/AvValidator/utils';

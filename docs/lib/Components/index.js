@@ -1,17 +1,24 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 import { Container, Row, Col, Nav, NavItem, NavLink } from 'reactstrap';
 
-const ComponentLink = (props) => {
+const ComponentLink = ({ item }) => {
   return (
     <NavItem>
-      <NavLink tag={Link} to={props.item.to} activeClassName="active">
-        {props.item.name}
+      <NavLink tag={Link} to={item.to} activeClassName="active">
+        {item.name}
       </NavLink>
     </NavItem>
   );
 };
 
+ComponentLink.propTypes = {
+  item: PropTypes.shape({
+    to: PropTypes.string,
+    name: PropTypes.string,
+  }).isRequired,
+};
 
 class Components extends React.Component {
   constructor(props) {
@@ -34,6 +41,7 @@ class Components extends React.Component {
       ],
     };
   }
+
   render() {
     return (
       <Container className="content">
@@ -42,9 +50,9 @@ class Components extends React.Component {
             <div className="docs-sidebar mb-3">
               <h5>Components</h5>
               <Nav className="flex-column">
-                {this.state.navItems.map((item, i) => {
-                  return <ComponentLink key={i} item={item} />;
-                })}
+                {this.state.navItems.map((item, i) => (
+                  <ComponentLink key={i} item={item} />
+                ))}
               </Nav>
             </div>
           </Col>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { AvForm, AvGroup, AvInput } from 'availity-reactstrap-validation';
-import { Button, Label, FormGroup  } from 'reactstrap';
+import { Button, Label, FormGroup } from 'reactstrap';
 
 export default class Example extends React.Component {
   constructor(props) {

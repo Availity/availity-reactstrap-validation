@@ -5,5 +5,5 @@ import Layout from './Layout';
 export default {
   Nav,
   Layout,
-  Footer
+  Footer,
 };

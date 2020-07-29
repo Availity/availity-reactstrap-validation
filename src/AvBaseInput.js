@@ -21,7 +21,7 @@ const htmlValidationTypes = [
   'number',
   'tel',
   'url',
-  /*'range', 'month', 'week', 'time'*/ // These do not currently have validation
+  /* 'range', 'month', 'week', 'time' */ // These do not currently have validation
 ];
 
 export default class AvBaseInput extends Component {
@@ -66,7 +66,7 @@ export default class AvBaseInput extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { value: this.props.multiple ? [] : '' };
+    this.state = { value: props.multiple ? [] : '' };
     this.validations = {};
     this.value = '';
     this.onKeyUpHandler = this.onKeyUpHandler.bind(this);

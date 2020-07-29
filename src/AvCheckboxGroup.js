@@ -223,7 +223,7 @@ export default class AvCheckboxGroup extends Component {
       <FormGroup tag="fieldset" {...attributes} className={groupClass}>
         {legend}
         <div className={classes}>{children}</div>
-       <AvFeedback>{validation.errorMessage}</AvFeedback>
+        <AvFeedback>{validation.errorMessage}</AvFeedback>
       </FormGroup>
     );
   }

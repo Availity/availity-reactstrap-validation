@@ -3,11 +3,11 @@ import {AvValidator} from 'availity-reactstrap-validation';
 const fn = AvValidator.match;
 const now = new Date();
 const context = {
-  field1: "",
-  field2: "something",
+  field1: '',
+  field2: 'something',
   field3: now,
   field4: 4,
-  field5: {value: "something"},
+  field5: {value: 'something'},
 };
 
 describe('Match Validation', () => {

@@ -1,4 +1,4 @@
-/* eslint react/no-multi-comp: 0, react/prop-types: 0 */
+/* eslint import/first: 0 */
 import React from 'react';
 import { PrismCode } from 'react-prism';
 import Helmet from 'react-helmet';

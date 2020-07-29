@@ -42,9 +42,9 @@ export default class AvInput extends AvBaseInput {
 
     if (Array.isArray(tag)) {
       let tags;
-      [Tag, ...tags] = tag;
-      attributes.tag = tags
-      if(attributes.tag.length <= 1) {
+      [Tag, ...tags] = tag; // eslint-disable-line prefer-const
+      attributes.tag = tags;
+      if (attributes.tag.length <= 1) {
         attributes.tag = attributes.tag[0];
       }
     }
@@ -62,7 +62,8 @@ export default class AvInput extends AvBaseInput {
     const value = this.getViewValue();
 
     return (
-      <Tag {...attributes}
+      <Tag
+        {...attributes}
         ref={getRef}
         {...this.getValidatorProps()}
         className={classes}

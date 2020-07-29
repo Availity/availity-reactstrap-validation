@@ -1,9 +1,13 @@
 {
-  "extends": "eslint-config-availity/react",
+  "extends": "availity/react",
   "rules": {
     "semi": [2, "always"],
     "no-unused-vars": ["error", {
       "varsIgnorePattern": "^(unused|omit)"
+    }],
+    "space-before-function-paren": [2, {
+      "anonymous": "never",
+      "named": "never"
     }],
     "comma-dangle": [2, "always-multiline"]
   },

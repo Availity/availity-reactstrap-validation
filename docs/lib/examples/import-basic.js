@@ -3,6 +3,27 @@ import { AvForm, AvField } from 'availity-reactstrap-validation';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 export default class Example extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.handleValidSubmit = this.handleValidSubmit.bind(this);
+    this.handleInvalidSubmit = this.handleInvalidSubmit.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+    this.state = {email: false};
+  }
+
+  handleValidSubmit(event, values) {
+    this.setState({email: values.email});
+  }
+
+  handleInvalidSubmit(event, errors, values) {
+    this.setState({email: values.email, error: true});
+  }
+
+  closeModal() {
+    this.setState({email: false, error: false});
+  }
+
   render() {
     const modalError = this.state.error ? 'not' : ''; // This is just for the modal
     return (
@@ -24,26 +45,5 @@ export default class Example extends React.Component {
         </Modal>
       </div>
     );
-  }
-
-  constructor(props) {
-    super(props);
-
-    this.handleValidSubmit = this.handleValidSubmit.bind(this);
-    this.handleInvalidSubmit = this.handleInvalidSubmit.bind(this);
-    this.closeModal = this.closeModal.bind(this);
-    this.state = {email: false};
-  }
-
-  handleValidSubmit(event, values) {
-    this.setState({email: values.email});
-  }
-
-  handleInvalidSubmit(event, errors, values) {
-    this.setState({email: values.email, error: true});
-  }
-
-  closeModal() {
-    this.setState({email: false, error: false});
   }
 }
