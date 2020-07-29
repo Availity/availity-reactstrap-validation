@@ -6,10 +6,9 @@ export default () => (
   <div className="footer">
     <Container fluid>
       <Row>
-        <Col className="text-xs-center">
+        <Col className="text-center">
           <p className="social">
-            &copy; 2016 - present Availity
-            {' '}
+            &copy; 2016 - present Availity &nbsp;&nbsp;
             <iframe
               src="https://ghbtns.com/github-btn.html?user=availity&repo=availity-reactstrap-validation&type=star&count=true"
               frameBorder="0"

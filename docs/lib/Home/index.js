@@ -14,7 +14,7 @@ export default () => {
           <Row>
             <Col>
               <p className="lead">
-                <img src="assets/logo.png" alt="" width="150px" />
+                <img src="/assets/logo.png" alt="logo" width="150px" />
               </p>
               <h1 className="jumbotron-heading display-4">Availity reactstrap Validation</h1>
               <p className="lead">

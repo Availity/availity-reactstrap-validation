@@ -16,16 +16,14 @@ export default class UINav extends Component {
     super(props);
 
     this.toggleNavbar = this.toggleNavbar.bind(this);
-    this.state = {
-      showNavbar: false,
-    };
+    this.state = { showNavbar: false };
   }
+
   toggleNavbar(e) {
     e.preventDefault();
-    this.setState({
-      showNavbar: !this.state.showNavbar,
-    });
+    this.setState(prevState => ({ showNavbar: !prevState.showNavbar }));
   }
+
   render() {
     return (
       <Navbar className="header" color="faded" light expand="md">
@@ -37,12 +35,7 @@ export default class UINav extends Component {
           <Collapse navbar isOpen={this.state.showNavbar}>
             <Nav navbar className="ml-sm-auto">
               <NavItem>
-                <NavLink
-                  tag={Link}
-                  className="nav-link"
-                  to="/components/"
-                  activeClassName="active"
-                >
+                <NavLink tag={Link} to="/components/" activeClassName="active">
                   Components
                 </NavLink>
               </NavItem>

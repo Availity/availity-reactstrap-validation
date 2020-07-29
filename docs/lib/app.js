@@ -43,7 +43,7 @@ export default (locals, callback) => {
         <meta charset="utf-8" />
         ${head.title.toString()}
         ${head.meta.toString()}
-        <link rel=icon href="${basename}/assets/favicon.ico" />
+        <link rel="shortcut icon" href="${basename}/assets/favicon.ico" />
         <link rel="stylesheet" href="${basename}/assets/style.css" />
         <link rel="stylesheet" href="${basename}/assets/docs.css" />
       </head>

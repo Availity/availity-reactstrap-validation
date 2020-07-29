@@ -23,6 +23,7 @@ var config = [{
   devServer: {
     contentBase: './build',
     stats: { chunks: false },
+    historyApiFallback: true,
   },
   entry: {
     main: './docs/lib/app.js',
@@ -44,7 +45,7 @@ var config = [{
     }),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurenceOrderPlugin(),
-    new StaticSiteGeneratorPlugin('main', paths, {basename: basePath}),
+    new StaticSiteGeneratorPlugin('main', paths, { basename: basePath }),
     new webpack.NoErrorsPlugin(),
     new ExtractTextPlugin('/assets/style.css'),
   ],
