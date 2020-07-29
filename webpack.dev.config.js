@@ -22,9 +22,7 @@ var config = [{
   devtool: 'source-map',
   devServer: {
     contentBase: './build',
-    stats: {
-      chunks: false,
-    },
+    stats: { chunks: false },
   },
   entry: {
     main: './docs/lib/app.js',

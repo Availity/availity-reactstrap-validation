@@ -3,7 +3,7 @@ var webpack = require('webpack');
 
 var webpackConfig = {
   target: 'node',
-  context: path.join(__dirname, './src'),
+  context: path.join(__dirname, 'src'),
   devtool: '#cheap-module-source-map',
   entry: {
     'availity-reactstrap-validation': ['./index.js'],
