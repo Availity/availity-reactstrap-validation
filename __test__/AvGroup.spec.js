@@ -3,7 +3,7 @@ import { shallow, mount } from 'enzyme';
 import { AvGroup } from 'availity-reactstrap-validation';
 import { FormGroup } from 'reactstrap';
 
-describe('AvGroup', function() {
+describe('AvGroup', function () {
   beforeEach(() => {
     this.inputState = {color: 'danger'};
     this.props = {

@@ -10,7 +10,7 @@ export default class Example extends React.Component {
     this.state = {};
   }
 
-  handleSubmit(event, errors, values) {
+  handleSubmit(_event, errors, values) {
     this.setState({errors, values});
   }
 
@@ -79,11 +79,14 @@ export default class Example extends React.Component {
             <Button>Submit</Button>
           </FormGroup>
         </AvForm>
-        {this.state.values && <div>
-          <h5>Submission values</h5>
-          Invalid: {this.state.errors.join(', ')}<br />
-          Values: <pre>{JSON.stringify(this.state.values, null, 2)}</pre>
-        </div>}
+        {this.state.values && (
+          <div>
+            <h5>Submission values</h5>
+            Invalid: {this.state.errors.join(', ')}
+            <br />
+            Values: <pre>{JSON.stringify(this.state.values, null, 2)}</pre>
+          </div>
+        )}
       </div>
     );
   }

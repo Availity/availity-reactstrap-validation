@@ -3,7 +3,7 @@ var webpack = require('webpack');
 
 var libraryName = 'AvailityReactstrapValidation';
 
-module.exports = function(env) {
+module.exports = function (env) {
   var outputFile = libraryName.toLowerCase() + (env === 'production' ? '.min.js' : '.js');
 
   var config = {

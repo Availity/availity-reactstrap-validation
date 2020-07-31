@@ -3,7 +3,7 @@ import {shallow} from 'enzyme';
 import {AvForm, AvValidator} from 'availity-reactstrap-validation';
 import {Form} from 'reactstrap';
 
-describe('AvForm', function() {
+describe('AvForm', function () {
   it('should render a "Form" by default', () => {
     const wrapper = shallow(<AvForm />);
     expect(wrapper.type()).to.equal(Form);
@@ -210,14 +210,14 @@ describe('AvForm', function() {
       expect(wrapper.simulate.bind(wrapper, 'submit')).to.not.throw();
     });
 
-    it('should get all of the values', () =>{
+    it('should get all of the values', () => {
       const wrapper = shallow(<AvForm />);
       const getValuesSpy = sinon.spy(wrapper.instance(), 'getValues');
       wrapper.simulate('submit');
       expect(getValuesSpy).to.have.been.calledOnce;
     });
 
-    it('should pass the values to validateAll', () =>{
+    it('should pass the values to validateAll', () => {
       const wrapper = shallow(<AvForm />);
       const instance = wrapper.instance();
       instance._inputs.input = {getValue: () => 'value', setState: () => {}};
@@ -386,10 +386,10 @@ describe('AvForm', function() {
         const dateOfBirth = new Date();
         const number = 4;
         const inputs = this.instance._inputs = {
-          'name': {getValue: sinon.stub().returns(name)},
-          'email': {getValue: sinon.stub().returns(email)},
-          'dateOfBirth': {getValue: sinon.stub().returns(dateOfBirth)},
-          'number': {getValue: sinon.stub().returns(number)},
+          name: { getValue: sinon.stub().returns(name) },
+          email: { getValue: sinon.stub().returns(email) },
+          dateOfBirth: { getValue: sinon.stub().returns(dateOfBirth) },
+          number: { getValue: sinon.stub().returns(number) },
         };
         this.instance.getValues();
         expect(inputs.name.getValue).to.have.been.calledOnce;
@@ -404,10 +404,10 @@ describe('AvForm', function() {
         const dateOfBirth = new Date();
         const number = 4;
         this.instance._inputs = {
-          'name': {getValue: () => name},
-          'email': {getValue: () => email},
-          'dateOfBirth': {getValue: () => dateOfBirth},
-          'number': {getValue: () => number},
+          name: { getValue: () => name },
+          email: { getValue: () => email },
+          dateOfBirth: { getValue: () => dateOfBirth },
+          number: { getValue: () => number },
         };
         const result = this.instance.getValues();
         expect(result).to.deep.equal({name, email, dateOfBirth, number});
@@ -458,7 +458,7 @@ describe('AvForm', function() {
       });
     });
 
-    describe('validate input', ()=> {
+    describe('validate input', () => {
       it('should trigger validate one with the input and the values', () => {
         const values = {};
         const inputName = 'myInput';
@@ -1139,11 +1139,13 @@ describe('AvForm', function() {
         it('should be able to handle a returned promise', () => {
           let resolve;
           const input = {props: {name: 'myInput'}};
-          const rules = {myFn: () => {
-            return new Promise(r => {
-              resolve = r;
-            });
-          }};
+          const rules = {
+            myFn: () => {
+              return new Promise(r => {
+                resolve = r;
+              });
+            },
+          };
           const fn = this.instance.compileValidationRules(input, rules);
           const result = fn();
           expect(result).to.not.be.fulfilled;
@@ -1155,11 +1157,13 @@ describe('AvForm', function() {
           it('should be able to return true to invalid valid', () => {
             let resolve;
             const input = {props: {name: 'myInput'}};
-            const rules = {myFn: () => {
-              return new Promise(r => {
-                resolve = r;
-              });
-            }};
+            const rules = {
+              myFn: () => {
+                return new Promise(r => {
+                  resolve = r;
+                });
+              },
+            };
             const fn = this.instance.compileValidationRules(input, rules);
             const result = fn();
             expect(result).to.not.be.fulfilled;
@@ -1170,11 +1174,13 @@ describe('AvForm', function() {
           it('should be able to return false to indicate invalud', () => {
             let resolve;
             const input = {props: {name: 'myInput'}};
-            const rules = {myFn: () => {
-              return new Promise(r => {
-                resolve = r;
-              });
-            }};
+            const rules = {
+              myFn: () => {
+                return new Promise(r => {
+                  resolve = r;
+                });
+              },
+            };
             const fn = this.instance.compileValidationRules(input, rules);
             const result = fn();
             expect(result).to.not.be.fulfilled;
@@ -1185,11 +1191,13 @@ describe('AvForm', function() {
           it('should be able to return a string error message', () => {
             let resolve;
             const input = {props: {name: 'myInput'}};
-            const rules = {myFn: () => {
-              return new Promise(r => {
-                resolve = r;
-              });
-            }};
+            const rules = {
+              myFn: () => {
+                return new Promise(r => {
+                  resolve = r;
+                });
+              },
+            };
             const errorMessage = 'my error message';
             const fn = this.instance.compileValidationRules(input, rules);
             const result = fn();
@@ -1203,9 +1211,11 @@ describe('AvForm', function() {
         it('should be able to use a callback', () => {
           let callback;
           const input = {props: {name: 'myInput'}};
-          const rules = {myFn: (_value, _ctx, _input, cb) => {
-            callback = cb;
-          }};
+          const rules = {
+            myFn: (_value, _ctx, _input, cb) => {
+              callback = cb;
+            },
+          };
           const fn = this.instance.compileValidationRules(input, rules);
           const result = fn();
           expect(result).to.not.be.fulfilled;
@@ -1217,9 +1227,11 @@ describe('AvForm', function() {
           it('should be able to return true to invalid valid', () => {
             let callback;
             const input = {props: {name: 'myInput'}};
-            const rules = {myFn: (_value, _ctx, _input, cb) => {
-              callback = cb;
-            }};
+            const rules = {
+              myFn: (_value, _ctx, _input, cb) => {
+                callback = cb;
+              },
+            };
             const fn = this.instance.compileValidationRules(input, rules);
             const result = fn();
             expect(result).to.not.be.fulfilled;
@@ -1230,9 +1242,11 @@ describe('AvForm', function() {
           it('should be able to return false to indicate invalud', () => {
             let callback;
             const input = {props: {name: 'myInput'}};
-            const rules = {myFn: (_value, _ctx, _input, cb) => {
-              callback = cb;
-            }};
+            const rules = {
+              myFn: (_value, _ctx, _input, cb) => {
+                callback = cb;
+              },
+            };
             const fn = this.instance.compileValidationRules(input, rules);
             const result = fn();
             expect(result).to.not.be.fulfilled;
@@ -1243,9 +1257,11 @@ describe('AvForm', function() {
           it('should be able to return a string error message', () => {
             let callback;
             const input = {props: {name: 'myInput'}};
-            const rules = {myFn: (_value, _ctx, _input, cb) => {
-              callback = cb;
-            }};
+            const rules = {
+              myFn: (_value, _ctx, _input, cb) => {
+                callback = cb;
+              },
+            };
             const errorMessage = 'my error message';
             const fn = this.instance.compileValidationRules(input, rules);
             const result = fn();
@@ -1255,7 +1271,7 @@ describe('AvForm', function() {
           });
         });
 
-        describe('when validate prop object has a function', ()=> {
+        describe('when validate prop object has a function', () => {
           it('should call the validation function', () => {
             const input = {props: {name: 'myInput'}};
             const spy = sinon.spy();
@@ -1336,7 +1352,7 @@ describe('AvForm', function() {
           });
         });
 
-        describe('when validate prop object has a validation key', ()=> {
+        describe('when validate prop object has a validation key', () => {
           before(() => {
             this.minStub = sinon.stub(AvValidator, 'min').returns(false);
             this.maxStub = sinon.stub(AvValidator, 'max').returns(true);

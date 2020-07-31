@@ -1,12 +1,12 @@
 var path = require('path');
 var webpack = require('webpack');
 var StaticSiteGeneratorPlugin = require('static-site-generator-webpack-plugin');
-var env = process.env.WEBPACK_BUILD || 'development';
-
 var CleanWebpackPlugin = require('clean-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var webpackConfig = require('./webpack.base.config');
 
+var env = process.env.WEBPACK_BUILD || 'development';
 var paths = [
   '/',
   '/components/',
@@ -76,8 +76,6 @@ var config = [{
 }];
 
 if (env === 'development') {
-  var webpackConfig = require('./webpack.base.config');
-
   config.push(webpackConfig('development'));
   config.push(webpackConfig('production'));
 } else {

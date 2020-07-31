@@ -20,49 +20,39 @@ ComponentLink.propTypes = {
   }).isRequired,
 };
 
-class Components extends React.Component {
-  constructor(props) {
-    super(props);
+const navItems = [
+  {
+    name: 'AvForm',
+    to: '/components/avform/',
+  },
+  {
+    name: 'Validators',
+    to: '/components/validators/',
+  },
+  {
+    name: 'Checkboxes',
+    to: '/components/checkboxes/',
+  },
+];
 
-    this.state = {
-      navItems: [
-        {
-          name: 'AvForm',
-          to: '/components/avform/',
-        },
-        {
-          name: 'Validators',
-          to: '/components/validators/',
-        },
-        {
-          name: 'Checkboxes',
-          to: '/components/checkboxes/',
-        },
-      ],
-    };
-  }
-
-  render() {
-    return (
-      <Container className="content">
-        <Row>
-          <Col md={{ size: 3, order: 2 }}>
-            <div className="docs-sidebar mb-3">
-              <h5>Components</h5>
-              <Nav className="flex-column">
-                {this.state.navItems.map((item, i) => (
-                  <ComponentLink key={i} item={item} />
-                ))}
-              </Nav>
-            </div>
-          </Col>
-          <Col md={{ size: 9, order: 1}}>
-            {this.props.children}
-          </Col>
-        </Row>
-      </Container>
-    );
-  }
-}
+const Components = ({ children }) => (
+  <Container className="content">
+    <Row>
+      <Col md={{ size: 3, order: 2 }}>
+        <div className="docs-sidebar mb-3">
+          <h5>Components</h5>
+          <Nav className="flex-column">
+            {navItems.map((item, i) => (
+              <ComponentLink key={i} item={item} />
+            ))}
+          </Nav>
+        </div>
+      </Col>
+      <Col md={{ size: 9, order: 1 }}>
+        {children}
+      </Col>
+    </Row>
+  </Container>
+);
 
 export default Components;

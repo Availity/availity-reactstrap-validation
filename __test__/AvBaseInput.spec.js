@@ -1,6 +1,6 @@
 import { AvBaseInput } from 'availity-reactstrap-validation';
 
-describe('BaseInput', function() {
+describe('BaseInput', function () {
   let touched;
   let dirty;
   let bad;
@@ -144,14 +144,14 @@ describe('BaseInput', function() {
 
       it('should reset the value if multiple has changed from false to true', () => {
         this.props.multiple = false;
-        this.component.componentWillReceiveProps({multiple: true});
+        this.component.componentWillReceiveProps({ multiple: true });
         expect(this.component.value).to.be.empty;
         expect(this.component.state.value).to.be.empty;
       });
 
       it('should reset the value if multiple has changed from true to false', () => {
         this.props.multiple = true;
-        this.component.componentWillReceiveProps({multiple: false});
+        this.component.componentWillReceiveProps({ multiple: false });
         expect(this.component.value).to.equal('');
       });
     });
@@ -581,9 +581,16 @@ describe('BaseInput', function() {
     it('should give the selected options', () => {
       this.props.type = 'select';
       this.props.multiple = true;
-      const event = { target: { options: [ { value: 'selected', selected: true }, { value: 'notSelected', selected: false } ] } };
+      const event = {
+        target: {
+          options: [
+            { value: 'selected', selected: true },
+            { value: 'notSelected', selected: false },
+          ],
+        },
+      };
       const result = this.component.getFieldValue(event);
-      expect(result).to.deep.equal([ 'selected' ]);
+      expect(result).to.deep.equal(['selected']);
     });
   });
 

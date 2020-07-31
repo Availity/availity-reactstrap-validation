@@ -7,19 +7,16 @@ export default class Example extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { valid: 'true' };
     this.handleSubmit = console.log.bind(console); // eslint-disable-line no-console
   }
 
   // debounce to not pound the 'server'
   validate = _debounce((value, _ctx, _input, cb) => {
-
     // cancel pending 'network call'
     clearTimeout(this.timeout);
 
     // simulate network call
-    this.timeout = setTimeout(() => cb(!value || value === 'valid'), 500);
-
+    this.timeout = setTimeout(() => cb(value === 'valid' || value === ''), 500);
   }, 300);
 
   render() {

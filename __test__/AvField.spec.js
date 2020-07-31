@@ -1,11 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import {
-  AvFeedback,
-  AvField,
-  AvGroup,
-  AvInput,
-} from 'availity-reactstrap-validation';
+import { AvFeedback, AvField, AvGroup, AvInput } from 'availity-reactstrap-validation';
 import { Label, FormText, Col } from 'reactstrap';
 
 let state = {};
@@ -19,7 +14,7 @@ const options = {
 
 const stdProps = { name: 'testing', label: 'Test Label' };
 
-describe('AvField', function() {
+describe('AvField', function () {
   beforeEach(() => {
     state = {};
   });
@@ -70,21 +65,11 @@ describe('AvField', function() {
         });
 
         it('should render an "AvInput" inside the Col', () => {
-          expect(
-            this.wrapper
-              .childAt(1)
-              .childAt(0)
-              .type()
-          ).to.equal(AvInput);
+          expect(this.wrapper.childAt(1).childAt(0).type()).to.equal(AvInput);
         });
 
         it('should not render any thing else inside the Col', () => {
-          expect(
-            this.wrapper
-              .childAt(1)
-              .childAt(1)
-              .type()
-          ).to.be.null;
+          expect(this.wrapper.childAt(1).childAt(1).type()).to.be.null;
         });
 
         it('should not render any thing else', () => {
@@ -145,30 +130,15 @@ describe('AvField', function() {
         });
 
         it('should render an "AvInput" inside the Col', () => {
-          expect(
-            this.wrapper
-              .childAt(1)
-              .childAt(0)
-              .type()
-          ).to.equal(AvInput);
+          expect(this.wrapper.childAt(1).childAt(0).type()).to.equal(AvInput);
         });
 
         it('should render an "AvFeedback" inside the Col after the AvInput', () => {
-          expect(
-            this.wrapper
-              .childAt(1)
-              .childAt(1)
-              .type()
-          ).to.equal(AvFeedback);
+          expect(this.wrapper.childAt(1).childAt(1).type()).to.equal(AvFeedback);
         });
 
         it('should not render any thing else inside the Col', () => {
-          expect(
-            this.wrapper
-              .childAt(1)
-              .childAt(2)
-              .type()
-          ).to.be.null;
+          expect(this.wrapper.childAt(1).childAt(2).type()).to.be.null;
         });
 
         it('should not render any thing else', () => {
@@ -232,30 +202,15 @@ describe('AvField', function() {
         });
 
         it('should render an "AvInput" inside the Col', () => {
-          expect(
-            this.wrapper
-              .childAt(1)
-              .childAt(0)
-              .type()
-          ).to.equal(AvInput);
+          expect(this.wrapper.childAt(1).childAt(0).type()).to.equal(AvInput);
         });
 
         it('should render an "FormText" inside the Col after the AvInput', () => {
-          expect(
-            this.wrapper
-              .childAt(1)
-              .childAt(1)
-              .type()
-          ).to.equal(FormText);
+          expect(this.wrapper.childAt(1).childAt(1).type()).to.equal(FormText);
         });
 
         it('should not render any thing else inside the Col', () => {
-          expect(
-            this.wrapper
-              .childAt(1)
-              .childAt(2)
-              .type()
-          ).to.be.null;
+          expect(this.wrapper.childAt(1).childAt(2).type()).to.be.null;
         });
 
         it('should not render any thing else', () => {
@@ -325,39 +280,19 @@ describe('AvField', function() {
         });
 
         it('should render an "AvInput" inside the Col', () => {
-          expect(
-            this.wrapper
-              .childAt(1)
-              .childAt(0)
-              .type()
-          ).to.equal(AvInput);
+          expect(this.wrapper.childAt(1).childAt(0).type()).to.equal(AvInput);
         });
 
         it('should render an "AvFeedback" inside the Col after the AvInput', () => {
-          expect(
-            this.wrapper
-              .childAt(1)
-              .childAt(1)
-              .type()
-          ).to.equal(AvFeedback);
+          expect(this.wrapper.childAt(1).childAt(1).type()).to.equal(AvFeedback);
         });
 
         it('should render an "FormText" inside the Col after the AvInput', () => {
-          expect(
-            this.wrapper
-              .childAt(1)
-              .childAt(2)
-              .type()
-          ).to.equal(FormText);
+          expect(this.wrapper.childAt(1).childAt(2).type()).to.equal(FormText);
         });
 
         it('should not render any thing else inside the Col', () => {
-          expect(
-            this.wrapper
-              .childAt(1)
-              .childAt(3)
-              .type()
-          ).to.be.null;
+          expect(this.wrapper.childAt(1).childAt(3).type()).to.be.null;
         });
 
         it('should not render any thing else', () => {

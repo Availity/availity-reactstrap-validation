@@ -1,6 +1,6 @@
 import { AvInputContainer } from 'availity-reactstrap-validation';
 
-describe('BaseInput', function() {
+describe('BaseInput', function () {
   beforeEach(() => {
     this.inputs = {};
     this.updaters = {};
@@ -26,15 +26,11 @@ describe('BaseInput', function() {
     });
 
     it('should throw if the input does not have props', () => {
-      expect(this.component.registerInput.bind(this.component, {})).to.throw(
-        'no "name" prop'
-      );
+      expect(this.component.registerInput.bind(this.component, {})).to.throw('no "name" prop');
     });
 
     it('should throw if the input is undefined', () => {
-      expect(this.component.registerInput.bind(this.component)).to.throw(
-        'no "name" prop'
-      );
+      expect(this.component.registerInput.bind(this.component)).to.throw('no "name" prop');
     });
 
     describe('other input types', () => {

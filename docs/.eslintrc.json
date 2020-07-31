@@ -2,8 +2,7 @@
   "rules": {
     "import/no-webpack-loader-syntax": 0,
     "react/prop-types": [2, {
-      "ignore": ["children", "className"],
-      "skipUndeclared": true
+      "ignore": ["children", "className"]
     }]
   }
 }

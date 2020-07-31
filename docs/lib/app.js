@@ -19,23 +19,28 @@ if (typeof document !== 'undefined') {
 // Exported static site renderer:
 export default (locals, callback) => {
   const basename = locals.basename.substr(0, locals.basename.length - 1);
-  match({ routes, location: locals.path, basename }, (error, redirectLocation, renderProps) => {
 
+  match({ routes, location: locals.path, basename }, (error, redirectLocation, renderProps) => {
     if (redirectLocation && redirectLocation.pathname) {
       const url = redirectLocation.pathname;
-      callback(null, `<!DOCTYPE html>
+      callback(
+        null,
+        `<!DOCTYPE html>
         <html lang="en">
         <head>
           <link rel="canonical" href="${basename}${url}" />
           <meta http-equiv="content-type" content="text/html; charset=utf-8" />
           <meta http-equiv="refresh" content="0;url=${basename}${url}" />
         </head>
-        </html>`);
+        </html>`
+      );
     }
 
     const body = ReactDOMServer.renderToString(<RouterContext {...renderProps} />);
     const head = Helmet.rewind();
-    callback(null, `<!DOCTYPE html>
+    callback(
+      null,
+      `<!DOCTYPE html>
       <html lang="en">
       <head>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -53,6 +58,7 @@ export default (locals, callback) => {
         <script>window.basename = '${basename}';</script>
         <script src="${basename}/bundle.js"></script>
       </body>
-      </html>`);
+      </html>`
+    );
   });
 };

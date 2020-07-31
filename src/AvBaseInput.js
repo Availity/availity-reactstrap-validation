@@ -125,10 +125,7 @@ export default class AvBaseInput extends Component {
   onKeyUpHandler(event) {
     const badInput = get(event, 'target.validity.badInput', false);
     if (badInput !== this.context.FormCtrl.isBad(this.props.name)) {
-      this.context.FormCtrl.setBad(
-        this.props.name,
-        badInput
-      );
+      this.context.FormCtrl.setBad(this.props.name, badInput);
       this.validate();
     }
     this.props.onKeyUp && this.props.onKeyUp(event);
@@ -137,15 +134,13 @@ export default class AvBaseInput extends Component {
   onInputHandler(_value) {
     this.value = this.getFieldValue(_value);
     this.validateEvent('onInput', _value);
-    !this.context.FormCtrl.isDirty(this.props.name) &&
-      this.context.FormCtrl.setDirty(this.props.name);
+    !this.context.FormCtrl.isDirty(this.props.name) && this.context.FormCtrl.setDirty(this.props.name);
   }
 
   onBlurHandler(_value) {
     this.value = this.getFieldValue(_value);
     this.validateEvent('onBlur', _value);
-    !this.context.FormCtrl.isTouched(this.props.name) &&
-      this.context.FormCtrl.setTouched(this.props.name);
+    !this.context.FormCtrl.isTouched(this.props.name) && this.context.FormCtrl.setTouched(this.props.name);
   }
 
   onFocusHandler(_value) {
@@ -156,8 +151,7 @@ export default class AvBaseInput extends Component {
   onChangeHandler(_value) {
     this.value = this.getFieldValue(_value);
     this.validateEvent('onChange', _value);
-    !this.context.FormCtrl.isDirty(this.props.name) &&
-      this.context.FormCtrl.setDirty(this.props.name);
+    !this.context.FormCtrl.isDirty(this.props.name) && this.context.FormCtrl.setDirty(this.props.name);
   }
 
   getDefaultValue() {
@@ -165,9 +159,7 @@ export default class AvBaseInput extends Component {
 
     if (this.props.type === 'checkbox') {
       if (!isUndefined(this.props.defaultChecked)) {
-        return this.props.defaultChecked
-          ? this.props.trueValue
-          : this.props.falseValue;
+        return this.props.defaultChecked ? this.props.trueValue : this.props.falseValue;
       }
       defaultValue = this.props.falseValue;
     }
@@ -176,9 +168,7 @@ export default class AvBaseInput extends Component {
       defaultValue = [];
     }
 
-    let value =
-      this.props.defaultValue ||
-      this.context.FormCtrl.getDefaultValue(this.props.name);
+    let value = this.props.defaultValue || this.context.FormCtrl.getDefaultValue(this.props.name);
 
     if (this.props.type === 'checkbox' && value !== this.props.trueValue) {
       value = defaultValue;
@@ -189,9 +179,7 @@ export default class AvBaseInput extends Component {
 
   getFieldValue(event) {
     if (this.props.type === 'checkbox') {
-      return event.target.checked
-        ? this.props.trueValue
-        : this.props.falseValue;
+      return event.target.checked ? this.props.trueValue : this.props.falseValue;
     }
 
     if (this.props.type === 'select' && this.props.multiple) {
@@ -201,16 +189,14 @@ export default class AvBaseInput extends Component {
         .map(({ value }) => value); */
       const ret = [];
       const options = event.target.options;
-      for (let i = 0; i < options.length; i++){
-        if (options[i].selected){
+      for (let i = 0; i < options.length; i++) {
+        if (options[i].selected) {
           ret.push(options[i].value);
         }
       }
       return ret;
     }
-    return event && event.target && !isUndefined(event.target.value)
-      ? event.target.value
-      : event;
+    return (event && event.target && !isUndefined(event.target.value)) ? event.target.value : event;
   }
 
   getValidationEvent() {
@@ -225,8 +211,7 @@ export default class AvBaseInput extends Component {
     const htmlValAttrs = Object.keys(this.props.validate || {})
       .filter(val => htmlValidationAttrs.indexOf(val) > -1)
       .reduce((result, item) => {
-        result[item] =
-          this.props.validate[item].value || this.props.validate[item];
+        result[item] = this.props.validate[item].value || this.props.validate[item];
         return result;
       }, {});
 

@@ -5,9 +5,10 @@ import AvBaseInput from './AvBaseInput';
 
 
 export default class AvInput extends AvBaseInput {
-  static defaultProps = Object.assign({}, AvBaseInput.defaultProps, {
+  static defaultProps = {
+    ...AvBaseInput.defaultProps,
     tag: Input,
-  });
+  };
 
   static contextTypes = AvBaseInput.contextTypes;
 

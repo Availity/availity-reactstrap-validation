@@ -11,9 +11,10 @@ const htmlValidationAttrs = ['required'];
 const noop = () => {};
 
 export default class AvRadioGroup extends Component {
-  static propTypes = Object.assign({}, FormGroup.propTypes, {
+  static propTypes = {
+    ...FormGroup.propTypes,
     name: PropTypes.string.isRequired,
-  });
+  };
 
   static contextTypes = {
     FormCtrl: PropTypes.object.isRequired,
@@ -45,10 +46,8 @@ export default class AvRadioGroup extends Component {
       this.setState({ value });
       this.value = value;
       await this.validate();
-      !this.context.FormCtrl.isTouched(this.props.name) &&
-        this.context.FormCtrl.setTouched(this.props.name);
-      !this.context.FormCtrl.isDirty(this.props.name) &&
-        this.context.FormCtrl.setDirty(this.props.name);
+      !this.context.FormCtrl.isTouched(this.props.name) && this.context.FormCtrl.setTouched(this.props.name);
+      !this.context.FormCtrl.isDirty(this.props.name) && this.context.FormCtrl.setDirty(this.props.name);
       this.props.onChange && this.props.onChange(e, value);
     };
 
@@ -57,9 +56,7 @@ export default class AvRadioGroup extends Component {
         getProps: () => ({
           name: this.props.name,
           inline: this.props.inline,
-          required:
-            this.props.required ||
-            !!(this.validations.required && this.validations.required.value),
+          required: this.props.required || !!(this.validations.required && this.validations.required.value),
           value: this.value,
         }),
         update: updateGroup,
@@ -195,9 +192,7 @@ export default class AvRadioGroup extends Component {
     const classes = classNames(
       'form-control border-0 p-0 h-auto',
       touched ? 'is-touched' : 'is-untouched',
-      this.context.FormCtrl.isDirty(this.props.name)
-        ? 'is-dirty'
-        : 'is-pristine',
+      this.context.FormCtrl.isDirty(this.props.name) ? 'is-dirty' : 'is-pristine',
       this.context.FormCtrl.isBad(this.props.name) ? 'is-bad-input' : null,
       hasError ? 'av-invalid' : 'av-valid',
       touched && hasError && 'is-invalid'

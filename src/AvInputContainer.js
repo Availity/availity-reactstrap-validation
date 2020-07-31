@@ -1,4 +1,4 @@
-import {Component} from 'react';
+import { Component } from 'react';
 
 function validComponent(input) {
   const name = input && input.props ? input.props.name : undefined;
@@ -7,7 +7,7 @@ function validComponent(input) {
     throw new Error(`Input ${input} has no "name" prop`);
   }
 
-  return {name};
+  return { name };
 }
 
 export default class InputContainer extends Component {
@@ -17,19 +17,15 @@ export default class InputContainer extends Component {
   }
 
   getOldInputName(input) {
-    for (const key in this._inputs) {
-      if (this._inputs[key] === input) {
-        return key;
-      }
-    }
+    return Object.keys(this._inputs).find(key => this._inputs[key] === input);
   }
 
   registerInput(input, updater = input && input.setState && input.setState.bind(input)) {
-    const {name} = validComponent(input, updater);
+    const { name } = validComponent(input, updater);
     const oldName = this.getOldInputName(input);
     if (oldName !== name) {
       if (oldName) {
-        this.unregisterInput({props: {name: oldName}});
+        this.unregisterInput({ props: { name: oldName } });
       }
       this._updaters[name] = updater;
       this._inputs[name] = input;
@@ -37,7 +33,7 @@ export default class InputContainer extends Component {
   }
 
   unregisterInput(input) {
-    const {name} = validComponent(input);
+    const { name } = validComponent(input);
     delete this._updaters[name];
     delete this._inputs[name];
   }

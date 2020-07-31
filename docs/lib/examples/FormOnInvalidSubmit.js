@@ -1,5 +1,15 @@
 import React from 'react';
-import { AvForm, AvField, AvGroup, AvInput, AvFeedback, AvRadioGroup, AvRadio, AvCheckboxGroup, AvCheckbox } from 'availity-reactstrap-validation';
+import {
+  AvForm,
+  AvField,
+  AvGroup,
+  AvInput,
+  AvFeedback,
+  AvRadioGroup,
+  AvRadio,
+  AvCheckboxGroup,
+  AvCheckbox,
+} from 'availity-reactstrap-validation';
 import { Button, Label, FormGroup } from 'reactstrap';
 
 export default class Example extends React.Component {
@@ -10,7 +20,7 @@ export default class Example extends React.Component {
     this.state = {};
   }
 
-  handleInvalidSubmit(event, errors, values) {
+  handleInvalidSubmit(_event, errors, values) {
     this.setState({errors, values});
   }
 
@@ -53,11 +63,14 @@ export default class Example extends React.Component {
             <Button>Submit</Button>
           </FormGroup>
         </AvForm>
-        {this.state.values && <div>
-          <h5>Submission values</h5>
-          Invalid: {this.state.errors.join(', ')}<br />
-          Values: <pre>{JSON.stringify(this.state.values, null, 2)}</pre>
-        </div>}
+        {this.state.values && (
+          <div>
+            <h5>Submission values</h5>
+            Invalid: {this.state.errors.join(', ')}
+            <br />
+            Values: <pre>{JSON.stringify(this.state.values, null, 2)}</pre>
+          </div>
+        )}
       </div>
     );
   }

@@ -1,10 +1,10 @@
 /* eslint comma-dangle: [2, "only-multiline"] */
 import moment from 'moment';
-import {AvValidator} from 'availity-reactstrap-validation';
-import {inputTypeOverride} from 'availity-reactstrap-validation/AvValidator/utils';
+import { AvValidator } from 'availity-reactstrap-validation';
+import { inputTypeOverride } from 'availity-reactstrap-validation/AvValidator/utils';
 
 const fn = AvValidator.dateRange;
-const input = {props: {type: 'text'}};
+const input = { props: { type: 'text' } };
 const context = {};
 let date0;
 let date1;
@@ -23,101 +23,180 @@ describe('Date Range Validation', () => {
 
   describe('error message', () => {
     it('should allow the error message to be overridden', () => {
-      expect(fn('abc 123', context, {errorMessage: 'Custom'}, input)).to.equal('Custom');
+      expect(fn('abc 123', context, { errorMessage: 'Custom' }, input)).to.equal('Custom');
     });
 
     it('should use the custom format in the default message', () => {
-      expect(fn('abc 123', context, {
-        format: 'YYYY-MM-DD',
-        displayFormat: 'YYYY-MM-DD',
-        start: {value: '2014-10-12'},
-        end: {value: '2015-10-12'}
-      }, input)).to.equal('Date must be between 2014-10-12 and 2015-10-12');
+      expect(
+        fn(
+          'abc 123',
+          context,
+          {
+            format: 'YYYY-MM-DD',
+            displayFormat: 'YYYY-MM-DD',
+            start: { value: '2014-10-12' },
+            end: { value: '2015-10-12' },
+          },
+          input
+        )
+      ).to.equal('Date must be between 2014-10-12 and 2015-10-12');
     });
 
     it('should use the default format in the default message', () => {
-      expect(fn('abc 123', context, {
-        format: 'YYYY-MM-DD',
-        start: {value: '2014-10-12'},
-        end: {value: '2015-10-12'}
-      }, input)).to.equal('Date must be between 10/12/2014 and 10/12/2015');
+      expect(
+        fn(
+          'abc 123',
+          context,
+          {
+            format: 'YYYY-MM-DD',
+            start: { value: '2014-10-12' },
+            end: { value: '2015-10-12' },
+          },
+          input
+        )
+      ).to.equal('Date must be between 10/12/2014 and 10/12/2015');
     });
 
   });
 
   describe('with units', () => {
     it('should return true when date is within range of the current date', () => {
-      expect(fn(date0.format('YYYY-MM-DD'), context, {
-        format: 'YYYY-MM-DD',
-        start: {value: -1, units: 'day'},
-        end: {value: 1, units: 'day'}
-      }, input)).to.be.true;
+      expect(
+        fn(
+          date0.format('YYYY-MM-DD'),
+          context,
+          {
+            format: 'YYYY-MM-DD',
+            start: { value: -1, units: 'day' },
+            end: { value: 1, units: 'day' },
+          },
+          input
+        )
+      ).to.be.true;
     });
 
     it('should return true when date is the same as the start date', () => {
-      expect(fn(date0.format('YYYY-MM-DD'), context, {
-        format: 'YYYY-MM-DD',
-        start: {value: 0, units: 'day'},
-        end: {value: 1, units: 'day'}
-      }, input)).to.be.true;
+      expect(
+        fn(
+          date0.format('YYYY-MM-DD'),
+          context,
+          {
+            format: 'YYYY-MM-DD',
+            start: { value: 0, units: 'day' },
+            end: { value: 1, units: 'day' },
+          },
+          input
+        )
+      ).to.be.true;
     });
 
     it('should return true when date is the same as the end date', () => {
-      expect(fn(date0.format('YYYY-MM-DD'), context, {
-        format: 'YYYY-MM-DD',
-        start: {value: -1, units: 'day'},
-        end: {value: 0, units: 'day'}
-      }, input)).to.be.true;
+      expect(
+        fn(
+          date0.format('YYYY-MM-DD'),
+          context,
+          {
+            format: 'YYYY-MM-DD',
+            start: { value: -1, units: 'day' },
+            end: { value: 0, units: 'day' },
+          },
+          input
+        )
+      ).to.be.true;
     });
 
     it('should return an error message when date is not within range of the current date', () => {
-      expect(fn(date0.format('YYYY-MM-DD'), context, {
-        format: 'YYYY-MM-DD',
-        start: {value: -5, units: 'day'},
-        end: {value: -1, units: 'day'}
-      }, input)).to.equal(`Date must be between ${date1.add(-5, 'day').format('MM/DD/YYYY')} and ${date2.add(-1, 'day').format('MM/DD/YYYY')}`);
+      expect(
+        fn(
+          date0.format('YYYY-MM-DD'),
+          context,
+          {
+            format: 'YYYY-MM-DD',
+            start: { value: -5, units: 'day' },
+            end: { value: -1, units: 'day' },
+          },
+          input
+        )
+      ).to.equal(
+        `Date must be between ${date1.add(-5, 'day').format('MM/DD/YYYY')} and ${date2.add(-1, 'day').format('MM/DD/YYYY')}`
+      );
     });
   });
 
   describe('without units', () => {
     it('should return true when date is within range of the current date', () => {
-      expect(fn(date0.format('YYYY-MM-DD'), context, {
-        format: 'YYYY-MM-DD',
-        start: {value: date1.add(-1, 'day').format('YYYY-MM-DD')},
-        end: {value: date2.add(1, 'day').format('YYYY-MM-DD')}
-      }, input)).to.be.true;
+      expect(
+        fn(
+          date0.format('YYYY-MM-DD'),
+          context,
+          {
+            format: 'YYYY-MM-DD',
+            start: { value: date1.add(-1, 'day').format('YYYY-MM-DD') },
+            end: { value: date2.add(1, 'day').format('YYYY-MM-DD') },
+          },
+          input
+        )
+      ).to.be.true;
     });
 
     it('should return true when date is the same as the start date', () => {
-      expect(fn(date0.format('YYYY-MM-DD'), context, {
-        format: 'YYYY-MM-DD',
-        start: {value: date1.format('YYYY-MM-DD')},
-        end: {value: date2.add(1, 'day').format('YYYY-MM-DD')}
-      }, input)).to.be.true;
+      expect(
+        fn(
+          date0.format('YYYY-MM-DD'),
+          context,
+          {
+            format: 'YYYY-MM-DD',
+            start: { value: date1.format('YYYY-MM-DD') },
+            end: { value: date2.add(1, 'day').format('YYYY-MM-DD') },
+          },
+          input
+        )
+      ).to.be.true;
     });
 
     it('should return true when date is the same as the end date', () => {
-      expect(fn(date0.format('YYYY-MM-DD'), context, {
-        format: 'YYYY-MM-DD',
-        start: {value: date1.add(-1, 'day').format('YYYY-MM-DD')},
-        end: {value: date2.format('YYYY-MM-DD')}
-      }, input)).to.be.true;
+      expect(
+        fn(
+          date0.format('YYYY-MM-DD'),
+          context,
+          {
+            format: 'YYYY-MM-DD',
+            start: { value: date1.add(-1, 'day').format('YYYY-MM-DD') },
+            end: { value: date2.format('YYYY-MM-DD') },
+          },
+          input
+        )
+      ).to.be.true;
     });
 
     it('should return an error message when date is not within range of the current date', () => {
-      expect(fn(date0.format('YYYY-MM-DD'), context, {
-        format: 'YYYY-MM-DD',
-        start: {value: date1.add(-5, 'day').format('YYYY-MM-DD')},
-        end: {value: date2.add(-1, 'day').format('YYYY-MM-DD')}
-      }, input)).to.equal(`Date must be between ${date1.format('MM/DD/YYYY')} and ${date2.format('MM/DD/YYYY')}`);
+      expect(
+        fn(
+          date0.format('YYYY-MM-DD'),
+          context,
+          {
+            format: 'YYYY-MM-DD',
+            start: { value: date1.add(-5, 'day').format('YYYY-MM-DD') },
+            end: { value: date2.add(-1, 'day').format('YYYY-MM-DD') },
+          },
+          input
+        )
+      ).to.equal(`Date must be between ${date1.format('MM/DD/YYYY')} and ${date2.format('MM/DD/YYYY')}`);
     });
 
     it('should allow the start and end formats to be different than the user format', () => {
-      expect(fn(date0.format('YYYY-MM-DD'), context, {
-        format: 'YYYY-MM-DD',
-        start: {value: date1.add(-5, 'day').format('DD-MM-YYYY'), format: 'DD-MM-YYYY'},
-        end: {value: date2.add(-1, 'day').format('YYYY/MM/DD'), format: 'YYYY/MM/DD'}
-      }, input)).to.equal(`Date must be between ${date1.format('MM/DD/YYYY')} and ${date2.format('MM/DD/YYYY')}`);
+      expect(
+        fn(
+          date0.format('YYYY-MM-DD'),
+          context,
+          {
+            format: 'YYYY-MM-DD',
+            start: { value: date1.add(-5, 'day').format('DD-MM-YYYY'), format: 'DD-MM-YYYY' },
+            end: { value: date2.add(-1, 'day').format('YYYY/MM/DD'), format: 'YYYY/MM/DD' },
+          },
+          input
+        )
+      ).to.equal(`Date must be between ${date1.format('MM/DD/YYYY')} and ${date2.format('MM/DD/YYYY')}`);
     });
   });
 
@@ -127,25 +206,46 @@ describe('Date Range Validation', () => {
     });
 
     it('should accept MM/DD/YYYY by default', () => {
-      expect(fn(date0.format('MM/DD/YYYY'), context, {
-        start: {value: -1, units: 'day'},
-        end: {value: 1, units: 'day'}
-      }, input)).to.be.true;
+      expect(
+        fn(
+          date0.format('MM/DD/YYYY'),
+          context,
+          {
+            start: { value: -1, units: 'day' },
+            end: { value: 1, units: 'day' },
+          },
+          input
+        )
+      ).to.be.true;
     });
 
     it('should accept YYYY-MM-DD by default', () => {
-      expect(fn(date0.format('YYYY-MM-DD'), context, {
-        start: {value: -1, units: 'day'},
-        end: {value: 1, units: 'day'}
-      }, input)).to.be.true;
+      expect(
+        fn(
+          date0.format('YYYY-MM-DD'),
+          context,
+          {
+            start: { value: -1, units: 'day' },
+            end: { value: 1, units: 'day' },
+          },
+          input
+        )
+      ).to.be.true;
     });
 
     it('should allow the format to be overridden', () => {
-      expect(fn(date0.format('DD-MM-YYYY'), context, {
-        format: 'DD-MM-YYYY',
-        start: {value: -1, units: 'day'},
-        end: {value: 1, units: 'day'}
-      }, input)).to.be.true;
+      expect(
+        fn(
+          date0.format('DD-MM-YYYY'),
+          context,
+          {
+            format: 'DD-MM-YYYY',
+            start: { value: -1, units: 'day' },
+            end: { value: 1, units: 'day' },
+          },
+          input
+        )
+      ).to.be.true;
     });
   });
 
@@ -157,25 +257,46 @@ describe('Date Range Validation', () => {
       });
 
       it('should accept MM/DD/YYYY by default', () => {
-        expect(fn(date0.format('MM/DD/YYYY'), context, {
-          start: {value: -1, units: 'day'},
-          end: {value: 1, units: 'day'}
-        }, input)).to.be.true;
+        expect(
+          fn(
+            date0.format('MM/DD/YYYY'),
+            context,
+            {
+              start: { value: -1, units: 'day' },
+              end: { value: 1, units: 'day' },
+            },
+            input
+          )
+        ).to.be.true;
       });
 
       it('should accept YYYY-MM-DD by default', () => {
-        expect(fn(date0.format('YYYY-MM-DD'), context, {
-          start: {value: -1, units: 'day'},
-          end: {value: 1, units: 'day'}
-        }, input)).to.be.true;
+        expect(
+          fn(
+            date0.format('YYYY-MM-DD'),
+            context,
+            {
+              start: { value: -1, units: 'day' },
+              end: { value: 1, units: 'day' },
+            },
+            input
+          )
+        ).to.be.true;
       });
 
       it('should allow the format to be overridden', () => {
-        expect(fn(date0.format('DD-MM-YYYY'), context, {
-          format: 'DD-MM-YYYY',
-          start: {value: -1, units: 'day'},
-          end: {value: 1, units: 'day'}
-        }, input)).to.be.true;
+        expect(
+          fn(
+            date0.format('DD-MM-YYYY'),
+            context,
+            {
+              format: 'DD-MM-YYYY',
+              start: { value: -1, units: 'day' },
+              end: { value: 1, units: 'day' },
+            },
+            input
+          )
+        ).to.be.true;
       });
     });
 
@@ -186,25 +307,46 @@ describe('Date Range Validation', () => {
       });
 
       it('should accept YYYY-MM-DD by default', () => {
-        expect(fn(date0.format('YYYY-MM-DD'), context, {
-          start: {value: -1, units: 'day'},
-          end: {value: 1, units: 'day'}
-        }, input)).to.be.true;
+        expect(
+          fn(
+            date0.format('YYYY-MM-DD'),
+            context,
+            {
+              start: { value: -1, units: 'day' },
+              end: { value: 1, units: 'day' },
+            },
+            input
+          )
+        ).to.be.true;
       });
 
       it('should accept MM/DD/YYYY by default', () => {
-        expect(fn(date0.format('MM/DD/YYYY'), context, {
-          start: {value: -1, units: 'day'},
-          end: {value: 1, units: 'day'}
-        }, input)).to.be.true;
+        expect(
+          fn(
+            date0.format('MM/DD/YYYY'),
+            context,
+            {
+              start: { value: -1, units: 'day' },
+              end: { value: 1, units: 'day' },
+            },
+            input
+          )
+        ).to.be.true;
       });
 
       it('should allow the format to be overridden', () => {
-        expect(fn(date0.format('DD-MM-YYYY'), context, {
-          format: 'DD-MM-YYYY',
-          start: {value: -1, units: 'day'},
-          end: {value: 1, units: 'day'}
-        }, input)).to.be.true;
+        expect(
+          fn(
+            date0.format('DD-MM-YYYY'),
+            context,
+            {
+              format: 'DD-MM-YYYY',
+              start: { value: -1, units: 'day' },
+              end: { value: 1, units: 'day' },
+            },
+            input
+          )
+        ).to.be.true;
       });
     });
   });
