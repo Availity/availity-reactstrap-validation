@@ -1,5 +1,4 @@
 import React from 'react';
-import { shallow } from 'enzyme';
 import { AvFeedback, AvField, AvGroup, AvInput } from 'availity-reactstrap-validation';
 import { Label, FormText, Col } from 'reactstrap';
 
@@ -13,6 +12,7 @@ const options = {
 };
 
 const stdProps = { name: 'testing', label: 'Test Label' };
+const noNodeFound = /\btype\b.*? to be run on 1 node\. 0 found instead\b/;
 
 describe('AvField', function () {
   beforeEach(() => {
@@ -38,7 +38,7 @@ describe('AvField', function () {
         });
 
         it('should not render any thing else', () => {
-          expect(this.wrapper.childAt(2).type()).to.be.null;
+          expect(() => this.wrapper.childAt(2).type()).to.throw(noNodeFound);
         });
       });
 
@@ -69,11 +69,11 @@ describe('AvField', function () {
         });
 
         it('should not render any thing else inside the Col', () => {
-          expect(this.wrapper.childAt(1).childAt(1).type()).to.be.null;
+          expect(() => this.wrapper.childAt(1).childAt(1).type()).to.throw(noNodeFound);
         });
 
         it('should not render any thing else', () => {
-          expect(this.wrapper.childAt(2).type()).to.be.null;
+          expect(() => this.wrapper.childAt(2).type()).to.throw(noNodeFound);
         });
       });
     });
@@ -102,7 +102,7 @@ describe('AvField', function () {
         });
 
         it('should not render any thing else', () => {
-          expect(this.wrapper.childAt(3).type()).to.be.null;
+          expect(() => this.wrapper.childAt(3).type()).to.throw(noNodeFound);
         });
       });
 
@@ -138,11 +138,11 @@ describe('AvField', function () {
         });
 
         it('should not render any thing else inside the Col', () => {
-          expect(this.wrapper.childAt(1).childAt(2).type()).to.be.null;
+          expect(() => this.wrapper.childAt(1).childAt(2).type()).to.throw(noNodeFound);
         });
 
         it('should not render any thing else', () => {
-          expect(this.wrapper.childAt(2).type()).to.be.null;
+          expect(() => this.wrapper.childAt(2).type()).to.throw(noNodeFound);
         });
       });
     });
@@ -175,7 +175,7 @@ describe('AvField', function () {
         });
 
         it('should not render any thing else', () => {
-          expect(this.wrapper.childAt(3).type()).to.be.null;
+          expect(() => this.wrapper.childAt(3).type()).to.throw(noNodeFound);
         });
       });
 
@@ -210,11 +210,11 @@ describe('AvField', function () {
         });
 
         it('should not render any thing else inside the Col', () => {
-          expect(this.wrapper.childAt(1).childAt(2).type()).to.be.null;
+          expect(() => this.wrapper.childAt(1).childAt(2).type()).to.throw(noNodeFound);
         });
 
         it('should not render any thing else', () => {
-          expect(this.wrapper.childAt(2).type()).to.be.null;
+          expect(() => this.wrapper.childAt(2).type()).to.throw(noNodeFound);
         });
       });
     });
@@ -252,7 +252,7 @@ describe('AvField', function () {
         });
 
         it('should not render any thing else', () => {
-          expect(this.wrapper.childAt(4).type()).to.be.null;
+          expect(() => this.wrapper.childAt(4).type()).to.throw(noNodeFound);
         });
       });
 
@@ -292,11 +292,11 @@ describe('AvField', function () {
         });
 
         it('should not render any thing else inside the Col', () => {
-          expect(this.wrapper.childAt(1).childAt(3).type()).to.be.null;
+          expect(() => this.wrapper.childAt(1).childAt(3).type()).to.throw(noNodeFound);
         });
 
         it('should not render any thing else', () => {
-          expect(this.wrapper.childAt(2).type()).to.be.null;
+          expect(() => this.wrapper.childAt(2).type()).to.throw(noNodeFound);
         });
       });
     });

@@ -1,7 +1,6 @@
 import React from 'react';
-import {shallow} from 'enzyme';
-import {AvForm, AvValidator} from 'availity-reactstrap-validation';
-import {Form} from 'reactstrap';
+import { AvForm, AvValidator } from 'availity-reactstrap-validation';
+import { Form } from 'reactstrap';
 
 describe('AvForm', function () {
   it('should render a "Form" by default', () => {

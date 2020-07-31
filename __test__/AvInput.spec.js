@@ -1,5 +1,4 @@
 import React from 'react';
-import { shallow } from 'enzyme';
 import { AvInput } from 'availity-reactstrap-validation';
 import { Input } from 'reactstrap';
 

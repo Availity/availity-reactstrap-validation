@@ -1,5 +1,4 @@
 import React from 'react';
-import { shallow } from 'enzyme';
 import { AvRadioGroup, AvFeedback } from 'availity-reactstrap-validation';
 
 let options;
