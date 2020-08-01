@@ -75,6 +75,7 @@ export default class AvCheckboxGroup extends Component {
   }
 
   componentWillMount() {
+    this._isMounted = true;
     this.value = this.props.value || this.getDefaultValue().value;
     this.setState({ value: this.value });
     this.updateValidations();
@@ -94,6 +95,7 @@ export default class AvCheckboxGroup extends Component {
   }
 
   componentWillUnmount() {
+    this._isMounted = false;
     this.context.FormCtrl.unregister(this);
   }
 
@@ -124,9 +126,11 @@ export default class AvCheckboxGroup extends Component {
   }
 
   update() {
-    this.setState({});
+    this._isMounted && this.setState({});
     this.updateInputs();
   }
+
+  _isMounted = false;
 
   _inputs = [];
 
@@ -153,10 +157,13 @@ export default class AvCheckboxGroup extends Component {
 
   updateInputs() {
     this._inputs.forEach(
-      input => findDOMNode(input).firstChild.setCustomValidity('Invalid.') && input.setState.call(input, {})
+      input =>
+        typeof input.setState === 'function' &&
+        findDOMNode(input).firstChild.setCustomValidity('Invalid.') &&
+        input.setState.call(input, {})
     );
 
-    this.setState({});
+    this._isMounted && this.setState({});
   }
 
   reset() {

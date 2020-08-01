@@ -170,12 +170,12 @@ describe('AvCheckboxGroup', () => {
     const spy = sinon.spy();
     const wrapper = shallow(<AvCheckboxGroup name="yo" onChange={spy} />, options);
     const component = wrapper.instance();
-    const event = {};
+    const event = { target: { checked: true } };
     component
       .getChildContext()
       .Group.update(event, 'momo')
       .then(() => {
-        expect(spy).to.have.been.calledWith(event, 'momo');
+        expect(spy).to.have.been.calledWith(event, ['momo']);
       });
   });
 

@@ -465,40 +465,37 @@ export default class AvForm extends InputContainer {
       let result = true;
       const validations = [];
 
-      for (const rule in ruleProp) {
-        /* istanbul ignore else  */
-        if (ruleProp.hasOwnProperty(rule)) {
-          let ruleResult;
+      Object.keys(ruleProp).forEach(rule => {
+        let ruleResult;
 
-          const promise = new Promise((resolve, reject) => {
-            const callback = value => resolve({ value, rule });
+        const promise = new Promise((resolve, reject) => {
+          const callback = value => resolve({ value, rule });
 
-            if (typeof ruleProp[rule] === 'function') {
-              ruleResult = ruleProp[rule](val, context, input, callback);
-            } else {
-              if (typeof AvValidator[rule] !== 'function') {
-                return reject(new Error(`Invalid input validation rule: "${rule}"`));
-              }
-
-              if (ruleProp[rule].enabled === false) {
-                ruleResult = true;
-              } else {
-                ruleResult = AvValidator[rule](val, context, ruleProp[rule], input, callback);
-              }
+          if (typeof ruleProp[rule] === 'function') {
+            ruleResult = ruleProp[rule](val, context, input, callback);
+          } else {
+            if (typeof AvValidator[rule] !== 'function') {
+              return reject(new Error(`Invalid input validation rule: "${rule}"`));
             }
 
-            if (ruleResult && typeof ruleResult.then === 'function') {
-              ruleResult.then(callback);
-            } else if (ruleResult !== undefined) {
-              callback(ruleResult);
+            if (ruleProp[rule].enabled === false) {
+              ruleResult = true;
             } else {
-              // they are using the callback
+              ruleResult = AvValidator[rule](val, context, ruleProp[rule], input, callback);
             }
-          });
+          }
 
-          validations.push(promise);
-        }
-      }
+          if (ruleResult && typeof ruleResult.then === 'function') {
+            ruleResult.then(callback);
+          } else if (ruleResult !== undefined) {
+            callback(ruleResult);
+          } else {
+            // they are using the callback
+          }
+        });
+
+        validations.push(promise);
+      });
 
       await Promise.all(validations).then(results => {
         results.every(ruleResult => {

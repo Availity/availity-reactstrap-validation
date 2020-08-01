@@ -12,13 +12,13 @@ const options = {
 };
 
 const stdProps = { name: 'testing', label: 'Test Label' };
-const noNodeFound = /\btype\b.*? to be run on 1 node\. 0 found instead\b/;
 
-describe('AvField', function () {
+describe('AvField', () => {
   beforeEach(() => {
     state = {};
   });
-  describe('structure', () => {
+
+  describe('structure', function () {
     describe('default', () => {
       describe('default', () => {
         beforeEach(() => {
@@ -38,7 +38,7 @@ describe('AvField', function () {
         });
 
         it('should not render any thing else', () => {
-          expect(() => this.wrapper.childAt(2).type()).to.throw(noNodeFound);
+          expect(this.wrapper.childAt(2).exists()).to.be.false;
         });
       });
 
@@ -69,11 +69,11 @@ describe('AvField', function () {
         });
 
         it('should not render any thing else inside the Col', () => {
-          expect(() => this.wrapper.childAt(1).childAt(1).type()).to.throw(noNodeFound);
+          expect(this.wrapper.childAt(1).childAt(1).exists()).to.be.false;
         });
 
         it('should not render any thing else', () => {
-          expect(() => this.wrapper.childAt(2).type()).to.throw(noNodeFound);
+          expect(this.wrapper.childAt(2).exists()).to.be.false;
         });
       });
     });
@@ -102,7 +102,7 @@ describe('AvField', function () {
         });
 
         it('should not render any thing else', () => {
-          expect(() => this.wrapper.childAt(3).type()).to.throw(noNodeFound);
+          expect(this.wrapper.childAt(3).exists()).to.be.false;
         });
       });
 
@@ -138,11 +138,11 @@ describe('AvField', function () {
         });
 
         it('should not render any thing else inside the Col', () => {
-          expect(() => this.wrapper.childAt(1).childAt(2).type()).to.throw(noNodeFound);
+          expect(this.wrapper.childAt(1).childAt(2).exists()).to.be.false;
         });
 
         it('should not render any thing else', () => {
-          expect(() => this.wrapper.childAt(2).type()).to.throw(noNodeFound);
+          expect(this.wrapper.childAt(2).exists()).to.be.false;
         });
       });
     });
@@ -175,7 +175,7 @@ describe('AvField', function () {
         });
 
         it('should not render any thing else', () => {
-          expect(() => this.wrapper.childAt(3).type()).to.throw(noNodeFound);
+          expect(this.wrapper.childAt(3).exists()).to.be.false;
         });
       });
 
@@ -210,11 +210,11 @@ describe('AvField', function () {
         });
 
         it('should not render any thing else inside the Col', () => {
-          expect(() => this.wrapper.childAt(1).childAt(2).type()).to.throw(noNodeFound);
+          expect(this.wrapper.childAt(1).childAt(2).exists()).to.be.false;
         });
 
         it('should not render any thing else', () => {
-          expect(() => this.wrapper.childAt(2).type()).to.throw(noNodeFound);
+          expect(this.wrapper.childAt(2).exists()).to.be.false;
         });
       });
     });
@@ -252,7 +252,7 @@ describe('AvField', function () {
         });
 
         it('should not render any thing else', () => {
-          expect(() => this.wrapper.childAt(4).type()).to.throw(noNodeFound);
+          expect(this.wrapper.childAt(4).exists()).to.be.false;
         });
       });
 
@@ -292,11 +292,11 @@ describe('AvField', function () {
         });
 
         it('should not render any thing else inside the Col', () => {
-          expect(() => this.wrapper.childAt(1).childAt(3).type()).to.throw(noNodeFound);
+          expect(this.wrapper.childAt(1).childAt(3).exists()).to.be.false;
         });
 
         it('should not render any thing else', () => {
-          expect(() => this.wrapper.childAt(2).type()).to.throw(noNodeFound);
+          expect(this.wrapper.childAt(2).exists()).to.be.false;
         });
       });
     });
@@ -351,18 +351,12 @@ describe('AvField', function () {
     });
 
     it('should use the "name" props as the "for" prop when id is not provided', () => {
-      const label = shallow(
-        <AvField {...stdProps}>Yo!</AvField>,
-        options
-      ).childAt(0);
+      const label = shallow(<AvField {...stdProps}>Yo!</AvField>, options).childAt(0);
       expect(label.prop('for')).to.equal(stdProps.name);
     });
 
     it('should use the "label" prop as the children', () => {
-      const label = shallow(
-        <AvField {...stdProps}>Yo!</AvField>,
-        options
-      ).childAt(0);
+      const label = shallow(<AvField {...stdProps}>Yo!</AvField>, options).childAt(0);
       expect(label.prop('children')).to.equal(stdProps.label);
     });
 
@@ -482,10 +476,7 @@ describe('AvField', function () {
     });
 
     it('should set id to value of name if id is not provided', () => {
-      const input = shallow(
-        <AvField {...stdProps}>Yo!</AvField>,
-        options
-      ).childAt(1);
+      const input = shallow(<AvField {...stdProps}>Yo!</AvField>, options).childAt(1);
       expect(input.prop('id')).to.equal(stdProps.name);
     });
 

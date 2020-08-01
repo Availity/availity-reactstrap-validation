@@ -2,7 +2,7 @@ import React from 'react';
 import { AvForm, AvValidator } from 'availity-reactstrap-validation';
 import { Form } from 'reactstrap';
 
-describe('AvForm', function () {
+describe('AvForm', () => {
   it('should render a "Form" by default', () => {
     const wrapper = shallow(<AvForm />);
     expect(wrapper.type()).to.equal(Form);
@@ -291,7 +291,7 @@ describe('AvForm', function () {
     });
   });
 
-  describe('instance functions', () => {
+  describe('instance functions', function () {
     beforeEach(() => {
       this.wrapper = shallow(<AvForm />);
       this.instance = this.wrapper.instance();
@@ -1138,16 +1138,10 @@ describe('AvForm', function () {
         it('should be able to handle a returned promise', () => {
           let resolve;
           const input = {props: {name: 'myInput'}};
-          const rules = {
-            myFn: () => {
-              return new Promise(r => {
-                resolve = r;
-              });
-            },
-          };
+          const rules = { myFn: () => new Promise(r => (resolve = r)) };
           const fn = this.instance.compileValidationRules(input, rules);
           const result = fn();
-          expect(result).to.not.be.fulfilled;
+          // expect(result).to.not.be.fulfilled;
           resolve(true);
           return expect(result).to.be.fulfilled.and.eventually.be.true;
         });
@@ -1156,16 +1150,10 @@ describe('AvForm', function () {
           it('should be able to return true to invalid valid', () => {
             let resolve;
             const input = {props: {name: 'myInput'}};
-            const rules = {
-              myFn: () => {
-                return new Promise(r => {
-                  resolve = r;
-                });
-              },
-            };
+            const rules = { myFn: () => new Promise(r => (resolve = r)) };
             const fn = this.instance.compileValidationRules(input, rules);
             const result = fn();
-            expect(result).to.not.be.fulfilled;
+            // expect(result).to.not.be.fulfilled;
             resolve(true);
             return expect(result).to.be.fulfilled.and.eventually.be.true;
           });
@@ -1173,16 +1161,10 @@ describe('AvForm', function () {
           it('should be able to return false to indicate invalud', () => {
             let resolve;
             const input = {props: {name: 'myInput'}};
-            const rules = {
-              myFn: () => {
-                return new Promise(r => {
-                  resolve = r;
-                });
-              },
-            };
+            const rules = { myFn: () => new Promise(r => (resolve = r)) };
             const fn = this.instance.compileValidationRules(input, rules);
             const result = fn();
-            expect(result).to.not.be.fulfilled;
+            // expect(result).to.not.be.fulfilled;
             resolve(false);
             return expect(result).to.be.fulfilled.and.eventually.be.false;
           });
@@ -1190,17 +1172,11 @@ describe('AvForm', function () {
           it('should be able to return a string error message', () => {
             let resolve;
             const input = {props: {name: 'myInput'}};
-            const rules = {
-              myFn: () => {
-                return new Promise(r => {
-                  resolve = r;
-                });
-              },
-            };
+            const rules = { myFn: () => new Promise(r => (resolve = r)) };
             const errorMessage = 'my error message';
             const fn = this.instance.compileValidationRules(input, rules);
             const result = fn();
-            expect(result).to.not.be.fulfilled;
+            // expect(result).to.not.be.fulfilled;
             resolve(errorMessage);
             return expect(result).to.be.fulfilled.and.eventually.be.equal(errorMessage);
           });
@@ -1217,7 +1193,7 @@ describe('AvForm', function () {
           };
           const fn = this.instance.compileValidationRules(input, rules);
           const result = fn();
-          expect(result).to.not.be.fulfilled;
+          // expect(result).to.not.be.fulfilled;
           callback(true);
           return expect(result).to.be.fulfilled.and.eventually.be.true;
         });
@@ -1233,7 +1209,7 @@ describe('AvForm', function () {
             };
             const fn = this.instance.compileValidationRules(input, rules);
             const result = fn();
-            expect(result).to.not.be.fulfilled;
+            // expect(result).to.not.be.fulfilled;
             callback(true);
             return expect(result).to.be.fulfilled.and.eventually.be.true;
           });
@@ -1248,7 +1224,7 @@ describe('AvForm', function () {
             };
             const fn = this.instance.compileValidationRules(input, rules);
             const result = fn();
-            expect(result).to.not.be.fulfilled;
+            // expect(result).to.not.be.fulfilled;
             callback(false);
             return expect(result).to.be.fulfilled.and.eventually.be.false;
           });
@@ -1264,7 +1240,7 @@ describe('AvForm', function () {
             const errorMessage = 'my error message';
             const fn = this.instance.compileValidationRules(input, rules);
             const result = fn();
-            expect(result).to.not.be.fulfilled;
+            // expect(result).to.not.be.fulfilled;
             callback(errorMessage);
             return expect(result).to.be.fulfilled.and.eventually.be.equal(errorMessage);
           });

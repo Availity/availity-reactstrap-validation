@@ -68,6 +68,7 @@ export default class AvRadioGroup extends Component {
   }
 
   componentWillMount() {
+    this._isMounted = true;
     this.value = this.props.value || this.getDefaultValue().value;
     this.setState({ value: this.value });
     this.updateValidations();
@@ -87,6 +88,7 @@ export default class AvRadioGroup extends Component {
   }
 
   componentWillUnmount() {
+    this._isMounted = false;
     this.context.FormCtrl.unregister(this);
   }
 
@@ -117,9 +119,11 @@ export default class AvRadioGroup extends Component {
   }
 
   update() {
-    this.setState({});
+    this._isMounted && this.setState({});
     this.updateInputs();
   }
+
+  _isMounted = false;
 
   _inputs = [];
 
@@ -145,8 +149,8 @@ export default class AvRadioGroup extends Component {
   }
 
   updateInputs() {
-    this._inputs.forEach(input => input.setState.call(input, {}));
-    this.setState({});
+    this._inputs.forEach(input => typeof input.setState === 'function' && input.setState.call(input, {}));
+    this._isMounted && this.setState({});
   }
 
   reset() {
