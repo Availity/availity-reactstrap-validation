@@ -12,15 +12,16 @@ import Helmet from 'react-helmet';
 if (typeof document !== 'undefined') {
   const history = useRouterHistory(createHistory)({ basename: window.basename });
   const outlet = document.getElementById('app');
-  const gotoTop = () => window.scrollTo(0, 0);
-  ReactDOM.render(<Router onUpdate={gotoTop} history={history} routes={routes} />, outlet);
+  const handleRouterUpdate = () => window.scrollTo(0, 0);
+
+  ReactDOM.hydrate(<Router onUpdate={handleRouterUpdate} history={history} routes={routes} />, outlet);
 }
 
 // Exported static site renderer:
 export default (locals, callback) => {
-  const basename = locals.basename.substr(0, locals.basename.length - 1);
+  const basename = locals.basename.replace(/\/$/, '');
 
-  match({ routes, location: locals.path, basename }, (error, redirectLocation, renderProps) => {
+  match({ routes, location: locals.path, basename }, (_error, redirectLocation, renderProps) => {
     if (redirectLocation && redirectLocation.pathname) {
       const url = redirectLocation.pathname;
       callback(
@@ -36,7 +37,7 @@ export default (locals, callback) => {
       );
     }
 
-    const body = ReactDOMServer.renderToString(<RouterContext {...renderProps} />);
+    const body = renderProps ? ReactDOMServer.renderToString(<RouterContext {...renderProps} />) : '';
     const head = Helmet.rewind();
     callback(
       null,

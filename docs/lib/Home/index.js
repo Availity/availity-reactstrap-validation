@@ -3,30 +3,27 @@ import { PrismCode } from 'react-prism';
 import { Jumbotron, Button, Container, Row, Col } from 'reactstrap';
 import { Link } from 'react-router';
 import Example from '../examples/import-basic';
+import Logo from '../UI/Logo';
 
-const importBasic = require('!!raw!../examples/import-basic.js');
+const importBasic = require('!!raw-loader!../examples/import-basic.js');
 
 export default () => (
   <div>
     <Jumbotron tag="section" className="jumbotron-header text-center mb-3">
       <Container>
-        <Row>
-          <Col>
-            <p className="lead">
-              <img src="/assets/logo.png" alt="logo" width="150px" />
-            </p>
-            <h1 className="jumbotron-heading display-4">Availity reactstrap Validation</h1>
-            <p className="lead">
-              Easy to use form validation for <a href="https://github.com/reactstrap/reactstrap">reactstrap</a>
-            </p>
-            <p>
-              <Button outline color="danger" href="https://github.com/availity/availity-reactstrap-validation">
-                View on GitHub
-              </Button>
-              <Button color="danger" tag={Link} to="/components/">View Components</Button>
-            </p>
-          </Col>
-        </Row>
+        <p className="lead">
+          <Logo />
+        </p>
+        <h1 className="jumbotron-heading display-4">Availity reactstrap Validation</h1>
+        <p className="lead">
+          Easy to use form validation for <a href="https://github.com/reactstrap/reactstrap">reactstrap</a>
+        </p>
+        <p>
+          <Button outline color="danger" href="https://github.com/availity/availity-reactstrap-validation">
+            View on GitHub
+          </Button>
+          <Button color="danger" tag={Link} to="/components/">View Components</Button>
+        </p>
       </Container>
     </Jumbotron>
     <Container>

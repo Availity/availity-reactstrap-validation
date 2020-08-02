@@ -10,9 +10,9 @@ var env = process.env.WEBPACK_BUILD || 'development';
 var paths = [
   '/',
   '/components/',
+  '/components/avform/',
   '/components/validators/',
   '/components/checkboxes/',
-  '/components/avform/',
   '/404.html',
 ];
 
@@ -23,6 +23,7 @@ var config = [{
   devServer: {
     contentBase: './build',
     stats: { chunks: false },
+    inline: false,
     historyApiFallback: true,
   },
   entry: {
@@ -34,7 +35,7 @@ var config = [{
   output: {
     filename: 'bundle.js',
     publicPath: basePath,
-    path: './build',
+    path: path.join(__dirname, 'build'),
     libraryTarget: 'umd',
   },
   plugins: [
@@ -43,31 +44,25 @@ var config = [{
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(env),
     }),
-    new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.OccurenceOrderPlugin(),
     new StaticSiteGeneratorPlugin('main', paths, { basename: basePath }),
-    new webpack.NoErrorsPlugin(),
-    new ExtractTextPlugin('/assets/style.css'),
+    new webpack.NoEmitOnErrorsPlugin(),
+    new ExtractTextPlugin('assets/style.css'),
   ],
   module: {
-    loaders: [
-      {
-        test: /\.json$/,
-        loaders: ['json-loader?cacheDirectory'],
-      },
+    rules: [
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,
-        loaders: ['babel-loader?cacheDirectory'],
+        loader: 'babel-loader?cacheDirectory',
       },
       {
         test: /\.css$/,
-        loader: ExtractTextPlugin.extract('style-loader', 'css-loader'),
+        loader: ExtractTextPlugin.extract({ fallback: 'style-loader', use: 'css-loader' }),
       },
     ],
   },
   resolve: {
-    extensions: ['', '.js', '.jsx', '.json'],
+    extensions: ['.js', '.jsx'],
     alias: {
       'bootstrap-css': path.join(__dirname, 'node_modules/bootstrap/dist/css/bootstrap.css'),
       'availity-reactstrap-validation': path.resolve('./src'),
@@ -80,11 +75,7 @@ if (env === 'development') {
   config.push(webpackConfig('production'));
 } else {
   config[0].plugins.push(
-    new webpack.optimize.UglifyJsPlugin({
-      minimize: true,
-      compress: { warnings: false },
-      mangle: true,
-    })
+    new webpack.optimize.UglifyJsPlugin({ minimize: true, sourceMap: true, mangle: true })
   );
 }
 

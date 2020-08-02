@@ -11,7 +11,7 @@ import UI from './UI';
 const routes = (
   <Route path="/" component={UI.Layout}>
     <IndexRoute component={Home} />
-    <Route path="/components/" component={Components}>
+    <Route path="components/" component={Components}>
       <IndexRedirect to="avform/" />
       <Route path="avform/" component={FormPage} />
       <Route path="validators/" component={ValidatorsPage} />

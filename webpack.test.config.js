@@ -4,7 +4,7 @@ var webpack = require('webpack');
 var webpackConfig = {
   target: 'node',
   context: path.join(__dirname, 'src'),
-  devtool: '#cheap-module-source-map',
+  devtool: 'cheap-module-source-map',
   entry: {
     'availity-reactstrap-validation': ['./index.js'],
   },
@@ -12,18 +12,14 @@ var webpackConfig = {
     fs: 'empty',
   },
   plugins: [
-    new webpack.NoErrorsPlugin(),
+    new webpack.NoEmitOnErrorsPlugin(),
   ],
   module: {
-    loaders: [
-      {
-        test: /\.json$/,
-        loaders: ['json-loader?cacheDirectory'],
-      },
+    rules: [
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,
-        loaders: ['babel-loader?cacheDirectory'],
+        loader: 'babel-loader?cacheDirectory',
       },
     ],
   },
@@ -31,7 +27,7 @@ var webpackConfig = {
     alias: {
       'availity-reactstrap-validation': path.resolve('./src'),
     },
-    extensions: ['', '.js', '.jsx', '.json'],
+    extensions: ['.js', '.jsx'],
   },
   externals: {
     'react/lib/ExecutionEnvironment': true,
@@ -41,9 +37,6 @@ var webpackConfig = {
   output: {
     devtoolModuleFilenameTemplate: '[absolute-resource-path]',
     devtoolFallbackModuleFilenameTemplate: '[absolute-resource-path]?[hash]',
-  },
-  webpackServer: {
-    noInfo: true,
   },
 };
 

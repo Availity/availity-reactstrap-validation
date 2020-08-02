@@ -35,39 +35,29 @@ module.exports = function (env) {
       },
     ],
     module: {
-      loaders: [
-        {
-          test: /\.json$/,
-          loaders: ['json-loader?cacheDirectory'],
-        },
+      rules: [
         {
           test: /\.jsx?$/,
           exclude: /node_modules/,
-          loaders: ['babel-loader?cacheDirectory'],
+          loader: 'babel-loader?cacheDirectory',
         },
       ],
     },
     resolve: {
-      extensions: ['', '.js', '.jsx', '.json'],
-      root: [path.resolve('./src')],
+      extensions: ['.js', '.jsx'],
+      modules: ['node_modules', path.resolve('./src')],
     },
     plugins: [
-      new webpack.NoErrorsPlugin(),
+      new webpack.NoEmitOnErrorsPlugin(),
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify(env),
       }),
-      new webpack.optimize.DedupePlugin(),
-      new webpack.optimize.OccurenceOrderPlugin(),
     ],
   };
 
   if (env === 'production') {
     config.plugins.push(
-      new webpack.optimize.UglifyJsPlugin({
-        minimize: true,
-        compress: { warnings: false },
-        mangle: true,
-      })
+      new webpack.optimize.UglifyJsPlugin({ minimize: true, sourceMap: true, mangle: true })
     );
   }
 
