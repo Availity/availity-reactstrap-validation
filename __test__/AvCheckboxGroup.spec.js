@@ -112,9 +112,7 @@ describe('AvCheckboxGroup', () => {
   it('should give default value from context', () => {
     const wrapper = shallow(<AvCheckboxGroup name="yo" />, options);
     const component = wrapper.instance();
-    component.context.FormCtrl.getDefaultValue = () => {
-      return 'jiri';
-    };
+    component.context.FormCtrl.getDefaultValue = () => 'jiri';
     expect(component.getDefaultValue()).to.eql({key: 'defaultValue', value: 'jiri'});
   });
 
@@ -171,18 +169,14 @@ describe('AvCheckboxGroup', () => {
     const wrapper = shallow(<AvCheckboxGroup name="yo" onChange={spy} />, options);
     const component = wrapper.instance();
     const event = { target: { checked: true } };
-    component
+    return component
       .getChildContext()
       .Group.update(event, 'momo')
-      .then(() => {
-        expect(spy).to.have.been.calledWith(event, ['momo']);
-      });
+      .then(() => expect(spy).to.have.been.calledWith(event, ['momo']));
   });
 
   it('should render validation message when sent', () => {
-    options.context.FormCtrl.getInputState = () => {
-      return { errorMessage: 'WHAT ARE YOU DOING?!' };
-    };
+    options.context.FormCtrl.getInputState = () => ({ errorMessage: 'WHAT ARE YOU DOING?!' });
     const wrapper = shallow(<AvCheckboxGroup name="yo" />, options);
     expect(wrapper.find(AvFeedback).prop('children')).to.equal('WHAT ARE YOU DOING?!');
   });

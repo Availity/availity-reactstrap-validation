@@ -1,9 +1,9 @@
-/* eslint import/first: 0 */
+/* eslint import/first: 0, import/newline-after-import: 0 */
 import React from 'react';
 import { PrismCode } from 'react-prism';
 import Helmet from 'react-helmet';
 
-import ValidationCustomMessageExample from '../examples/ValidationCustomMessage.js';
+import ValidationCustomMessageExample from '../examples/ValidationCustomMessage';
 const ValidationCustomMessageExampleSource = require('!!raw-loader!../examples/ValidationCustomMessage.js');
 import ValidationDateExample from '../examples/ValidationDate';
 const ValidationDateExampleSource = require('!!raw-loader!../examples/ValidationDate.js');

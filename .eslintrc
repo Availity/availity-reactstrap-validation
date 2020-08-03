@@ -1,14 +1,20 @@
 {
-  "extends": "availity/react",
+  "extends": "availity/browser",
   "rules": {
     "semi": [2, "always"],
     "no-unused-vars": ["error", {
       "varsIgnorePattern": "^(unused|omit)"
     }],
-    "space-before-function-paren": [2, {
-      "named": "never"
+    "comma-dangle": [2, "always-multiline", {
+      "functions": "never"
     }],
-    "comma-dangle": [2, "always-multiline"]
+    "no-unused-expressions": ["error", {
+      "allowShortCircuit": true
+    }],
+    "camelcase": ["warn", {
+      "properties": "never"
+    }],
+    "react/no-unused-state": "warn"
   },
   "parserOptions": {
     "sourceType": "module",

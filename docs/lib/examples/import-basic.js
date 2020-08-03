@@ -2,49 +2,43 @@ import React from 'react';
 import { AvForm, AvField } from 'availity-reactstrap-validation';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
-export default class Example extends React.Component {
-  constructor(props) {
-    super(props);
+export default () => {
+  const [email, setEmail] = React.useState(false);
+  const [error, setError] = React.useState();
 
-    this.handleValidSubmit = this.handleValidSubmit.bind(this);
-    this.handleInvalidSubmit = this.handleInvalidSubmit.bind(this);
-    this.closeModal = this.closeModal.bind(this);
-    this.state = {email: false};
-  }
+  const handleValidSubmit = (_event, values) => {
+    setEmail(values.email);
+  };
 
-  handleValidSubmit(_event, values) {
-    this.setState({email: values.email});
-  }
+  const handleInvalidSubmit = (_event, _errors, values) => {
+    setEmail(values.email);
+    setError(true);
+  };
 
-  handleInvalidSubmit(_event, _errors, values) {
-    this.setState({email: values.email, error: true});
-  }
+  const closeModal = () => {
+    setEmail(false);
+    setError(false);
+  };
 
-  closeModal() {
-    this.setState({email: false, error: false});
-  }
+  const modalError = error ? 'not' : ''; // This is just for the modal
+  return (
+    <div>
+      <AvForm onValidSubmit={handleValidSubmit} onInvalidSubmit={handleInvalidSubmit}>
+        <AvField name="email" label="Email Address" type="email" required />
+        <Button color="primary">Submit</Button>
+      </AvForm>
 
-  render() {
-    const modalError = this.state.error ? 'not' : ''; // This is just for the modal
-    return (
-      <div>
-        <AvForm onValidSubmit={this.handleValidSubmit} onInvalidSubmit={this.handleInvalidSubmit}>
-          <AvField name="email" label="Email Address" type="email" required />
-          <Button color="primary">Submit</Button>
-        </AvForm>
-
-        {/* below this is just for show, it's not needed unless you want a modal upon form submission */}
-        <Modal isOpen={this.state.email !== false} toggle={this.closeModal}>
-          <ModalHeader toggle={this.closeModal}>Form is {modalError} valid!</ModalHeader>
-          <ModalBody>
-            You have {modalError} successfully filled out the form and submitted it.
-            Your email ({this.state.email}) is {modalError} valid!
-          </ModalBody>
-          <ModalFooter>
-            <Button color="primary" onClick={this.closeModal}>Ok, got it!</Button>
-          </ModalFooter>
-        </Modal>
-      </div>
-    );
-  }
-}
+      {/* below this is just for show, it's not needed unless you want a modal upon form submission */}
+      <Modal isOpen={email !== false} toggle={closeModal}>
+        <ModalHeader toggle={closeModal}>Form is {modalError} valid!</ModalHeader>
+        <ModalBody>
+          You have {modalError} successfully filled out the form and submitted it.
+          Your email ({email}) is {modalError} valid!
+        </ModalBody>
+        <ModalFooter>
+          <Button color="primary" onClick={closeModal}>Ok, got it!</Button>
+        </ModalFooter>
+      </Modal>
+    </div>
+  );
+};

@@ -80,7 +80,7 @@ describe('AvInput', () => {
     expect(wrapper.hasClass('is-touched')).to.be.true;
   });
 
-  it('should have "is-pristine" class when not dirty', () => {
+  it('should not have "is-pristine" class when dirty', () => {
     dirty = true;
     const wrapper = shallow(<AvInput name="yo" />, options);
 
@@ -97,7 +97,7 @@ describe('AvInput', () => {
     expect(wrapper.hasClass('is-invalid')).to.be.true;
   });
 
-  it('should not have "is-bad-input" class when the input is not "bad"', () => {
+  it('should have "is-bad-input" class when the input is "bad"', () => {
     bad = true;
     const wrapper = shallow(<AvInput name="yo" />, options);
 

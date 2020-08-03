@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import InputContainer from './AvInputContainer';
-import AvValidator from './AvValidator';
 import { Form } from 'reactstrap';
 import classNames from 'classnames';
 import _get from 'lodash/get';
 import _set from 'lodash/set';
 import _throttle from 'lodash/throttle';
 import isString from 'lodash/isString';
+import InputContainer from './AvInputContainer';
+import AvValidator from './AvValidator';
 
 const getInputErrorMessage = (input, ruleName) => {
   const errorMessage = input && input.props && input.props.errorMessage;
@@ -79,7 +79,7 @@ export default class AvForm extends InputContainer {
 
   validations = {};
 
-  handleSubmit = async (e) => {
+  handleSubmit = async e => {
     if (this.props.beforeSubmitValidation) {
       this.props.beforeSubmitValidation(e);
     }
@@ -110,7 +110,7 @@ export default class AvForm extends InputContainer {
     !this.state.submitted && this._isMounted && this.setState({ submitted: true });
   };
 
-  handleNonFormSubmission = (event) => {
+  handleNonFormSubmission = event => {
     if (this.props.onKeyDown(event) !== false) {
       if (event.type === 'keydown' && (event.which === 13 || event.keyCode === 13 || event.key === 'Enter')) {
         event.stopPropagation();
@@ -150,9 +150,9 @@ export default class AvForm extends InputContainer {
     this._isMounted = false;
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this._isMounted = true;
-    super.componentWillMount();
+    super.UNSAFE_componentWillMount();
 
     this._validators = {};
   }
@@ -285,11 +285,11 @@ export default class AvForm extends InputContainer {
 
   setError(inputName, error = true, errText = error, update = true) {
     if (error && !isString(errText) && typeof errText !== 'boolean') {
-      errText = errText + '';
+      errText += '';
     }
     let changed = false;
     const currentError = this.hasError(inputName);
-    let invalidInputs = this.state.invalidInputs;
+    let { invalidInputs } = this.state;
 
     if (
       ((invalidInputs[inputName] === undefined && !error) || invalidInputs[inputName] === (errText || true)) &&
@@ -315,7 +315,7 @@ export default class AvForm extends InputContainer {
   }
 
   setDirty(inputs, dirty = true, update = true) {
-    let dirtyInputs = this.state.dirtyInputs;
+    let { dirtyInputs } = this.state;
     let changed = false;
     if (!Array.isArray(inputs)) {
       inputs = [inputs];
@@ -340,7 +340,7 @@ export default class AvForm extends InputContainer {
   }
 
   setTouched(inputs, touched = true, update = true) {
-    let touchedInputs = this.state.touchedInputs;
+    let { touchedInputs } = this.state;
     let changed = false;
     if (!Array.isArray(inputs)) {
       inputs = [inputs];
@@ -365,7 +365,7 @@ export default class AvForm extends InputContainer {
   }
 
   setBad(inputs, isBad = true, update = true) {
-    let badInputs = this.state.badInputs;
+    let { badInputs } = this.state;
     let changed = false;
     if (!Array.isArray(inputs)) {
       inputs = [inputs];
@@ -427,14 +427,12 @@ export default class AvForm extends InputContainer {
     const errors = [];
     let isValid = true;
 
-    for (const inputName in this._inputs) {
-      /* istanbul ignore else  */
-      if (this._inputs.hasOwnProperty(inputName)) {
-        const valid = await this.validateOne(inputName, context, update);
-        if (!valid) {
-          isValid = false;
-          errors.push(inputName);
-        }
+    // eslint-disable-next-line no-restricted-syntax
+    for (const inputName of Object.keys(this._inputs)) {
+      const valid = await this.validateOne(inputName, context, update); // eslint-disable-line no-await-in-loop
+      if (!valid) {
+        isValid = false;
+        errors.push(inputName);
       }
     }
 
@@ -475,7 +473,8 @@ export default class AvForm extends InputContainer {
             ruleResult = ruleProp[rule](val, context, input, callback);
           } else {
             if (typeof AvValidator[rule] !== 'function') {
-              return reject(new Error(`Invalid input validation rule: "${rule}"`));
+              reject(new Error(`Invalid input validation rule: "${rule}"`));
+              return;
             }
 
             if (ruleProp[rule].enabled === false) {
@@ -486,7 +485,7 @@ export default class AvForm extends InputContainer {
           }
 
           if (ruleResult && typeof ruleResult.then === 'function') {
-            ruleResult.then(callback);
+            ruleResult.then(callback); // eslint-disable-line promise/catch-or-return
           } else if (ruleResult !== undefined) {
             callback(ruleResult);
           } else {
@@ -497,6 +496,7 @@ export default class AvForm extends InputContainer {
         validations.push(promise);
       });
 
+      // eslint-disable-next-line promise/always-return
       await Promise.all(validations).then(results => {
         results.every(ruleResult => {
           if (result === true && ruleResult.value !== true) {

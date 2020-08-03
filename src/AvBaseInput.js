@@ -1,3 +1,4 @@
+/* eslint react/forbid-prop-types: 0, react/no-unused-prop-types: 0 */
 import { Component } from 'react';
 import PropTypes from 'prop-types';
 import isUndefined from 'lodash/isUndefined';
@@ -77,13 +78,13 @@ export default class AvBaseInput extends Component {
     this.validate = this.validate.bind(this);
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.value = this.props.value || this.getDefaultValue();
     this.setState({ value: this.value });
     this.updateValidations();
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.name !== this.props.name) {
       this.context.FormCtrl.unregister(this);
     }
@@ -183,12 +184,9 @@ export default class AvBaseInput extends Component {
     }
 
     if (this.props.type === 'select' && this.props.multiple) {
-      /* // Something about this does not work when transpiled
-      return [...event.target.options]
-        .filter(({ selected }) => selected)
-        .map(({ value }) => value); */
+      // Use loop to make this work when transpiled
       const ret = [];
-      const options = event.target.options;
+      const { options } = event.target;
       for (let i = 0; i < options.length; i++) {
         if (options[i].selected) {
           ret.push(options[i].value);

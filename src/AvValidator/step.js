@@ -17,7 +17,7 @@ function floatSafeRemainder(val, step) {
   const decCount = valDecCount > stepDecCount ? valDecCount : stepDecCount;
   const valInt = parseInt(val.toFixed(decCount).replace('.', ''), 10);
   const stepInt = parseInt(step.toFixed(decCount).replace('.', ''), 10);
-  return (valInt % stepInt) / Math.pow(10, decCount);
+  return (valInt % stepInt) / (10 ** decCount);
 }
 
 export default function validate(value, context, constraint = {}) {

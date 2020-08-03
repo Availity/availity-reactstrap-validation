@@ -1,3 +1,4 @@
+/* eslint react/no-find-dom-node: 0 */
 import React, { Component } from 'react';
 import { findDOMNode } from 'react-dom';
 import PropTypes from 'prop-types';
@@ -27,11 +28,11 @@ export default class AvCheckboxGroup extends Component {
   };
 
   state = {
-    invalidInputs: {},
-    dirtyInputs: {},
-    touchedInputs: {},
-    badInputs: {},
-    validate: {},
+    // invalidInputs: {},
+    // dirtyInputs: {},
+    // touchedInputs: {},
+    // badInputs: {},
+    // validate: {},
     value: [],
   };
 
@@ -74,14 +75,14 @@ export default class AvCheckboxGroup extends Component {
     };
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this._isMounted = true;
     this.value = this.props.value || this.getDefaultValue().value;
     this.setState({ value: this.value });
     this.updateValidations();
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.name !== this.props.name) {
       this.context.FormCtrl.unregister(this);
     }
@@ -183,9 +184,7 @@ export default class AvCheckboxGroup extends Component {
   }
 
   unregisterInput(input) {
-    this._inputs = this._inputs.filter(ipt => {
-      return ipt !== input;
-    });
+    this._inputs = this._inputs.filter(ipt => ipt !== input);
   }
 
   render() {

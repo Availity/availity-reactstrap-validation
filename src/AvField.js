@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Col, FormText, Label, CustomInput } from 'reactstrap';
 import AvInput from './AvInput';
 import AvGroup from './AvGroup';
 import AvFeedback from './AvFeedback';
-import { Col, FormText, Label, CustomInput } from 'reactstrap';
 
 const colSizes = ['xs', 'sm', 'md', 'lg', 'xl'];
 

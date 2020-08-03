@@ -84,7 +84,7 @@ describe('AvCheckbox', () => {
     expect(wrapper.find(Input).hasClass('is-touched')).to.be.true;
   });
 
-  it('should have "is-pristine" class when not dirty', () => {
+  it('should not have "is-pristine" class when dirty', () => {
     dirty = true;
     const wrapper = shallow(<AvCheckbox name="yo" />, options);
 

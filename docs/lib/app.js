@@ -5,8 +5,8 @@ import ReactDOM from 'react-dom';
 import ReactDOMServer from 'react-dom/server';
 import { createHistory } from 'history';
 import { Router, RouterContext, match, useRouterHistory } from 'react-router';
-import routes from './routes';
 import Helmet from 'react-helmet';
+import routes from './routes';
 
 // Client render (optional):
 if (typeof document !== 'undefined') {

@@ -1,8 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
-import {Input} from 'reactstrap';
+import { Input } from 'reactstrap';
 import AvBaseInput from './AvBaseInput';
-
 
 export default class AvInput extends AvBaseInput {
   static defaultProps = {
@@ -44,10 +43,7 @@ export default class AvInput extends AvBaseInput {
     if (Array.isArray(tag)) {
       let tags;
       [Tag, ...tags] = tag; // eslint-disable-line prefer-const
-      attributes.tag = tags;
-      if (attributes.tag.length <= 1) {
-        attributes.tag = attributes.tag[0];
-      }
+      attributes.tag = (tags.length > 1) ? tags : tags[0];
     }
 
     const classes = classNames(

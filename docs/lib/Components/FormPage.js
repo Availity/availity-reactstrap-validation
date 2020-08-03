@@ -1,4 +1,4 @@
-/* eslint import/first: 0 */
+/* eslint import/first: 0, import/newline-after-import: 0 */
 import React from 'react';
 import { PrismCode } from 'react-prism';
 import Helmet from 'react-helmet';

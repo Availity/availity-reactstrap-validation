@@ -10,5 +10,14 @@
     "mount": true
   },
   "rules": {
+    "func-names": 0,
+    "no-unused-expressions": 0
+  },
+  "settings": {
+    "import/resolver": {
+      "webpack": {
+        "config": "webpack.test.config.js"
+      }
+    }
   }
 }

@@ -1,3 +1,4 @@
+/* eslint no-multi-assign: 0, promise/param-names: 0 */
 import React from 'react';
 import { AvForm, AvValidator } from 'availity-reactstrap-validation';
 import { Form } from 'reactstrap';
@@ -230,9 +231,9 @@ describe('AvForm', () => {
       const spy = sinon.spy(wrapper.instance(), 'setTouched');
       const instance = wrapper.instance();
       instance._inputs.input = {getValue: () => 'value', setState: () => {}};
-      return instance.handleSubmit().then(() => {
-        expect(spy).to.have.been.calledWithMatch(Object.keys(instance._inputs));
-      });
+      return instance
+        .handleSubmit()
+        .then(() => expect(spy).to.have.been.calledWithMatch(Object.keys(instance._inputs)));
     });
 
     it('should call the onSubmit callback from props with the event, errors, and values', () => {
@@ -244,9 +245,9 @@ describe('AvForm', () => {
       instance._inputs.invalidInput = {getValue: () => '', setState: () => {}};
       const errors = ['invalidInput'];
       instance.validateAll = sinon.stub().returns({isValid: false, errors});
-      return instance.handleSubmit(event).then(() => {
-        expect(spy).to.have.been.calledWithMatch(event, errors, {input: 'value', invalidInput: ''});
-      });
+      return instance
+        .handleSubmit(event)
+        .then(() => expect(spy).to.have.been.calledWithMatch(event, errors, {input: 'value', invalidInput: ''}));
     });
 
     it('should call the onValidSubmit callback from props with the event and values when form is valid', () => {
@@ -259,7 +260,7 @@ describe('AvForm', () => {
 
       return instance.handleSubmit(event).then(() => {
         expect(spy).to.have.been.calledWithMatch(event, { input: 'value' });
-        expect(invalidSpy).to.not.have.been.called;
+        return expect(invalidSpy).to.not.have.been.called;
       });
     });
 
@@ -276,7 +277,7 @@ describe('AvForm', () => {
 
       return instance.handleSubmit(event).then(() => {
         expect(spy).to.not.have.been.called;
-        expect(invalidSpy).to.have.been.calledWithMatch(event, errors, { input: 'value', invalidInput: '' });
+        return expect(invalidSpy).to.have.been.calledWithMatch(event, errors, { input: 'value', invalidInput: '' });
       });
     });
 
@@ -285,9 +286,7 @@ describe('AvForm', () => {
       const instance = wrapper.instance();
       expect(wrapper.state('submitted')).to.be.false;
 
-      return instance.handleSubmit().then(() => {
-        expect(wrapper.state('submitted')).to.be.true;
-      });
+      return instance.handleSubmit().then(() => expect(wrapper.state('submitted')).to.be.true);
     });
   });
 
@@ -384,12 +383,12 @@ describe('AvForm', () => {
         const email = 'evan.sharp@availity.com';
         const dateOfBirth = new Date();
         const number = 4;
-        const inputs = this.instance._inputs = {
+        const inputs = (this.instance._inputs = {
           name: { getValue: sinon.stub().returns(name) },
           email: { getValue: sinon.stub().returns(email) },
           dateOfBirth: { getValue: sinon.stub().returns(dateOfBirth) },
           number: { getValue: sinon.stub().returns(number) },
-        };
+        });
         this.instance.getValues();
         expect(inputs.name.getValue).to.have.been.calledOnce;
         expect(inputs.email.getValue).to.have.been.calledOnce;
@@ -443,12 +442,12 @@ describe('AvForm', () => {
 
     describe('reset', () => {
       it('should trigger reset on each of the registered inputs', () => {
-        const inputs = this.instance._inputs = {
+        const inputs = (this.instance._inputs = {
           'name.first': {reset: sinon.spy()},
           'name.last': {reset: sinon.spy()},
           'email': {reset: sinon.spy()},
           'going.real.deep.for.this.value': {reset: sinon.spy()},
-        };
+        });
         this.instance.reset();
         expect(inputs['name.first'].reset).to.have.been.calledOnce;
         expect(inputs['name.last'].reset).to.have.been.calledOnce;
@@ -927,7 +926,7 @@ describe('AvForm', () => {
           this.instance._inputs = {[inputName]: input};
           return this.instance.validateOne(inputName, context).then(result => {
             expect(spy).to.have.been.calledWith(inputName, true, undefined);
-            expect(result).to.be.false;
+            return expect(result).to.be.false;
           });
         });
 
@@ -941,7 +940,7 @@ describe('AvForm', () => {
           this.instance._inputs = {[inputName]: input};
           return this.instance.validateOne(inputName, context).then(result => {
             expect(spy).to.have.been.calledWith(inputName, true, errorMessage);
-            expect(result).to.be.false;
+            return expect(result).to.be.false;
           });
         });
 
@@ -954,7 +953,7 @@ describe('AvForm', () => {
           this.instance._inputs = {[inputName]: input};
           return this.instance.validateOne(inputName, context).then(result => {
             expect(spy).to.have.been.calledWith(inputName, false, undefined);
-            expect(result).to.be.true;
+            return expect(result).to.be.true;
           });
         });
       });
@@ -962,14 +961,14 @@ describe('AvForm', () => {
       describe('when validate is an object', () => {
         it('should call the validators with value and context', () => {
           const inputName = 'myInput';
-          const validatorsSpy = this.instance._validators[inputName] = sinon.stub();
+          const validatorsSpy = (this.instance._validators[inputName] = sinon.stub());
           const input = {validations: {}};
           const inputValue = 'some value';
           const context = {[inputName]: inputValue};
           this.instance._inputs = {[inputName]: input};
-          return this.instance.validateOne(inputName, context).then(() => {
-            expect(validatorsSpy).to.have.been.calledWith(inputValue, context);
-          });
+          return this.instance
+            .validateOne(inputName, context)
+            .then(() => expect(validatorsSpy).to.have.been.calledWith(inputValue, context));
         });
 
         it('should set error when the validators returns false', () => {
@@ -982,7 +981,7 @@ describe('AvForm', () => {
           this.instance._inputs = {[inputName]: input};
           return this.instance.validateOne(inputName, context).then(result => {
             expect(spy).to.have.been.calledWith(inputName, true, undefined);
-            expect(result).to.be.false;
+            return expect(result).to.be.false;
           });
         });
 
@@ -997,7 +996,7 @@ describe('AvForm', () => {
           this.instance._inputs = {[inputName]: input};
           return this.instance.validateOne(inputName, context).then(result => {
             expect(spy).to.have.been.calledWith(inputName, true, errorMessage);
-            expect(result).to.be.false;
+            return expect(result).to.be.false;
           });
         });
 
@@ -1011,7 +1010,7 @@ describe('AvForm', () => {
           this.instance._inputs = {[inputName]: input};
           return this.instance.validateOne(inputName, context).then(result => {
             expect(spy).to.have.been.calledWith(inputName, false, undefined);
-            expect(result).to.be.true;
+            return expect(result).to.be.true;
           });
         });
       });
@@ -1030,7 +1029,7 @@ describe('AvForm', () => {
 
     describe('validate all', () => {
       it('should return an object', () => {
-        return expect(this.instance.validateAll({})).to.eventually.be.an('object');
+        expect(this.instance.validateAll({})).to.eventually.be.an('object');
       });
 
       it('should validate each registered input', () => {
@@ -1041,7 +1040,7 @@ describe('AvForm', () => {
           expect(spy).to.have.been.calledThrice;
           expect(spy.firstCall).to.have.been.calledWith('input1', context);
           expect(spy.secondCall).to.have.been.calledWith('input2', context);
-          expect(spy.thirdCall).to.have.been.calledWith('input3', context);
+          return expect(spy.thirdCall).to.have.been.calledWith('input3', context);
         });
       });
 
@@ -1060,7 +1059,7 @@ describe('AvForm', () => {
         stub.returns(true);
         return this.instance.validateAll(context).then(result => {
           expect(result.errors).to.contain('input2');
-          expect(result.errors).to.not.contain.any('input1', 'input3');
+          return expect(result.errors).to.not.contain.any('input1', 'input3');
         });
       });
 
@@ -1130,15 +1129,18 @@ describe('AvForm', () => {
           const rules = {myFn: (...args) => spy(...args) || true};
           const fn = this.instance.compileValidationRules(input, rules);
 
-          return expect(fn()).to.eventually.be.false.then(() => {
-            expect(spy).to.not.have.been.called;
-          });
+          return expect(fn()).to.eventually.be.false.then(() => expect(spy).to.not.have.been.called);
         });
 
         it('should be able to handle a returned promise', () => {
           let resolve;
           const input = {props: {name: 'myInput'}};
-          const rules = { myFn: () => new Promise(r => (resolve = r)) };
+          const rules = {
+            myFn: () =>
+              new Promise(r => {
+                resolve = r;
+              }),
+          };
           const fn = this.instance.compileValidationRules(input, rules);
           const result = fn();
           // expect(result).to.not.be.fulfilled;
@@ -1150,7 +1152,12 @@ describe('AvForm', () => {
           it('should be able to return true to invalid valid', () => {
             let resolve;
             const input = {props: {name: 'myInput'}};
-            const rules = { myFn: () => new Promise(r => (resolve = r)) };
+            const rules = {
+              myFn: () =>
+                new Promise(r => {
+                  resolve = r;
+                }),
+            };
             const fn = this.instance.compileValidationRules(input, rules);
             const result = fn();
             // expect(result).to.not.be.fulfilled;
@@ -1161,7 +1168,12 @@ describe('AvForm', () => {
           it('should be able to return false to indicate invalud', () => {
             let resolve;
             const input = {props: {name: 'myInput'}};
-            const rules = { myFn: () => new Promise(r => (resolve = r)) };
+            const rules = {
+              myFn: () =>
+                new Promise(r => {
+                  resolve = r;
+                }),
+            };
             const fn = this.instance.compileValidationRules(input, rules);
             const result = fn();
             // expect(result).to.not.be.fulfilled;
@@ -1172,7 +1184,12 @@ describe('AvForm', () => {
           it('should be able to return a string error message', () => {
             let resolve;
             const input = {props: {name: 'myInput'}};
-            const rules = { myFn: () => new Promise(r => (resolve = r)) };
+            const rules = {
+              myFn: () =>
+                new Promise(r => {
+                  resolve = r;
+                }),
+            };
             const errorMessage = 'my error message';
             const fn = this.instance.compileValidationRules(input, rules);
             const result = fn();
@@ -1254,9 +1271,9 @@ describe('AvForm', () => {
             const fn = this.instance.compileValidationRules(input, rules);
             const value = 'myvalue';
             const context = {};
-            return fn(value, context).then(() => {
-              expect(spy).to.have.been.calledWith(value, context, input);
-            });
+            return fn(value, context).then(() =>
+              expect(spy).to.have.been.calledWith(value, context, input)
+            );
           });
 
           it('should return false when the function returns false and no message is not supplied', () => {
@@ -1346,9 +1363,9 @@ describe('AvForm', () => {
             const fn = this.instance.compileValidationRules(input, rules);
             const value = 'myvalue';
             const context = {};
-            return fn(value, context).then(() => {
-              expect(this.minStub).to.have.been.calledWith(value, context, rules.min, input);
-            });
+            return fn(value, context).then(() =>
+              expect(this.minStub).to.have.been.calledWith(value, context, rules.min, input)
+            );
           });
 
           it('should return false when the function returns false and no message is not supplied', () => {

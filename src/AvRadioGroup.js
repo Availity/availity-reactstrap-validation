@@ -26,11 +26,11 @@ export default class AvRadioGroup extends Component {
   };
 
   state = {
-    invalidInputs: {},
-    dirtyInputs: {},
-    touchedInputs: {},
-    badInputs: {},
-    validate: {},
+    // invalidInputs: {},
+    // dirtyInputs: {},
+    // touchedInputs: {},
+    // badInputs: {},
+    // validate: {},
     value: '',
   };
 
@@ -67,14 +67,14 @@ export default class AvRadioGroup extends Component {
     };
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this._isMounted = true;
     this.value = this.props.value || this.getDefaultValue().value;
     this.setState({ value: this.value });
     this.updateValidations();
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.name !== this.props.name) {
       this.context.FormCtrl.unregister(this);
     }
@@ -170,9 +170,7 @@ export default class AvRadioGroup extends Component {
   }
 
   unregisterInput(input) {
-    this._inputs = this._inputs.filter(ipt => {
-      return ipt !== input;
-    });
+    this._inputs = this._inputs.filter(ipt => ipt !== input);
   }
 
   render() {
