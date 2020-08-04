@@ -65,6 +65,8 @@ export default class AvBaseInput extends Component {
     falseValue: false,
   };
 
+  _isMounted = false;
+
   constructor(props) {
     super(props);
     this.state = { value: props.multiple ? [] : '' };
@@ -82,6 +84,7 @@ export default class AvBaseInput extends Component {
     this.value = this.props.value || this.getDefaultValue();
     this.setState({ value: this.value });
     this.updateValidations();
+    this._isMounted = true;
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
@@ -120,6 +123,7 @@ export default class AvBaseInput extends Component {
   }
 
   componentWillUnmount() {
+    this._isMounted = false;
     this.context.FormCtrl.unregister(this);
   }
 
@@ -288,6 +292,6 @@ export default class AvBaseInput extends Component {
       });
 
     this.context.FormCtrl && this.context.FormCtrl.register(this);
-    this.validate();
+    this._isMounted && this.validate();
   }
 }

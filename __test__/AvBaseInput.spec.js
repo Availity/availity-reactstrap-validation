@@ -107,8 +107,8 @@ describe('BaseInput', function () {
       expect(this.setStateSpy).to.have.been.calledWithMatch({ value: defaultValue });
     });
 
-    it('should trigger validation', () => {
-      const spy = sinon.spy(this.component, 'validate');
+    it('should not trigger validation', () => {
+      const spy = sinon.spy(this.component, 'updateValidations');
       this.component.UNSAFE_componentWillMount();
       expect(spy).to.have.been.calledOnce;
     });
@@ -139,6 +139,7 @@ describe('BaseInput', function () {
       it('should trigger validation', () => {
         const newValue = 2342;
         const spy = sinon.spy(this.component, 'validate');
+        this.component._isMounted = true;
         this.component.UNSAFE_componentWillReceiveProps({ value: newValue });
         expect(spy).to.have.been.calledOnce;
       });
@@ -214,6 +215,7 @@ describe('BaseInput', function () {
 
     it('should trigger validation', () => {
       const spy = sinon.spy(this.component, 'validate');
+      this.component._isMounted = true;
       this.component.updateValidations();
       expect(spy).to.have.been.calledOnce;
     });

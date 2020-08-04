@@ -19,8 +19,6 @@ const getInputErrorMessage = (input, ruleName) => {
 };
 
 export default class AvForm extends InputContainer {
-  _isMounted = false;
-
   static childContextTypes = {
     FormCtrl: PropTypes.object.isRequired,
   };
@@ -56,6 +54,7 @@ export default class AvForm extends InputContainer {
     ]),
     disabled: PropTypes.bool,
     readOnly: PropTypes.bool,
+    validateOnSubmitOnly: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -68,6 +67,9 @@ export default class AvForm extends InputContainer {
     onValidSubmit: () => {},
     onInvalidSubmit: () => {},
   };
+
+  _isMounted = false;
+  _validateOnSubmitOnly = !!this.props.validateOnSubmitOnly;
 
   state = {
     invalidInputs: {},
@@ -90,6 +92,10 @@ export default class AvForm extends InputContainer {
 
     if (this.props.disabled) {
       return;
+    }
+
+    if (this._validateOnSubmitOnly) {
+      this._validateOnSubmitOnly = false;
     }
 
     const values = this.getValues();
@@ -189,6 +195,7 @@ export default class AvForm extends InputContainer {
       disabled: omit9,
       readOnly: omit10,
       beforeSubmitValidation: omit11,
+      validateOnSubmitOnly: omit12,
       className,
       ...attributes
     } = this.props;
@@ -390,8 +397,11 @@ export default class AvForm extends InputContainer {
   }
 
   async validateOne(inputName, context, update = true) {
-    const input = this._inputs[inputName];
+    if (this._validateOnSubmitOnly || this.props.disabled) {
+      return true;
+    }
 
+    const input = this._inputs[inputName];
     if (Array.isArray(input)) {
       throw new Error(`Multiple inputs cannot use the same name: "${inputName}"`);
     }

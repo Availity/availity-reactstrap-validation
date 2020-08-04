@@ -76,10 +76,10 @@ export default class AvCheckboxGroup extends Component {
   }
 
   UNSAFE_componentWillMount() {
-    this._isMounted = true;
     this.value = this.props.value || this.getDefaultValue().value;
     this.setState({ value: this.value });
     this.updateValidations();
+    this._isMounted = true;
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
@@ -153,7 +153,7 @@ export default class AvCheckboxGroup extends Component {
       });
 
     this.context.FormCtrl.register(this, this.update.bind(this));
-    this.validate();
+    this._isMounted && this.validate();
   }
 
   updateInputs() {

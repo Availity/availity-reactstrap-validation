@@ -19,7 +19,7 @@ export default () => {
 
   return (
     <div>
-      <AvForm onSubmit={handleSubmit}>
+      <AvForm onSubmit={handleSubmit} validateOnSubmitOnly>
         {/* With AvField */}
         <AvField name="name" label="Name" required />
         {/* With AvGroup AvInput and AvFeedback to build your own */}
