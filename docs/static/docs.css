@@ -193,7 +193,8 @@ pre, code {
 }
 
 
-/* http://prismjs.com/download.html?themes=prism-okaidia&languages=markup+css+clike+javascript+bash+jsx&plugins=autolinker */
+/* PrismJS 1.20.0
+https://prismjs.com/download.html#themes=prism-okaidia&languages=markup+css+clike+javascript+bash+jsx&plugins=autolinker */
 /**
  * okaidia theme for JavaScript, CSS and HTML
  * Loosely based on Monokai textmate theme by http://www.monokai.nl/
@@ -244,14 +245,14 @@ pre[class*="language-"] {
 .token.prolog,
 .token.doctype,
 .token.cdata {
-  color: slategray;
+  color: #8292a2;
 }
 
 .token.punctuation {
   color: #f8f8f2;
 }
 
-.namespace {
+.token.namespace {
   opacity: .7;
 }
 
@@ -288,7 +289,8 @@ pre[class*="language-"] {
 
 .token.atrule,
 .token.attr-value,
-.token.function {
+.token.function,
+.token.class-name {
   color: #e6db74;
 }
 

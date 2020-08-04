@@ -11,14 +11,17 @@ import {
   AvCheckbox,
 } from 'availity-reactstrap-validation';
 import { Button, Row, Col, Label, FormGroup } from 'reactstrap';
+import SubmitResult from './SubmitResult';
 
 export default () => {
-  const [errors, setErrors] = React.useState();
-  const [values, setValues] = React.useState();
+  const sr = React.useRef(null);
+  const handleSubmit = (...args) => sr.current.handleSubmit(...args);
 
-  const handleSubmit = (_event, errors, values) => {
-    setErrors(errors);
-    setValues(values);
+  const form = React.useRef(null);
+  const handleReset = e => {
+    e.preventDefault();
+    form.current.reset();
+    sr.current.reset();
   };
 
   const defaultValues = {
@@ -41,7 +44,7 @@ export default () => {
 
   return (
     <div>
-      <AvForm onSubmit={handleSubmit} model={defaultValues}>
+      <AvForm onSubmit={handleSubmit} model={defaultValues} ref={form}>
         {/* Radios */}
         <AvRadioGroup inline name="locationType" label="Location Type" required>
           <AvRadio label="Residential" value="home" />
@@ -95,22 +98,18 @@ export default () => {
             <AvField name="location.zip" label="ZIP Code" required />
           </Col>
         </Row>
-        <AvGroup check>
-          <AvInput type="checkbox" name="checkItOut" />
-          <Label check for="checkItOut">Check it out!</Label>
-        </AvGroup>
         <FormGroup>
-          <Button>Submit</Button>
+          <AvGroup check>
+            <AvInput type="checkbox" name="checkItOut" />
+            <Label check for="checkItOut">Check it out!</Label>
+          </AvGroup>
+        </FormGroup>
+        <FormGroup>
+          <Button className="mr-3">Submit</Button>
+          <Button outline onClick={handleReset}>Reset</Button>
         </FormGroup>
       </AvForm>
-      {values && (
-        <div>
-          <h5>Submission values</h5>
-          Invalid: {errors && errors.join(', ')}
-          <br />
-          Values: <pre>{JSON.stringify(values, null, 2)}</pre>
-        </div>
-      )}
+      <SubmitResult ref={sr} />
     </div>
   );
 };

@@ -34,7 +34,7 @@ export default () => (
           <h3 className="mt-5">NPM</h3>
           <p>Install reactstrap and peer dependencies via NPM</p>
           <pre>
-            <PrismCode className="language-bash">
+            <PrismCode async className="language-bash">
               npm install --save availity-reactstrap-validation react react-dom
             </PrismCode>
           </pre>
@@ -43,7 +43,7 @@ export default () => (
             <Example />
           </div>
           <pre>
-            <PrismCode className="language-jsx">
+            <PrismCode async className="language-jsx">
               {importBasic}
             </PrismCode>
           </pre>

@@ -5,9 +5,9 @@ import Helmet from 'react-helmet';
 import Logo from '../UI/Logo';
 
 export default () => (
-  <div>
+  <main>
     <Helmet title="404 Page Not Found" />
-    <Jumbotron tag="section" className="text-center mb-3">
+    <Jumbotron className="text-center mb-3">
       <Container>
         <p className="lead">
           <Logo />
@@ -23,5 +23,5 @@ export default () => (
         </p>
       </Container>
     </Jumbotron>
-  </div>
+  </main>
 );

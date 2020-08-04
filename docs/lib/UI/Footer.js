@@ -3,7 +3,7 @@ import React from 'react';
 import { Container } from 'reactstrap';
 
 export default () => (
-  <div className="footer text-center">
+  <footer className="footer text-center">
     <Container fluid>
       <p className="social">
         &copy; 2016 - present Availity &nbsp;&nbsp;
@@ -23,5 +23,5 @@ export default () => (
         />
       </p>
     </Container>
-  </div>
+  </footer>
 );

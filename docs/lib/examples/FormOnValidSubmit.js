@@ -11,13 +11,11 @@ import {
   AvCheckbox,
 } from 'availity-reactstrap-validation';
 import { Button, Label, FormGroup } from 'reactstrap';
+import SubmitResult from './SubmitResult';
 
 export default () => {
-  const [values, setValues] = React.useState();
-
-  const handleValidSubmit = (_event, values) => {
-    setValues(values);
-  };
+  const sr = React.useRef(null);
+  const handleValidSubmit = (...args) => sr.current.handleValidSubmit(...args);
 
   return (
     <div>
@@ -57,12 +55,7 @@ export default () => {
           <Button>Submit</Button>
         </FormGroup>
       </AvForm>
-      {values && (
-        <div>
-          <h5>Submission values</h5>
-          Values: <pre>{JSON.stringify(values, null, 2)}</pre>
-        </div>
-      )}
+      <SubmitResult ref={sr} />
     </div>
   );
 };

@@ -26,7 +26,7 @@ export default () => (
       <FormExample />
     </div>
     <pre>
-      <PrismCode className="language-jsx">
+      <PrismCode async className="language-jsx">
         {FormExampleSource}
       </PrismCode>
     </pre>
@@ -37,7 +37,7 @@ export default () => (
       <FormOnSubmitExample />
     </div>
     <pre>
-      <PrismCode className="language-jsx">
+      <PrismCode async className="language-jsx">
         {FormOnSubmitExampleSource}
       </PrismCode>
     </pre>
@@ -48,7 +48,7 @@ export default () => (
       <FormOnValidSubmitExample />
     </div>
     <pre>
-      <PrismCode className="language-jsx">
+      <PrismCode async className="language-jsx">
         {FormOnValidSubmitExampleSource}
       </PrismCode>
     </pre>
@@ -59,7 +59,7 @@ export default () => (
       <FormOnInvalidSubmitExample />
     </div>
     <pre>
-      <PrismCode className="language-jsx">
+      <PrismCode async className="language-jsx">
         {FormOnInvalidSubmitExampleSource}
       </PrismCode>
     </pre>
@@ -76,7 +76,7 @@ export default () => (
       <FormModelExample />
     </div>
     <pre>
-      <PrismCode className="language-jsx">
+      <PrismCode async className="language-jsx">
         {FormModelExampleSource}
       </PrismCode>
     </pre>

@@ -52,7 +52,7 @@ export default () => (
       <ValidationCustomMessageExample />
     </div>
     <pre>
-      <PrismCode className="language-jsx">
+      <PrismCode async className="language-jsx">
         {ValidationCustomMessageExampleSource}
       </PrismCode>
     </pre>
@@ -62,7 +62,7 @@ export default () => (
       <ValidationDateExample />
     </div>
     <pre>
-      <PrismCode className="language-jsx">
+      <PrismCode async className="language-jsx">
         {ValidationDateExampleSource}
       </PrismCode>
     </pre>
@@ -72,7 +72,7 @@ export default () => (
       <ValidationDateRangeExample />
     </div>
     <pre>
-      <PrismCode className="language-jsx">
+      <PrismCode async className="language-jsx">
         {ValidationDateRangeExampleSource}
       </PrismCode>
     </pre>
@@ -82,7 +82,7 @@ export default () => (
       <ValidationDateTimeExample />
     </div>
     <pre>
-      <PrismCode className="language-jsx">
+      <PrismCode async className="language-jsx">
         {ValidationDateTimeExampleSource}
       </PrismCode>
     </pre>
@@ -92,7 +92,7 @@ export default () => (
       <ValidationEmailExample />
     </div>
     <pre>
-      <PrismCode className="language-jsx">
+      <PrismCode async className="language-jsx">
         {ValidationEmailExampleSource}
       </PrismCode>
     </pre>
@@ -102,7 +102,7 @@ export default () => (
       <ValidationMatchExample />
     </div>
     <pre>
-      <PrismCode className="language-jsx">
+      <PrismCode async className="language-jsx">
         {ValidationMatchExampleSource}
       </PrismCode>
     </pre>
@@ -112,7 +112,7 @@ export default () => (
       <ValidationMaxExample />
     </div>
     <pre>
-      <PrismCode className="language-jsx">
+      <PrismCode async className="language-jsx">
         {ValidationMaxExampleSource}
       </PrismCode>
     </pre>
@@ -122,7 +122,7 @@ export default () => (
       <ValidationMaxLengthExample />
     </div>
     <pre>
-      <PrismCode className="language-jsx">
+      <PrismCode async className="language-jsx">
         {ValidationMaxLengthExampleSource}
       </PrismCode>
     </pre>
@@ -132,7 +132,7 @@ export default () => (
       <ValidationMaxCheckedExample />
     </div>
     <pre>
-      <PrismCode className="language-jsx">
+      <PrismCode async className="language-jsx">
         {ValidationMaxCheckedExampleSource}
       </PrismCode>
     </pre>
@@ -142,7 +142,7 @@ export default () => (
       <ValidationMinExample />
     </div>
     <pre>
-      <PrismCode className="language-jsx">
+      <PrismCode async className="language-jsx">
         {ValidationMinExampleSource}
       </PrismCode>
     </pre>
@@ -152,7 +152,7 @@ export default () => (
       <ValidationMinLengthExample />
     </div>
     <pre>
-      <PrismCode className="language-jsx">
+      <PrismCode async className="language-jsx">
         {ValidationMinLengthExampleSource}
       </PrismCode>
     </pre>
@@ -162,7 +162,7 @@ export default () => (
       <ValidationMinCheckedExample />
     </div>
     <pre>
-      <PrismCode className="language-jsx">
+      <PrismCode async className="language-jsx">
         {ValidationMinCheckedExampleSource}
       </PrismCode>
     </pre>
@@ -172,7 +172,7 @@ export default () => (
       <ValidationNpiExample />
     </div>
     <pre>
-      <PrismCode className="language-jsx">
+      <PrismCode async className="language-jsx">
         {ValidationNpiExampleSource}
       </PrismCode>
     </pre>
@@ -182,7 +182,7 @@ export default () => (
       <ValidationNumberExample />
     </div>
     <pre>
-      <PrismCode className="language-jsx">
+      <PrismCode async className="language-jsx">
         {ValidationNumberExampleSource}
       </PrismCode>
     </pre>
@@ -192,7 +192,7 @@ export default () => (
       <ValidationPatternExample />
     </div>
     <pre>
-      <PrismCode className="language-jsx">
+      <PrismCode async className="language-jsx">
         {ValidationPatternExampleSource}
       </PrismCode>
     </pre>
@@ -203,7 +203,7 @@ export default () => (
       <ValidationPhoneExample />
     </div>
     <pre>
-      <PrismCode className="language-jsx">
+      <PrismCode async className="language-jsx">
         {ValidationPhoneExampleSource}
       </PrismCode>
     </pre>
@@ -213,7 +213,7 @@ export default () => (
       <ValidationRequiredExample />
     </div>
     <pre>
-      <PrismCode className="language-jsx">
+      <PrismCode async className="language-jsx">
         {ValidationRequiredExampleSource}
       </PrismCode>
     </pre>
@@ -224,7 +224,7 @@ export default () => (
       <ValidationStepExample />
     </div>
     <pre>
-      <PrismCode className="language-jsx">
+      <PrismCode async className="language-jsx">
         {ValidationStepExampleSource}
       </PrismCode>
     </pre>
@@ -234,7 +234,7 @@ export default () => (
       <ValidationAsyncExample />
     </div>
     <pre>
-      <PrismCode className="language-jsx">
+      <PrismCode async className="language-jsx">
         {ValidationAsyncExampleSource}
       </PrismCode>
     </pre>

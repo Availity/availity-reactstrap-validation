@@ -26,7 +26,7 @@ export default () => (
       <CheckboxExample />
     </div>
     <pre>
-      <PrismCode className="language-jsx">
+      <PrismCode async className="language-jsx">
         {CheckboxExampleSource}
       </PrismCode>
     </pre>
@@ -40,21 +40,21 @@ export default () => (
       <CheckboxTrueValueExample />
     </div>
     <pre>
-      <PrismCode className="language-jsx">
+      <PrismCode async className="language-jsx">
         {CheckboxTrueValueExampleSource}
       </PrismCode>
     </pre>
 
     <h4>False Value</h4>
     <p>
-      Leaving the boxes unchecked and submitting the form, you will see the value passed is the
-      <code>falseValue</code> for the checkbox; <code>false</code> by default.
+      Leaving the boxes unchecked and submitting the form, you will see the value passed
+      is the <code>falseValue</code> for the checkbox; <code>false</code> by default.
     </p>
     <div className="docs-example">
       <CheckboxFalseValueExample />
     </div>
     <pre>
-      <PrismCode className="language-jsx">
+      <PrismCode async className="language-jsx">
         {CheckboxFalseValueExampleSource}
       </PrismCode>
     </pre>
@@ -68,7 +68,7 @@ export default () => (
       <CheckboxDefaultExample />
     </div>
     <pre>
-      <PrismCode className="language-jsx">
+      <PrismCode async className="language-jsx">
         {CheckboxDefaultExampleSource}
       </PrismCode>
     </pre>
