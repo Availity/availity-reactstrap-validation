@@ -163,7 +163,7 @@ export default class AvBaseInput extends Component {
   getDefaultValue() {
     let defaultValue = '';
 
-    if (this.props.type === 'checkbox') {
+    if (this.props.type === 'checkbox' || this.props.type === 'switch') {
       if (!isUndefined(this.props.defaultChecked)) {
         return this.props.defaultChecked
           ? this.props.trueValue
