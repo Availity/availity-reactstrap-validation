@@ -1,32 +1,30 @@
 var path = require('path');
 var webpack = require('webpack');
 var StaticSiteGeneratorPlugin = require('static-site-generator-webpack-plugin');
-var env = process.env.WEBPACK_BUILD || 'development';
-
 var CleanWebpackPlugin = require('clean-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var webpackDevConfig = require('./webpack.base.config')('development');
-var webpackProdConfig = require('./webpack.base.config')('production');
+var webpackConfig = require('./webpack.base.config');
 
+var env = process.env.WEBPACK_BUILD || 'development';
 var paths = [
   '/',
   '/components/',
+  '/components/avform/',
   '/components/validators/',
   '/components/checkboxes/',
-  '/components/avform/',
   '/404.html',
 ];
 
-var basepath = env === 'production' ? process.env.BASEPATH || '/availity-reactstrap-validation/' : '/';
+var basePath = (env === 'production') ? (process.env.BASEPATH || '/availity-reactstrap-validation/') : '/';
 
 var config = [{
   devtool: 'source-map',
   devServer: {
     contentBase: './build',
-    stats: {
-      chunks: false,
-    },
+    stats: { chunks: false },
+    inline: false,
+    historyApiFallback: true,
   },
   entry: {
     main: './docs/lib/app.js',
@@ -36,8 +34,8 @@ var config = [{
   },
   output: {
     filename: 'bundle.js',
-    publicPath: basepath,
-    path: './build',
+    publicPath: basePath,
+    path: path.join(__dirname, 'build'),
     libraryTarget: 'umd',
   },
   plugins: [
@@ -46,55 +44,39 @@ var config = [{
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(env),
     }),
-    new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.OccurenceOrderPlugin(),
-    new StaticSiteGeneratorPlugin('main', paths, {basename: basepath}),
-    new webpack.NoErrorsPlugin(),
-    new ExtractTextPlugin('/assets/style.css'),
+    new StaticSiteGeneratorPlugin('main', paths, { basename: basePath }),
+    new webpack.NoEmitOnErrorsPlugin(),
+    new ExtractTextPlugin('assets/style.css'),
   ],
   module: {
-    loaders: [
+    rules: [
       {
-        test: /\.(json)$/,
-        loaders: [
-          'json-loader?cacheDirectory',
-        ],
-      },
-      {
-        test: /\.(js|jsx)$/,
+        test: /\.jsx?$/,
         exclude: /node_modules/,
-        loaders: [
-          'babel-loader?cacheDirectory',
-        ],
+        loader: 'babel-loader?cacheDirectory',
       },
       {
         test: /\.css$/,
-        loader: ExtractTextPlugin.extract('style-loader', 'css-loader'),
+        loader: ExtractTextPlugin.extract({ fallback: 'style-loader', use: 'css-loader' }),
       },
     ],
   },
   resolve: {
-    extensions: ['', '.js', '.jsx', '.json'],
+    extensions: ['.js', '.jsx'],
     alias: {
-      'bootstrap-css': path.join(__dirname,'node_modules/bootstrap/dist/css/bootstrap.css'),
+      'bootstrap-css': path.join(__dirname, 'node_modules/bootstrap/dist/css/bootstrap.css'),
       'availity-reactstrap-validation': path.resolve('./src'),
     },
   },
 }];
 
 if (env === 'development') {
-  config.push(webpackDevConfig);
-  config.push(webpackProdConfig);
+  config.push(webpackConfig('development'));
+  config.push(webpackConfig('production'));
 } else {
-  config[0].plugins.push(new webpack.optimize.UglifyJsPlugin(
-    {
-      minimize: true,
-      compress: {
-        warnings: false,
-      },
-      mangle: true,
-    }
-  ));
+  config[0].plugins.push(
+    new webpack.optimize.UglifyJsPlugin({ minimize: true, sourceMap: true, mangle: true })
+  );
 }
 
 module.exports = config;

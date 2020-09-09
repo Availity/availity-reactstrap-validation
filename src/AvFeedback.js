@@ -1,17 +1,17 @@
-import React, {Component} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { FormFeedback } from 'reactstrap';
 
-export default class AvFeedback extends Component {
-  static propTypes = Object.assign({}, FormFeedback.propTypes);
+const AvFeedback = (props, context) => {
+  const validation = context.Group.getInputState();
+  return <FormFeedback valid={!validation.error} {...props} />;
+};
 
-  static contextTypes = {
-    FormCtrl: PropTypes.object.isRequired,
-    Group: PropTypes.object.isRequired,
-  };
+AvFeedback.propTypes = { ...FormFeedback.propTypes };
 
-  render() {
-    const validation = this.context.Group.getInputState();
-    return <FormFeedback valid={!validation.error} {...this.props} />;
-  }
-}
+AvFeedback.contextTypes = {
+  FormCtrl: PropTypes.object.isRequired,
+  Group: PropTypes.object.isRequired,
+};
+
+export default AvFeedback;

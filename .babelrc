@@ -5,10 +5,7 @@
     "test": {
       "plugins": [
         ["istanbul", {
-          "exclude": [
-            "**/*.spec.js",
-            ".tmp/**/*"
-          ]
+          "exclude": ["**/*.spec.js", ".tmp/**/*"]
         }]
       ]
     }

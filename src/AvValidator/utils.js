@@ -4,14 +4,20 @@ import isUndefined from 'lodash/isUndefined';
 export const isoDateFormat = 'YYYY-MM-DD';
 
 export function isEmpty(value) {
-  return isUndefined(value) || value === null || (isString(value) && value.trim() === '') || value === false || (Array.isArray(value) && value.length === 0 );
+  return (
+    isUndefined(value) ||
+    value === null ||
+    (isString(value) && value.trim() === '') ||
+    value === false ||
+    (Array.isArray(value) && value.length === 0)
+  );
 }
 
 export function isDecimal(value) {
   return value % 1 !== 0;
 }
 
-export const inputType = {date: false, number: false, time: false, month: false, week: false};
+export const inputType = { date: false, number: false, time: false, month: false, week: false };
 
 export const inputTypeOverride = (key, value) => {
   inputType[key] = value;
@@ -21,14 +27,12 @@ export const inputTypeOverride = (key, value) => {
 if (typeof document !== 'undefined' && typeof document.createElement === 'function') {
   const tester = document.createElement('input');
 
-  for (const i in inputType) {
-    if (inputType.hasOwnProperty(i)) {
-      tester.setAttribute('type', i);
-      tester.value = ':(';
+  Object.keys(inputType).forEach(i => {
+    tester.setAttribute('type', i);
+    tester.value = ':(';
 
-      if (tester.type === i && tester.value === '') {
-        inputType[i] = true;
-      }
+    if (tester.type === i && tester.value === '') {
+      inputType[i] = true;
     }
-  }
+  });
 }

@@ -1,20 +1,22 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import _omit from 'lodash/omit';
 import find from 'lodash/find';
-import {Input, FormGroup, Label, CustomInput} from 'reactstrap';
+import { Input, FormGroup, Label, CustomInput } from 'reactstrap';
 import AvInput from './AvInput';
-
-const checkPropTypes = Object.assign({}, AvInput.propTypes, {customInput: PropTypes.bool});
-delete checkPropTypes.name;
 
 export default class AvCheckbox extends Component {
 
-  static contextTypes = Object.assign({}, AvInput.contextTypes, {
+  static contextTypes = {
+    ...AvInput.contextTypes,
     Group: PropTypes.object.isRequired,
-  });
+  };
 
-  static propTypes = checkPropTypes;
+  static propTypes = {
+    ..._omit(AvInput.propTypes, 'name'),
+    customInput: PropTypes.bool,
+  };
 
   componentDidMount() {
     this.context.FormCtrl && this.context.FormCtrl.register(this);
@@ -32,7 +34,7 @@ export default class AvCheckbox extends Component {
   };
 
   isDefaultChecked(valueArr) {
-    return Array.isArray(valueArr) && valueArr.length > 0 && find(valueArr,item => item === this.props.value);
+    return Array.isArray(valueArr) && valueArr.length > 0 && find(valueArr, item => item === this.props.value);
   }
 
   render() {
@@ -40,7 +42,8 @@ export default class AvCheckbox extends Component {
       className,
       id,
       customInput,
-      ...attributes} = this.props;
+      ...attributes
+    } = this.props;
 
     const groupProps = this.context.Group.getProps();
 
@@ -53,7 +56,7 @@ export default class AvCheckbox extends Component {
       this.context.FormCtrl.isDirty(groupProps.name) ? 'is-dirty' : 'is-pristine',
       this.context.FormCtrl.isBad(groupProps.name) ? 'is-bad-input' : null,
       hasError ? 'av-invalid' : 'av-valid',
-      touched && hasError && 'is-invalid',
+      touched && hasError && 'is-invalid'
     );
 
     if (this.props.disabled === undefined && this.context.FormCtrl.isDisabled() !== undefined) {
@@ -68,7 +71,7 @@ export default class AvCheckbox extends Component {
       return (
         <CustomInput
           name={groupProps.name}
-          type='checkbox'
+          type="checkbox"
           {...attributes}
           inline={groupProps.inline}
           id={id || `checkbox-${groupProps.name}-${this.props.value}`}
@@ -86,7 +89,7 @@ export default class AvCheckbox extends Component {
       <FormGroup check inline={groupProps.inline} disabled={attributes.disabled || attributes.readOnly}>
         <Input
           name={groupProps.name}
-          type='checkbox'
+          type="checkbox"
           {...attributes}
           id={id || `checkbox-${groupProps.name}-${this.props.value}`}
           className={classes}

@@ -1,7 +1,6 @@
 import React from 'react';
-import { shallow } from 'enzyme';
 import { AvRadio } from 'availity-reactstrap-validation';
-import { Input, Label, FormGroup } from 'reactstrap';
+import { Input } from 'reactstrap';
 
 let options;
 let props;
@@ -28,21 +27,21 @@ describe('AvRadio', () => {
         },
         FormCtrl: {
           inputs: {},
-          getDefaultValue: ()=> {},
-          getInputState: ()=> ({}),
+          getDefaultValue: () => {},
+          getInputState: () => ({}),
           hasError: () => error,
           isDirty: () => dirty,
           isTouched: () => touched,
           isBad: () => bad,
           isDisabled: () => false,
           isReadOnly: () => false,
-          setDirty: ()=> {},
-          setTouched: ()=> {},
-          setBad: ()=> {},
-          register: ()=> {},
-          unregister: ()=> {},
-          validate: ()=> {},
-          getValidationEvent: ()=> {},
+          setDirty: () => {},
+          setTouched: () => {},
+          setBad: () => {},
+          register: () => {},
+          unregister: () => {},
+          validate: () => {},
+          getValidationEvent: () => {},
           validation: {},
           parent: null,
         },
@@ -85,7 +84,7 @@ describe('AvRadio', () => {
     expect(wrapper.find(Input).hasClass('is-touched')).to.be.true;
   });
 
-  it('should have "is-pristine" class when not dirty', () => {
+  it('should not have "is-pristine" class when dirty', () => {
     dirty = true;
     const wrapper = shallow(<AvRadio name="yo" />, options);
 

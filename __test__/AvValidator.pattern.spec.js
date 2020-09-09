@@ -27,9 +27,9 @@ describe('Pattern Validation', () => {
   });
 
   it('should accept and array of regex to match at least one of', () => {
-    expect(fn('3.4', undefined, {value: ['^\\d$', /^\d\.\d$/, '/^\\d\.\\d\.\\d$/']})).to.be.true;
-    expect(fn('3.4', undefined, {value: ['^\\d$', /^\d\.\d$/, '/^\\d\.\\d\.\\d$/']})).to.be.true;
-    expect(fn('3.4.5', undefined, {value: ['^\\d$', /^\d\.\d$/, '/^\\d\.\\d\.\\d$/']})).to.be.true;
-    expect(fn('3.a.b', undefined, {value: ['^\\d$', /^\d\.\d$/, '/^\\d\.\\d\.\\d$/']})).to.be.false;
+    expect(fn('3.4', undefined, {value: ['^\\d$', /^\d\.\d$/, '/^\\d\\.\\d\\.\\d$/']})).to.be.true;
+    expect(fn('3.4', undefined, {value: ['^\\d$', /^\d\.\d$/, '/^\\d\\.\\d\\.\\d$/']})).to.be.true;
+    expect(fn('3.4.5', undefined, {value: ['^\\d$', /^\d\.\d$/, '/^\\d\\.\\d\\.\\d$/']})).to.be.true;
+    expect(fn('3.a.b', undefined, {value: ['^\\d$', /^\d\.\d$/, '/^\\d\\.\\d\\.\\d$/']})).to.be.false;
   });
 });

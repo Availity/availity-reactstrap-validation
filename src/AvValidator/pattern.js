@@ -23,5 +23,5 @@ export default function validate(value, context, constraint = {}) {
 
   const values = Array.isArray(constraint.value) ? constraint.value : [constraint.value];
 
-  return values.some((expression) => asRegExp(expression).test(value)) || constraint.errorMessage || false;
+  return values.some(expression => asRegExp(expression).test(value)) || constraint.errorMessage || false;
 }

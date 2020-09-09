@@ -1,6 +1,7 @@
 /__test__/coverage
-node_modules
+node_modules/
 /dist
 /build
 /lib
+/.nyc_output
 /.tmp

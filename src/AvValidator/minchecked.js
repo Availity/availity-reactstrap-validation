@@ -7,7 +7,7 @@ export default function validate(value, context, constraint = {}, input = {}) {
   const min = toNumber(constraint.value);
 
   return (
-    (!isNaN(min) && isFinite(min) && !isDecimal(min) && min <= input.value.length) ||
+    (!Number.isNaN(min) && Number.isFinite(min) && !isDecimal(min) && min <= input.value.length) ||
     constraint.errorMessage ||
     false
   );

@@ -1,10 +1,10 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { FormGroup } from 'reactstrap';
 
 export default class AvGroup extends Component {
-  static propTypes = Object.assign({}, FormGroup.propTypes);
+  static propTypes = { ...FormGroup.propTypes };
 
   static contextTypes = {
     FormCtrl: PropTypes.object.isRequired,
@@ -18,14 +18,14 @@ export default class AvGroup extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {input: {props: {}}};
+    this.state = { input: { props: {} } };
   }
 
   getChildContext() {
-    this.FormCtrl = {...this.context.FormCtrl};
+    this.FormCtrl = { ...this.context.FormCtrl };
     const registerValidator = this.FormCtrl.register;
-    this.FormCtrl.register = (input) => {
-      this.setState({input});
+    this.FormCtrl.register = input => {
+      this.setState({ input });
       registerValidator(input, this.update.bind(this, input));
     };
     return {
@@ -41,7 +41,7 @@ export default class AvGroup extends Component {
     return this.context.FormCtrl.getInputState(this.state.input.props.name);
   }
 
-  update(input){
+  update(input) {
     if (input && input.setState) input.setState.call(input, {});
     this.setState({});
   }

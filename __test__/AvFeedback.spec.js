@@ -1,5 +1,4 @@
 import React from 'react';
-import { shallow } from 'enzyme';
 import { AvFeedback } from 'availity-reactstrap-validation';
 import { FormFeedback } from 'reactstrap';
 

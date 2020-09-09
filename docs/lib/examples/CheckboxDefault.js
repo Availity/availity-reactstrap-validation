@@ -1,38 +1,38 @@
 import React from 'react';
 import { AvForm, AvGroup, AvInput } from 'availity-reactstrap-validation';
 import { Button, Label, FormGroup } from 'reactstrap';
+import SubmitResult from './SubmitResult';
 
-export default class Example extends React.Component {
-  constructor(props) {
-    super(props);
+export default () => {
+  const sr = React.useRef(null);
+  const handleSubmit = (...args) => sr.current.handleSubmit(...args);
 
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.state = {};
-  }
+  const form = React.useRef(null);
+  const handleReset = e => {
+    e.preventDefault();
+    form.current.reset();
+    sr.current.reset();
+  };
 
-  handleSubmit(event, errors, values) {
-    this.setState({errors, values});
-  }
+  const model = {
+    checkbox1: true,
+    checkbox2: false,
+    checkbox3: false,
+    checkbox4: true,
+    checkbox5: 'yes',
+    checkbox6: 'yes',
+    checkbox7: 'no',
+    checkbox8: 'no',
+    checkbox9: 'other?',
+  };
 
-  render() {
-    const model = {
-      checkbox1: true,
-      checkbox2: false,
-      checkbox3: false,
-      checkbox4: true,
-      checkbox5: 'yes',
-      checkbox6: 'yes',
-      checkbox7: 'no',
-      checkbox8: 'no',
-      checkbox9: 'other?',
-    };
-
-    return (
-      <div>
-        <AvForm onSubmit={this.handleSubmit} model={model}>
+  return (
+    <div>
+      <AvForm onSubmit={handleSubmit} model={model} ref={form}>
+        <FormGroup>
           <AvGroup check>
             <Label check>
-              <AvInput type="checkbox" name="checkbox1" /> true is "checked" (default)
+              <AvInput type="checkbox" name="checkbox1" required /> true is "checked" (default)
             </Label>
           </AvGroup>
           <AvGroup check>
@@ -75,16 +75,13 @@ export default class Example extends React.Component {
               <AvInput type="checkbox" name="checkbox9" /> any values that are not the trueValue is unchecked
             </Label>
           </AvGroup>
-          <FormGroup>
-            <Button>Submit</Button>
-          </FormGroup>
-        </AvForm>
-        {this.state.values && <div>
-          <h5>Submission values</h5>
-          Invalid: {this.state.errors.join(', ')}<br />
-          Values: <pre>{JSON.stringify(this.state.values, null, 2)}</pre>
-        </div>}
-      </div>
-    );
-  }
-}
+        </FormGroup>
+        <FormGroup>
+          <Button className="mr-3">Submit</Button>
+          <Button outline onClick={handleReset}>Reset</Button>
+        </FormGroup>
+      </AvForm>
+      <SubmitResult ref={sr} />
+    </div>
+  );
+};

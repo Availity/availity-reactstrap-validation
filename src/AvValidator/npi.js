@@ -2,10 +2,10 @@ import { isEmpty } from './utils';
 
 const INTEGER_REGEX = /^\d*$/;
 
-export default function validate(value, context, {errorMessage = false} = {}) {
+export default function validate(value, context, { errorMessage = false } = {}) {
   if (isEmpty(value)) return true;
 
-  value = value + '';
+  value += '';
 
   if (!INTEGER_REGEX.test(value) || value.length !== 10) {
     return errorMessage;
@@ -26,7 +26,7 @@ export default function validate(value, context, {errorMessage = false} = {}) {
   for (let i = value.length; i > 0; i--) {
     let next = parseInt(value.charAt(i - 1), 10);
     if (alternate) {
-      next = next * 2;
+      next *= 2;
       if (next > 9) {
         next = (next % 10) + 1;
       }

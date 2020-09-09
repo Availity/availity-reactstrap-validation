@@ -1,14 +1,15 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Col, FormText, Label, CustomInput } from 'reactstrap';
 import AvInput from './AvInput';
 import AvGroup from './AvGroup';
 import AvFeedback from './AvFeedback';
-import {Col, FormText, Label, CustomInput} from 'reactstrap';
 
 const colSizes = ['xs', 'sm', 'md', 'lg', 'xl'];
 
 export default class AvField extends Component {
-  static propTypes = Object.assign({}, AvInput.propTypes, {
+  static propTypes = {
+    ...AvInput.propTypes,
     label: PropTypes.node,
     labelHidden: PropTypes.bool,
     disabled: PropTypes.bool,
@@ -27,7 +28,7 @@ export default class AvField extends Component {
     labelAttrs: PropTypes.object,
     groupAttrs: PropTypes.object,
     grid: PropTypes.object,
-  });
+  };
 
   static contextTypes = {
     FormCtrl: PropTypes.object.isRequired,
@@ -38,7 +39,7 @@ export default class AvField extends Component {
   };
 
   getChildContext() {
-    this.FormCtrl = {...this.context.FormCtrl};
+    this.FormCtrl = { ...this.context.FormCtrl };
     const registerValidator = this.FormCtrl.register;
     this.FormCtrl.register = (input, updater = input && input.setState && input.setState.bind(input)) => {
       registerValidator(input, () => {
@@ -83,45 +84,38 @@ export default class AvField extends Component {
       });
     }
 
-    const input = (<AvInput
-      id={id}
-      className={inputClass}
-      size={size}
-      disabled={disabled}
-      readOnly={readOnly}
-      {...attributes}
-    >
-      {children}
-    </AvInput>);
+    const input = (
+      <AvInput id={id} className={inputClass} size={size} disabled={disabled} readOnly={readOnly} {...attributes}>
+        {children}
+      </AvInput>
+    );
 
     const validation = this.context.FormCtrl.getInputState(this.props.name);
 
     const feedback = validation.errorMessage ? (<AvFeedback>{validation.errorMessage}</AvFeedback>) : null;
     const help = helpMessage ? (<FormText>{helpMessage}</FormText>) : null;
-    const inputRow = row ? <Col {...col}>{input}{feedback}{help}</Col> : input;
+    const inputRow = row ? (<Col {...col}>{input}{feedback}{help}</Col>) : input;
     const check = attributes.type === 'checkbox';
 
     if (
-      (check || attributes.type === "radio" || attributes.type === "switch") &&
-      (attributes.tag === CustomInput ||
-        (Array.isArray(attributes.tag) && attributes.tag[0] === CustomInput))
+      (check || attributes.type === 'radio' || attributes.type === 'switch') &&
+      (attributes.tag === CustomInput || (Array.isArray(attributes.tag) && attributes.tag[0] === CustomInput))
     ) {
-      return <AvGroup className="mb-0"><AvInput {...this.props}>{feedback}{help}</AvInput></AvGroup>;
+      return (
+        <AvGroup className="mb-0">
+          <AvInput {...this.props}>{feedback}{help}</AvInput>
+        </AvGroup>
+      );
     }
 
     return (
       <AvGroup check={check} disabled={disabled} row={row} {...groupAttrs}>
         {check && inputRow}
-        {label && <Label
-          for={id}
-          className={labelClass}
-          hidden={labelHidden}
-          size={size}
-          {...labelCol}
-          {...labelAttrs}
-        >
-          {label}
-        </Label>}
+        {label && (
+          <Label for={id} className={labelClass} hidden={labelHidden} size={size} {...labelCol} {...labelAttrs}>
+            {label}
+          </Label>
+        )}
         {!check && inputRow}
         {!row && feedback}
         {!row && help}

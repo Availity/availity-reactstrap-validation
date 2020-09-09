@@ -1,7 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
 import { AvRadioGroup, AvFeedback } from 'availity-reactstrap-validation';
-import { FormGroup } from 'reactstrap';
 
 let options;
 
@@ -20,8 +18,8 @@ describe('AvRadioGroup', () => {
       context: {
         FormCtrl: {
           inputs: {},
-          getDefaultValue: ()=> {},
-          getInputState: ()=> ({}),
+          getDefaultValue: () => {},
+          getInputState: () => ({}),
           hasError: () => error,
           isDirty: () => dirty,
           isTouched: () => touched,
@@ -34,7 +32,7 @@ describe('AvRadioGroup', () => {
           register: sinon.spy(),
           unregister: sinon.spy(),
           validate: sinon.spy(),
-          getValidationEvent: ()=> {},
+          getValidationEvent: () => {},
           validation: {},
           parent: null,
         },
@@ -62,14 +60,14 @@ describe('AvRadioGroup', () => {
     expect(instance.validations.required).to.be.undefined;
   });
 
-  it('should return the set value', ()=> {
+  it('should return the set value', () => {
     const wrapper = shallow(<AvRadioGroup name="yo" />, options);
     const component = wrapper.instance();
     component.value = 'boop';
     expect(component.getValue()).to.equal('boop');
   });
 
-  it('should unregister when unmounted', ()=> {
+  it('should unregister when unmounted', () => {
     const wrapper = shallow(<AvRadioGroup name="yo" />, options);
     wrapper.unmount();
     expect(options.context.FormCtrl.unregister).to.have.been.called;
@@ -114,9 +112,7 @@ describe('AvRadioGroup', () => {
   it('should give default value from context', () => {
     const wrapper = shallow(<AvRadioGroup name="yo" />, options);
     const component = wrapper.instance();
-    component.context.FormCtrl.getDefaultValue = () => {
-      return 'jiri';
-    };
+    component.context.FormCtrl.getDefaultValue = () => 'jiri';
     expect(component.getDefaultValue()).to.eql({key: 'defaultValue', value: 'jiri'});
   });
 
@@ -173,15 +169,14 @@ describe('AvRadioGroup', () => {
     const wrapper = shallow(<AvRadioGroup name="yo" onChange={spy} />, options);
     const component = wrapper.instance();
     const event = {};
-    component.getChildContext().Group.update(event, 'momo').then(() => {
-      expect(spy).to.have.been.calledWith(event, 'momo');
-    });
+    return component
+      .getChildContext()
+      .Group.update(event, 'momo')
+      .then(() => expect(spy).to.have.been.calledWith(event, 'momo'));
   });
 
   it('should render validation message when sent', () => {
-    options.context.FormCtrl.getInputState = () => {
-      return {'errorMessage': 'WHAT ARE YOU DOING?!'};
-    };
+    options.context.FormCtrl.getInputState = () => ({ errorMessage: 'WHAT ARE YOU DOING?!' });
     const wrapper = shallow(<AvRadioGroup name="yo" />, options);
     expect(wrapper.find(AvFeedback).prop('children')).to.equal('WHAT ARE YOU DOING?!');
   });

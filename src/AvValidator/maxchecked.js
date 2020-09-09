@@ -7,7 +7,7 @@ export default function validate(value, context, constraint = {}, input = {}) {
   const max = toNumber(constraint.value);
 
   return (
-    (!isNaN(max) && isFinite(max) && !isDecimal(max) && max >= input.value.length) ||
+    (!Number.isNaN(max) && Number.isFinite(max) && !isDecimal(max) && max >= input.value.length) ||
     constraint.errorMessage ||
     false
   );

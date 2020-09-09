@@ -3,37 +3,14 @@ var webpack = require('webpack');
 
 var libraryName = 'AvailityReactstrapValidation';
 
-module.exports = function(env) {
-  var outputFile;
-  var plugins = [
-    new webpack.NoErrorsPlugin(),
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(env),
-    }),
-    new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.OccurenceOrderPlugin(),
-  ];
-
-  if (env === 'production') {
-    plugins.push(new webpack.optimize.UglifyJsPlugin(
-      {
-        minimize: true,
-        compress: {
-          warnings: false,
-        },
-        mangle: true,
-      }
-    ));
-    outputFile = libraryName.toLowerCase() + '.min.js';
-  } else {
-    outputFile = libraryName.toLowerCase() + '.js';
-  }
+module.exports = function (env) {
+  var outputFile = libraryName.toLowerCase() + (env === 'production' ? '.min.js' : '.js');
 
   var config = {
     devtool: 'source-map',
-    entry: [__dirname + '/src/index.js'],
+    entry: [path.join(__dirname, 'src/index.js')],
     output: {
-      path: __dirname + '/dist',
+      path: path.join(__dirname, 'dist'),
       filename: outputFile,
       library: libraryName,
       libraryTarget: 'umd',
@@ -56,43 +33,33 @@ module.exports = function(env) {
           amd: 'react-dom',
         },
       },
-      {
-        'react-addons-transition-group': {
-          commonjs: 'react-addons-transition-group',
-          commonjs2: 'react-addons-transition-group',
-          amd: 'react-addons-transition-group',
-          root: ['React', 'addons', 'TransitionGroup'],
-        },
-      },
     ],
     module: {
-      loaders: [
+      rules: [
         {
-          test: /\.(json)$/,
-          loaders: [
-            'json-loader?cacheDirectory',
-          ],
-        },
-        {
-          test: /\.(js|jsx)$/,
+          test: /\.jsx?$/,
           exclude: /node_modules/,
-          loaders: [
-            'babel-loader?cacheDirectory',
-          ],
+          loader: 'babel-loader?cacheDirectory',
         },
       ],
     },
     resolve: {
-      alias: {
-        'avility-reactstrap-validation': 'src/index',
-      },
-      extensions: ['', '.js', '.jsx', '.json'],
-      root: [
-        path.resolve('./src'),
-      ],
+      extensions: ['.js', '.jsx'],
+      modules: ['node_modules', path.resolve('./src')],
     },
-    plugins: plugins,
+    plugins: [
+      new webpack.NoEmitOnErrorsPlugin(),
+      new webpack.DefinePlugin({
+        'process.env.NODE_ENV': JSON.stringify(env),
+      }),
+    ],
   };
+
+  if (env === 'production') {
+    config.plugins.push(
+      new webpack.optimize.UglifyJsPlugin({ minimize: true, sourceMap: true, mangle: true })
+    );
+  }
 
   return config;
 };

@@ -1,13 +1,13 @@
 import React from 'react';
 import classNames from 'classnames';
-import {Input} from 'reactstrap';
+import { Input } from 'reactstrap';
 import AvBaseInput from './AvBaseInput';
 
-
 export default class AvInput extends AvBaseInput {
-  static defaultProps = Object.assign({}, AvBaseInput.defaultProps, {
+  static defaultProps = {
+    ...AvBaseInput.defaultProps,
     tag: Input,
-  });
+  };
 
   static contextTypes = AvBaseInput.contextTypes;
 
@@ -42,11 +42,8 @@ export default class AvInput extends AvBaseInput {
 
     if (Array.isArray(tag)) {
       let tags;
-      [Tag, ...tags] = tag;
-      attributes.tag = tags
-      if(attributes.tag.length <= 1) {
-        attributes.tag = attributes.tag[0];
-      }
+      [Tag, ...tags] = tag; // eslint-disable-line prefer-const
+      attributes.tag = (tags.length > 1) ? tags : tags[0];
     }
 
     const classes = classNames(
@@ -62,7 +59,8 @@ export default class AvInput extends AvBaseInput {
     const value = this.getViewValue();
 
     return (
-      <Tag {...attributes}
+      <Tag
+        {...attributes}
         ref={getRef}
         {...this.getValidatorProps()}
         className={classes}

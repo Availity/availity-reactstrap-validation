@@ -4,7 +4,6 @@
 
 Easy to use React validation components compatible for reactstrap.
 
-
 ## Installation
 
 Install `availity-reactstrap-validation` via NPM
@@ -13,7 +12,7 @@ Install `availity-reactstrap-validation` via NPM
 npm install --save availity-reactstrap-validation
 ```
 
-If applicable, install a `Promise` polyfill.  For example:
+If applicable, install a `Promise` polyfill. For example:
 
 ```sh
 npm install es6-promise --save
@@ -32,34 +31,35 @@ import { AvField } from 'availity-reactstrap-validation';
 Install dependencies:
 
 ```sh
-npm install
+yarn install
 ```
 
 Run examples at [http://localhost:8080/](http://localhost:8080/) with Webpack dev server:
 
 ```sh
-npm start
+yarn start
 ```
 
 Run tests:
 
 ```sh
-npm test
+yarn test
 ```
 
 Run tests & coverage report:
 
 ```sh
-npm run test:coverage
+yarn test:coverage
 ```
 
 Watch tests:
 
 ```sh
-npm run test:watch
+yarn test:watch
 ```
 
 ## Disclaimer
+
 Open source software components distributed or made available in the Availity Materials are licensed to Company under the terms of the applicable open source license agreements, which may be found in text files included in the Availity Materials.
 
 ## LICENSE [MIT](LICENSE)

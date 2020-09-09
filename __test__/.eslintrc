@@ -1,21 +1,23 @@
 {
-  "extends" : "eslint-config-availity/react",
   "env": {
     "mocha": true,
     "node": true
   },
   "globals": {
     "sinon": true,
-    "expect": true
+    "expect": true,
+    "shallow": true,
+    "mount": true
   },
   "rules": {
-    "semi" : [2, "always"],
-    "comma-dangle": [2, "always-multiline"]
+    "func-names": 0,
+    "no-unused-expressions": 0
   },
-  "parserOptions": {
-    "sourceType": "module",
-    "ecmaFeatures": {
-      "jsx": true
+  "settings": {
+    "import/resolver": {
+      "webpack": {
+        "config": "webpack.test.config.js"
+      }
     }
   }
 }

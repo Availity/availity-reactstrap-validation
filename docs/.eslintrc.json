@@ -1,0 +1,18 @@
+{
+  "rules": {
+    "import/no-webpack-loader-syntax": 0,
+    "react/prop-types": [2, {
+      "ignore": ["children", "className"]
+    }],
+    "react/no-unescaped-entities": [2, {
+      "forbid": [">", "}"]
+    }]
+  },
+  "settings": {
+    "import/resolver": {
+      "webpack": {
+        "config": "webpack.dev.config.js"
+      }
+    }
+  }
+}

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router';
 import {
   NavbarToggler,
@@ -11,50 +11,36 @@ import {
   NavLink,
 } from 'reactstrap';
 
-export default class UINav extends Component {
-  constructor(props) {
-    super(props);
+export default () => {
+  const [showNavbar, setShowNavbar] = useState(false);
 
-    this.toggleNavbar = this.toggleNavbar.bind(this);
-    this.state = {
-      showNavbar: false,
-    };
-  }
-  toggleNavbar(e) {
+  const toggleNavbar = e => {
     e.preventDefault();
-    this.setState({
-      showNavbar: !this.state.showNavbar,
-    });
-  }
-  render() {
-    return (
-      <Navbar className="header" color="faded" light expand="md">
-        <Container>
-          <NavbarBrand className="mr-auto" tag={Link} to="/">
-            Availity reactstrap Validation
-          </NavbarBrand>
-          <NavbarToggler onClick={this.toggleNavbar} />
-          <Collapse navbar isOpen={this.state.showNavbar}>
-            <Nav navbar className="ml-sm-auto">
-              <NavItem>
-                <NavLink
-                  tag={Link}
-                  className="nav-link"
-                  to="/components/"
-                  activeClassName="active"
-                >
-                  Components
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink href="https://github.com/availity/availity-reactstrap-validation">
-                  GitHub
-                </NavLink>
-              </NavItem>
-            </Nav>
-          </Collapse>
-        </Container>
-      </Navbar>
-    );
-  }
-}
+    setShowNavbar(!showNavbar);
+  };
+
+  return (
+    <Navbar className="header" color="faded" light expand="md">
+      <Container>
+        <NavbarBrand className="mr-auto" tag={Link} to="/">
+          Availity reactstrap Validation
+        </NavbarBrand>
+        <NavbarToggler onClick={toggleNavbar} />
+        <Collapse navbar isOpen={showNavbar}>
+          <Nav navbar className="ml-sm-auto">
+            <NavItem>
+              <NavLink tag={Link} to="/components/" activeClassName="active">
+                Components
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink href="https://github.com/availity/availity-reactstrap-validation">
+                GitHub
+              </NavLink>
+            </NavItem>
+          </Nav>
+        </Collapse>
+      </Container>
+    </Navbar>
+  );
+};
