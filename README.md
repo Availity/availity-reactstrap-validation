@@ -7,10 +7,10 @@ Easy to use React validation components compatible for reactstrap.
 
 ## Installation
 
-Install `availity-reactstrap-validation` via NPM
+Install `availity-reactstrap-validation` and `reactstrap` via NPM
 
 ```sh
-npm install --save availity-reactstrap-validation
+npm install --save availity-reactstrap-validation reactstrap
 ```
 
 If applicable, install a `Promise` polyfill.  For example:
