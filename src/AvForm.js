@@ -83,7 +83,7 @@ export default class AvForm extends InputContainer {
 
   validations = {};
 
-  handleSubmit = async (e) => {
+  handleSubmit = async(e) => {
     if (this.props.beforeSubmitValidation) {
       this.props.beforeSubmitValidation(e);
     }
@@ -131,6 +131,7 @@ export default class AvForm extends InputContainer {
         getInputState: this.getInputState.bind(this),
         getInput: name => this._inputs[name],
         getInputValue: this.getValue.bind(this),
+        getInputs: this.getInputs.bind(this),
         getValues: this.getValues.bind(this),
         hasError: this.hasError.bind(this),
         isDirty: this.isDirty.bind(this),
@@ -215,6 +216,10 @@ export default class AvForm extends InputContainer {
         onSubmit={this.handleSubmit}
       />
     );
+  }
+
+  getInputs() {
+    return this._inputs;
   }
 
   getValues() {
@@ -446,7 +451,7 @@ export default class AvForm extends InputContainer {
   }
 
   compileValidationRules(input, ruleProp) {
-    return async (val, context) => {
+    return async(val, context) => {
       if (this.isBad(input.props.name)) {
         return false;
       }

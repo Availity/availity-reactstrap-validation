@@ -41,7 +41,7 @@ export default class AvRadioGroup extends Component {
       this.FormCtrl.validate = noop;
     }
 
-    const updateGroup = async (e, value) => {
+    const updateGroup = async(e, value) => {
       this.setState({ value });
       this.value = value;
       await this.validate();

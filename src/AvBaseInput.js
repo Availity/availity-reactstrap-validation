@@ -21,7 +21,7 @@ const htmlValidationTypes = [
   'number',
   'tel',
   'url',
-  /*'range', 'month', 'week', 'time'*/ // These do not currently have validation
+  /* 'range', 'month', 'week', 'time'*/ // These do not currently have validation
 ];
 
 export default class AvBaseInput extends Component {
