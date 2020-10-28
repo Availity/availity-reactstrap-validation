@@ -1,3 +1,19 @@
+<a name="2.7.0"></a>
+# [2.7.0](https://github.com/Availity/availity-reactstrap-validation/compare/2.6.1...2.7.0) (2020-10-28)
+
+
+### Bug Fixes
+
+* Update AvForm preventing setState on unmounted components ([#182](https://github.com/Availity/availity-reactstrap-validation/issues/182)) ([ec3062b](https://github.com/Availity/availity-reactstrap-validation/commit/ec3062b))
+
+
+### Features
+
+* add getInputs helper method to FormCtrl ([#216](https://github.com/Availity/availity-reactstrap-validation/issues/216)) ([a73b5ac](https://github.com/Availity/availity-reactstrap-validation/commit/a73b5ac))
+* **switch:** add support to bootstrap switch ([#206](https://github.com/Availity/availity-reactstrap-validation/issues/206)) ([3d44e38](https://github.com/Availity/availity-reactstrap-validation/commit/3d44e38))
+
+
+
 <a name="2.6.1"></a>
 ## [2.6.1](https://github.com/Availity/availity-reactstrap-validation/compare/2.6.0...2.6.1) (2019-11-21)
 
