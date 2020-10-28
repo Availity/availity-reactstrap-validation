@@ -42,7 +42,7 @@ export default class AvCheckboxGroup extends Component {
       this.FormCtrl.validate = noop;
     }
 
-    const updateGroup = async (e, value) => {
+    const updateGroup = async(e, value) => {
       if (e.target.checked) {
         this.value.push(value);
       } else {
@@ -223,7 +223,7 @@ export default class AvCheckboxGroup extends Component {
       <FormGroup tag="fieldset" {...attributes} className={groupClass}>
         {legend}
         <div className={classes}>{children}</div>
-       <AvFeedback>{validation.errorMessage}</AvFeedback>
+        <AvFeedback>{validation.errorMessage}</AvFeedback>
       </FormGroup>
     );
   }

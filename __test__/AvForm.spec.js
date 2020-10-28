@@ -374,6 +374,30 @@ describe('AvForm', function () {
       });
     });
 
+    describe('get Inputs', () => {
+      it('should return an object', () => {
+        expect(this.instance.getInputs()).to.be.an('object');
+      });
+
+      it('should return the registered inputs', () => {
+        const name = 'nameValue';
+        const email = 'evan.sharp@availity.com';
+        const dateOfBirth = new Date();
+        const number = 4;
+        this.instance._inputs = {
+          name: { getValue: sinon.stub().returns(name) },
+          email: { getValue: sinon.stub().returns(email) },
+          dateOfBirth: { getValue: sinon.stub().returns(dateOfBirth) },
+          number: { getValue: sinon.stub().returns(number) },
+        };
+
+        const inputs = this.instance.getInputs();
+
+        expect(Object.keys(inputs).length).to.equal(4);
+        expect(inputs).to.have.all.keys('name', 'email', 'dateOfBirth', 'number');
+      });
+    });
+
     describe('get Values', () => {
       it('should return an object', () => {
         expect(this.instance.getValues()).to.be.an('object');

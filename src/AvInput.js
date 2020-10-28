@@ -42,9 +42,10 @@ export default class AvInput extends AvBaseInput {
 
     if (Array.isArray(tag)) {
       let tags;
+      // eslint-disable-next-line prefer-const
       [Tag, ...tags] = tag;
-      attributes.tag = tags
-      if(attributes.tag.length <= 1) {
+      attributes.tag = tags;
+      if (attributes.tag.length <= 1) {
         attributes.tag = attributes.tag[0];
       }
     }
