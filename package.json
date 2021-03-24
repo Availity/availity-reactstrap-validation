@@ -5,8 +5,7 @@
   "description": "Form validation helpers for reactstrap",
   "main": "lib/index.js",
   "engines": {
-    "node": ">= 5.0.0",
-    "npm": "^3.0.0"
+    "node": ">= 5.0.0"
   },
   "scripts": {
     "ci": "npm run lint && cross-env BABEL_ENV=test nyc mocha-webpack",
