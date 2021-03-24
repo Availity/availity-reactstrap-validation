@@ -1,3 +1,8 @@
+<a name="2.7.1"></a>
+## [2.7.1](https://github.com/Availity/availity-reactstrap-validation/compare/2.7.0...2.7.1) (2021-03-24)
+
+
+
 <a name="2.7.0"></a>
 # [2.7.0](https://github.com/Availity/availity-reactstrap-validation/compare/2.6.1...2.7.0) (2020-10-28)
 
