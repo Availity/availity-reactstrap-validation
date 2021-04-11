@@ -4,6 +4,10 @@
 
 Easy to use React validation components compatible for reactstrap.
 
+## Important Update - 4th January, 2021
+
+This library has been **depreciated** in the favour of [another one](https://availity.github.io/availity-react/form/index). Please, plan your next projects and update your previous ones accordingly. 
+[This Guide](https://availity.github.io/availity-react/form/migrating) might be useful for you in order to migrate to the new library.
 
 ## Installation
 
