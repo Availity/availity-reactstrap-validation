@@ -11,7 +11,7 @@ function validComponent(input) {
 }
 
 export default class InputContainer extends Component {
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this._updaters = {};
     this._inputs = {};
   }

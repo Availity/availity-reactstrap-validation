@@ -77,13 +77,13 @@ export default class AvBaseInput extends Component {
     this.validate = this.validate.bind(this);
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.value = this.props.value || this.getDefaultValue();
     this.setState({ value: this.value });
     this.updateValidations();
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.name !== this.props.name) {
       this.context.FormCtrl.unregister(this);
     }
