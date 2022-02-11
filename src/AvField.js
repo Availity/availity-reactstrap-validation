@@ -89,7 +89,7 @@ export default class AvField extends Component {
       size={size}
       disabled={disabled}
       readOnly={readOnly}
-      {...attributes, {'aria-describedby':'errorMsg'}}
+      {...{...attributes, ...{'aria-describedby':'errorMsg'}}}
     >
       {children}
     </AvInput>);
