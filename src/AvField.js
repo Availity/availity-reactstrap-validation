@@ -89,14 +89,15 @@ export default class AvField extends Component {
       size={size}
       disabled={disabled}
       readOnly={readOnly}
-      {...{...attributes, ...{'aria-describedby':'errorMsg'}}}
+      aria-describedby = {`${id}-error`}
+      {...attributes}
     >
       {children}
     </AvInput>);
 
     const validation = this.context.FormCtrl.getInputState(this.props.name);
 
-    const feedback = validation.errorMessage ? (<AvFeedback id="errorMsg">{validation.errorMessage}</AvFeedback>) : null;
+    const feedback = validation.errorMessage ? (<AvFeedback id={`${id}-error`}>{validation.errorMessage}</AvFeedback>) : null;
     const help = helpMessage ? (<FormText>{helpMessage}</FormText>) : null;
     const inputRow = row ? <Col {...col}>{input}{feedback}{help}</Col> : input;
     const check = attributes.type === 'checkbox';
