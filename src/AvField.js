@@ -89,7 +89,7 @@ export default class AvField extends Component {
       size={size}
       disabled={disabled}
       readOnly={readOnly}
-      aria-describedby = {`${id}-error`}
+      aria-describedby={validation.errorMessage ? `${id}-error` : undefined}
       {...attributes}
     >
       {children}
